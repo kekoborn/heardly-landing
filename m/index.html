@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+
+<html lang="ru"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Heardly - Голос в текст на Mac</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c7c4d8",
+                    "error-container": "#ffdad6",
+                    "on-tertiary-fixed-variant": "#45474b",
+                    "on-surface-variant": "#464555",
+                    "soft-indigo-tint": "#EEF0FE",
+                    "frosted-surface": "rgba(255, 255, 255, 0.7)",
+                    "error": "#ba1a1a",
+                    "inverse-surface": "#303032",
+                    "on-primary-fixed": "#0f0069",
+                    "porcelain-white": "#FAFAFC",
+                    "on-error": "#ffffff",
+                    "surface-bright": "#fcf8fb",
+                    "on-surface": "#1b1b1d",
+                    "secondary-container": "#dfdfe1",
+                    "on-error-container": "#93000a",
+                    "tertiary-fixed": "#e2e2e7",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "on-secondary-fixed-variant": "#454749",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed": "#1a1c1d",
+                    "surface-dim": "#dcd9dc",
+                    "primary": "#3525cd",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-container": "#5e6064",
+                    "surface-container-highest": "#e4e2e4",
+                    "alert-red": "#FF453A",
+                    "secondary": "#5d5e60",
+                    "graphite": "#6E6E73",
+                    "tertiary-fixed-dim": "#c6c6cb",
+                    "fog": "#AEAEB2",
+                    "surface-container-low": "#f6f3f5",
+                    "outline": "#777587",
+                    "on-secondary-container": "#616365",
+                    "surface-tint": "#4d44e3",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "surface-container": "#f0edef",
+                    "on-primary": "#ffffff",
+                    "mist-gray": "#F2F2F7",
+                    "surface-container-high": "#eae7ea",
+                    "primary-fixed": "#e2dfff",
+                    "on-background": "#1b1b1d",
+                    "hairline": "#E5E5EA",
+                    "tertiary": "#46484c",
+                    "on-tertiary-fixed": "#1a1c1f",
+                    "deep-indigo": "#4F46E5",
+                    "surface": "#fcf8fb",
+                    "live-green": "#30D158",
+                    "inverse-primary": "#c3c0ff",
+                    "primary-container": "#4f46e5",
+                    "ink-black": "#1D1D1F",
+                    "background": "#fcf8fb",
+                    "inverse-on-surface": "#f3f0f2",
+                    "surface-variant": "#e4e2e4",
+                    "secondary-fixed": "#e2e2e4",
+                    "on-secondary": "#ffffff",
+                    "on-primary-container": "#dad7ff",
+                    "secondary-fixed-dim": "#c6c6c8",
+                    "on-tertiary-container": "#dadbe0"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "section-v-padding": "8rem",
+                    "container-max": "1200px",
+                    "hero-v-padding": "11rem",
+                    "gutter": "2rem",
+                    "stack-sm": "0.75rem",
+                    "stack-md": "1.5rem",
+                    "stack-lg": "3rem"
+            },
+            "fontFamily": {
+                    "headline-xl-mobile": [
+                            "Inter"
+                    ],
+                    "headline-xl": [
+                            "Inter"
+                    ],
+                    "cta-label": [
+                            "Inter"
+                    ],
+                    "transcript": [
+                            "JetBrains Mono"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "headline-lg": [
+                            "Inter"
+                    ],
+                    "caption": [
+                            "Inter"
+                    ],
+                    "body-base": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "headline-xl-mobile": [
+                            "3rem",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "headline-xl": [
+                            "4.5rem",
+                            {
+                                    "lineHeight": "1.1",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "cta-label": [
+                            "1rem",
+                            {
+                                    "lineHeight": "1",
+                                    "letterSpacing": "0em",
+                                    "fontWeight": "500"
+                            }
+                    ],
+                    "transcript": [
+                            "0.9375rem",
+                            {
+                                    "lineHeight": "1.6",
+                                    "letterSpacing": "0em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-md": [
+                            "1.5rem",
+                            {
+                                    "lineHeight": "1.4",
+                                    "letterSpacing": "0em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-lg": [
+                            "3rem",
+                            {
+                                    "lineHeight": "1.2",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "caption": [
+                            "0.875rem",
+                            {
+                                    "lineHeight": "1.5",
+                                    "letterSpacing": "0em",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "body-base": [
+                            "1.0625rem",
+                            {
+                                    "lineHeight": "1.65",
+                                    "letterSpacing": "0em",
+                                    "fontWeight": "400"
+                            }
+                    ]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body {
+            background-color: #FAFAFC;
+            color: #1D1D1F;
+            -webkit-font-smoothing: antialiased;
+            min-height: max(884px, 100dvh);
+        }
+        
+        .fade-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .pulse-dot {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(48, 209, 88, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(48, 209, 88, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(48, 209, 88, 0); }
+        }
+
+        .typewriter {
+            display: inline-block;
+            overflow: hidden;
+            border-right: .15em solid #4F46E5;
+            white-space: nowrap;
+            margin: 0;
+            animation: typing 3.5s steps(40, end) infinite, blink-caret .75s step-end infinite;
+            max-width: 0;
+            animation-fill-mode: forwards;
+        }
+
+        @keyframes typing {
+            0% { max-width: 0 }
+            50% { max-width: 100% }
+            90% { max-width: 100% }
+            100% { max-width: 0 }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: #4F46E5; }
+        }
+        
+        .mac-window {
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1), 0 0 0 1px rgba(229, 229, 234, 0.5);
+        }
+
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fade-up {
+                transition: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .pulse-dot, .typewriter {
+                animation: none !important;
+            }
+            .typewriter {
+                max-width: 100% !important;
+                border-right: none !important;
+            }
+        }
+    </style>
+<meta name="description" content="Heardly — диктовка, живой перевод речи и транскрибация аудио и видео на вашем Mac. Полностью локально, работает без интернета."><script>if(matchMedia("(min-width:768px)").matches&&!location.search.includes("stay"))location.replace("/")</script></head>
+<body class="font-body-base bg-porcelain-white text-ink-black overflow-x-hidden">
+<!-- Header / TopNavBar -->
+<header class="sticky top-0 w-full z-50 bg-frosted-surface backdrop-blur-md border-b border-hairline shadow-[0_8px_30px_rgba(0,0,0,0.06)] flex justify-between items-center h-16 px-4 md:px-gutter max-w-container-max mx-auto">
+<div class="flex items-center gap-2 font-headline-md text-headline-md font-bold text-ink-black">
+<span class="material-symbols-outlined text-deep-indigo" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+            Heardly
+        </div>
+<!-- Mobile Menu Button -->
+<button class="md:hidden p-2 text-ink-black focus:outline-none" id="mobile-menu-btn">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<!-- Desktop Navigation -->
+<nav class="hidden md:flex gap-8 items-center">
+<a class="text-graphite hover:text-ink-black transition-colors duration-200 text-sm font-medium" href="#features">Возможности</a>
+<a class="text-graphite hover:text-ink-black transition-colors duration-200 text-sm font-medium" href="#how-it-works">Как работает</a>
+<a class="text-graphite hover:text-ink-black transition-colors duration-200 text-sm font-medium" href="#use-cases">Сценарии</a>
+<a class="text-graphite hover:text-ink-black transition-colors duration-200 text-sm font-medium" href="#faq">FAQ</a>
+<a class="bg-deep-indigo text-white font-cta-label text-cta-label py-2 px-4 rounded-full hover:bg-opacity-90 transition-all flex items-center gap-2 active:scale-95" href="#">
+<svg class="w-5 h-5 shrink-0" fill="currentColor" class="w-4 h-4 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
+                Скачать для macOS
+            </a>
+</nav>
+</header>
+<!-- Mobile Menu Overlay -->
+<div class="fixed inset-0 z-40 bg-frosted-surface backdrop-blur-xl flex flex-col pt-24 px-6 gap-6 translate-x-full transition-transform duration-300 md:hidden" id="mobile-menu">
+<button class="absolute top-4 right-4 p-2 text-ink-black" id="mobile-menu-close">
+<span class="material-symbols-outlined">close</span>
+</button>
+<a class="text-headline-md font-headline-md border-b border-hairline pb-4 text-ink-black" href="#features">Возможности</a>
+<a class="text-headline-md font-headline-md border-b border-hairline pb-4 text-ink-black" href="#how-it-works">Как работает</a>
+<a class="text-headline-md font-headline-md border-b border-hairline pb-4 text-ink-black" href="#use-cases">Сценарии</a>
+<a class="text-headline-md font-headline-md border-b border-hairline pb-4 text-ink-black" href="#faq">FAQ</a>
+<button class="bg-deep-indigo text-white font-cta-label text-cta-label py-4 rounded-full w-full mt-4 flex justify-center items-center gap-2 active:scale-95 hover:bg-opacity-90 transition-all">
+<svg class="w-5 h-5 shrink-0" fill="currentColor" class="w-4 h-4 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
+            Скачать для macOS
+        </button>
+</div>
+<!-- Hero Section -->
+<section class="relative pt-16 pb-12 px-4 md:px-gutter max-w-container-max mx-auto text-center flex flex-col items-center z-10">
+<canvas class="absolute inset-0 w-full h-full -z-10 pointer-events-none opacity-50" id="hero-bg-canvas"></canvas>
+<div class="inline-flex items-center gap-2 bg-soft-indigo-tint text-deep-indigo font-semibold text-xs px-3 py-1 rounded-full mb-6 fade-up">
+<span class="w-2 h-2 rounded-full bg-live-green pulse-dot"></span>
+            100% локально · Без интернета
+        </div>
+<h1 class="font-headline-xl-mobile text-headline-xl-mobile md:font-headline-xl md:text-headline-xl text-ink-black max-w-3xl mb-6 fade-up" style="transition-delay: 100ms;">
+            Голос в текст.<br/>Прямо на вашем Mac.
+        </h1>
+<p class="text-lg md:text-xl text-graphite max-w-2xl mb-10 fade-up" style="transition-delay: 200ms;">
+            Диктовка, живой перевод речи и транскрибация аудио и видео — в строке меню macOS. Ничего не покидает ваш Mac.
+        </p>
+<button class="w-full md:w-auto bg-deep-indigo text-white font-cta-label text-cta-label py-4 md:py-3 px-8 rounded-xl hover:bg-opacity-90 transition-all flex justify-center items-center gap-2 active:scale-95 mb-16 fade-up" style="transition-delay: 300ms;">
+<svg class="w-5 h-5 shrink-0" fill="currentColor" class="w-4 h-4 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
+            Скачать для macOS
+        </button>
+<!-- Hero Image / Mockup -->
+<div class="w-full max-w-4xl relative fade-up" style="transition-delay: 400ms;">
+<img class="w-full h-auto rounded-xl mac-window" data-alt="A realistic 3D mockup of an iMac screen displaying a sleek macOS application interface. The app features a frosted glass window centered on the screen with a vibrant live green pulsating dot indicating recording. Below the dot, a dynamic blue audio waveform is visible, and beneath that, crisp black text elegantly typing out a transcript against a clean white background. The desktop background is a vibrant, abstract flowing gradient typical of modern Apple operating systems." src="../assets/img-ef81b7c30d.png"/>
+</div>
+</section>
+<!-- How it Works Section -->
+<section class="py-12 bg-mist-gray" id="how-it-works">
+<div class="px-4 md:px-gutter max-w-container-max mx-auto">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-8 text-center fade-up">Как это работает</h2>
+<div class="flex flex-col md:flex-row gap-8 justify-between">
+<!-- Step 1 -->
+<div class="flex-1 flex flex-col items-center text-center fade-up">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-deep-indigo font-bold text-xl shadow-sm mb-4 border border-hairline">1</div>
+<span class="material-symbols-outlined text-4xl text-graphite mb-2">keyboard</span>
+<h3 class="font-semibold text-lg text-ink-black mb-2">Нажмите горячую клавишу</h3>
+</div>
+<!-- Step 2 -->
+<div class="flex-1 flex flex-col items-center text-center fade-up" style="transition-delay: 100ms;">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-deep-indigo font-bold text-xl shadow-sm mb-4 border border-hairline">2</div>
+<span class="material-symbols-outlined text-4xl text-graphite mb-2">mic</span>
+<h3 class="font-semibold text-lg text-ink-black mb-2">Говорите</h3>
+</div>
+<!-- Step 3 -->
+<div class="flex-1 flex flex-col items-center text-center fade-up" style="transition-delay: 200ms;">
+<div class="w-12 h-12 bg-white rounded-full flex items-center justify-center text-deep-indigo font-bold text-xl shadow-sm mb-4 border border-hairline">3</div>
+<span class="material-symbols-outlined text-4xl text-graphite mb-2">description</span>
+<h3 class="font-semibold text-lg text-ink-black mb-2">Готовый текст — в любом приложении</h3>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-16 px-4 md:px-gutter max-w-container-max mx-auto flex flex-col gap-stack-lg" id="features">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-4 fade-up">Возможности</h2>
+<!-- Dictation -->
+<div class="bg-white rounded-2xl p-6 md:p-12 border border-hairline shadow-[0_8px_30px_rgba(0,0,0,0.04)] fade-up">
+<h3 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-4">Диктовка в любое приложение</h3>
+<p class="text-graphite text-lg mb-8 max-w-2xl">Нажмите хоткей — и говорите. Текст мгновенно вставляется туда, где стоит курсор.</p>
+<div class="relative w-full h-64 md:h-96 rounded-xl overflow-hidden bg-mist-gray flex items-center justify-center border border-hairline">
+<div class="absolute inset-0 bg-gradient-to-br from-soft-indigo-tint to-mist-gray opacity-50"></div>
+<!-- Abstract mockup representation -->
+<div class="relative z-10 w-11/12 md:w-2/3 bg-frosted-surface backdrop-blur-md border border-hairline rounded-full py-3 px-6 shadow-lg flex items-center gap-4">
+<div class="w-3 h-3 rounded-full bg-live-green pulse-dot"></div>
+<div class="flex-1 font-transcript text-transcript text-ink-black"><span class="typewriter">Привет, отправляю отчет за сегодня...</span></div>
+<span class="material-symbols-outlined text-graphite">graphic_eq</span>
+</div>
+</div>
+</div>
+<!-- Live Translation -->
+<div class="bg-white rounded-2xl p-6 md:p-12 border border-hairline shadow-[0_8px_30px_rgba(0,0,0,0.04)] fade-up" style="transition-delay: 100ms;">
+<h3 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-4">Живой перевод синхронно с речью</h3>
+<img class="w-full h-auto rounded-xl mac-window mt-8" data-alt="A detailed close-up of a macOS application window showcasing a live translation feature. The window is divided into two panels: the left side displays original Russian text 'Привет, как дела?' and the right side displays the English translation 'Hello, how are you?'. Below the text panels, a minimalist microphone icon sits next to a subtle audio waveform graphic, indicating active listening. The overall interface uses a clean, bright light-mode aesthetic with frosted glass elements." src="../assets/img-237a47f78c.png"/>
+</div>
+<!-- File Transcription -->
+<div class="bg-white rounded-2xl p-6 md:p-12 border border-hairline shadow-[0_8px_30px_rgba(0,0,0,0.04)] fade-up" style="transition-delay: 200ms;">
+<h3 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-4">Транскрибация аудио и видео</h3>
+<img class="w-full h-auto rounded-xl mac-window mt-8" data-alt="A clean, modern macOS app window titled 'File Transcription'. In the center, an icon of an audio file labeled 'interview.mp3' is displayed above a blue progress bar indicating 'Processing... 45%'. Below this section, a text area displays a transcript with speaker labels like '[00:00:05] Speaker 1: Welcome to the podcast.' A bright blue 'Export' button sits in the bottom right corner. The background is a soft, blurred gradient, typical of Apple's UI style." src="../assets/img-419907494f.png"/>
+</div>
+</section><section class="py-16 bg-mist-gray" id="privacy-band"><div class="px-4 md:px-gutter max-w-container-max mx-auto text-center"><h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-12 fade-up">Ничего не уходит с вашего Mac</h2><div class="flex flex-col gap-6 max-w-2xl mx-auto mb-12"><div class="flex items-center gap-4 bg-white p-6 rounded-2xl border border-hairline shadow-sm fade-up"><span class="material-symbols-outlined text-deep-indigo text-3xl">airplane</span><span class="text-lg font-medium text-ink-black">Работает офлайн — хоть в самолёте</span></div><div class="flex items-center gap-4 bg-white p-6 rounded-2xl border border-hairline shadow-sm fade-up"><span class="material-symbols-outlined text-deep-indigo text-3xl">cloud_off</span><span class="text-lg font-medium text-ink-black">Без облака и чужих серверов — распознавание на устройстве</span></div><div class="flex items-center gap-4 bg-white p-6 rounded-2xl border border-hairline shadow-sm fade-up"><span class="material-symbols-outlined text-deep-indigo text-3xl">lock</span><span class="text-lg font-medium text-ink-black">Ваши записи видите только вы</span></div></div><div class="flex justify-center items-center gap-4 fade-up opacity-50"><span class="material-symbols-outlined text-4xl">laptop_mac</span><span class="material-symbols-outlined text-2xl">close</span><span class="material-symbols-outlined text-4xl">cloud</span></div></div></section>
+<!-- Use Cases Section -->
+<section class="py-12 px-4 md:px-gutter max-w-container-max mx-auto overflow-hidden" id="use-cases">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-8 fade-up">Идеально для</h2>
+<div class="flex gap-4 overflow-x-auto snap-x snap-mandatory pb-4 hide-scrollbar">
+<div class="snap-start shrink-0 bg-white border border-hairline rounded-full px-6 py-3 font-medium text-ink-black shadow-sm fade-up">Лекции и семинары</div>
+<div class="snap-start shrink-0 bg-white border border-hairline rounded-full px-6 py-3 font-medium text-ink-black shadow-sm fade-up" style="transition-delay: 100ms;">Рабочие созвоны</div>
+<div class="snap-start shrink-0 bg-white border border-hairline rounded-full px-6 py-3 font-medium text-ink-black shadow-sm fade-up" style="transition-delay: 200ms;">Интервью и подкасты</div>
+<div class="snap-start shrink-0 bg-white border border-hairline rounded-full px-6 py-3 font-medium text-ink-black shadow-sm fade-up" style="transition-delay: 300ms;">Заметки на ходу</div>
+<div class="snap-start shrink-0 bg-white border border-hairline rounded-full px-6 py-3 font-medium text-ink-black shadow-sm fade-up" style="transition-delay: 400ms;">Перевод на лету</div>
+</div>
+</section><section class="py-16 px-4 md:px-gutter max-w-container-max mx-auto" id="pricing"><h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-8 text-center fade-up">Одна подписка. Все возможности.</h2><div class="flex justify-center mb-10 fade-up"><div class="bg-soft-indigo-tint p-1 rounded-full flex items-center"><button class="px-6 py-2 rounded-full bg-white text-deep-indigo font-semibold text-sm shadow-sm">Россия — 490 ₽/мес</button><button class="px-6 py-2 rounded-full text-graphite font-medium text-sm">Остальной мир — $5/мес</button></div></div><div class="max-w-md mx-auto bg-white rounded-2xl border border-hairline shadow-[0_8px_30px_rgba(0,0,0,0.06)] p-8 fade-up"><div class="text-center mb-8"><h3 class="text-xl font-bold text-ink-black mb-2">Heardly Pro</h3><div class="text-4xl font-bold text-deep-indigo">490 ₽ <span class="text-lg text-graphite font-normal">/ мес</span></div></div><ul class="flex flex-col gap-4 mb-8"> <li class="flex items-center gap-3 text-graphite"><span class="material-symbols-outlined text-live-green">check_circle</span>Диктовка в любое приложение</li> <li class="flex items-center gap-3 text-graphite"><span class="material-symbols-outlined text-live-green">check_circle</span>Живой перевод речи</li> <li class="flex items-center gap-3 text-graphite"><span class="material-symbols-outlined text-live-green">check_circle</span>Транскрибация файлов с разделением по спикерам</li> <li class="flex items-center gap-3 text-graphite"><span class="material-symbols-outlined text-live-green">check_circle</span>AI-резюме встреч</li> <li class="flex items-center gap-3 text-graphite"><span class="material-symbols-outlined text-live-green">check_circle</span>Экспорт текста</li> <li class="flex items-center gap-3 text-graphite"><span class="material-symbols-outlined text-live-green">check_circle</span>Обновления и поддержка</li> </ul><button class="w-full bg-deep-indigo text-white font-cta-label text-cta-label py-4 rounded-xl hover:bg-opacity-90 transition-all flex justify-center items-center gap-2 active:scale-95 mb-4"><svg class="w-5 h-5 shrink-0" fill="currentColor" class="w-4 h-4 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>Скачать для macOS</button><p class="text-center text-xs text-fog">Оплата российскими картами — в рублях</p></div></section>
+<!-- FAQ Section -->
+<section class="py-16 px-4 md:px-gutter max-w-container-max mx-auto" id="faq">
+<h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-8 fade-up">Частые вопросы</h2>
+<div class="flex flex-col gap-4">
+<div class="faq-item bg-white border border-hairline rounded-2xl p-6 shadow-sm fade-up cursor-pointer">
+<div class="flex justify-between items-center faq-header">
+<h3 class="font-semibold text-lg text-ink-black">Нужен ли интернет для работы?</h3>
+<span class="material-symbols-outlined text-graphite transition-transform duration-300">expand_more</span>
+</div>
+<div class="faq-content overflow-hidden max-h-0 transition-all duration-300">
+<p class="text-graphite mt-4 text-base">Нет, Heardly работает на 100% локально. Все вычисления и распознавание речи происходят прямо на вашем Mac без передачи данных в сеть.</p>
+</div>
+</div>
+<div class="faq-item bg-white border border-hairline rounded-2xl p-6 shadow-sm fade-up cursor-pointer" style="transition-delay: 100ms;">
+<div class="flex justify-between items-center faq-header">
+<h3 class="font-semibold text-lg text-ink-black">Какие языки поддерживаются?</h3>
+<span class="material-symbols-outlined text-graphite transition-transform duration-300">expand_more</span>
+</div>
+<div class="faq-content overflow-hidden max-h-0 transition-all duration-300">
+<p class="text-graphite mt-4 text-base">В настоящее время мы поддерживаем русский и английский языки с высокой точностью распознавания, а также более 50 других языков.</p>
+</div>
+</div>
+<div class="faq-item bg-white border border-hairline rounded-2xl p-6 shadow-sm fade-up cursor-pointer" style="transition-delay: 200ms;">
+<div class="flex justify-between items-center faq-header">
+<h3 class="font-semibold text-lg text-ink-black">Работает ли это на старых Mac?</h3>
+<span class="material-symbols-outlined text-graphite transition-transform duration-300">expand_more</span>
+</div>
+<div class="faq-content overflow-hidden max-h-0 transition-all duration-300">
+<p class="text-graphite mt-4 text-base">Heardly оптимизирован для компьютеров Mac с процессорами Apple Silicon (M1, M2, M3) для достижения наилучшей производительности.</p>
+</div>
+</div>
+<div class="faq-item bg-white border border-hairline rounded-2xl p-6 shadow-sm fade-up cursor-pointer"><div class="flex justify-between items-center faq-header"><h3 class="font-semibold text-lg text-ink-black">Куда уходят мои записи?</h3><span class="material-symbols-outlined text-graphite transition-transform duration-300">expand_more</span></div><div class="faq-content overflow-hidden max-h-0 transition-all duration-300"><p class="text-graphite mt-4 text-base">Никуда. Все аудиоданные обрабатываются локально на вашем процессоре. Мы не используем облачные API, поэтому ваши данные никогда не покидают память вашего Mac.</p></div></div><div class="faq-item bg-white border border-hairline rounded-2xl p-6 shadow-sm fade-up cursor-pointer"><div class="flex justify-between items-center faq-header"><h3 class="font-semibold text-lg text-ink-black">Как оплатить из России?</h3><span class="material-symbols-outlined text-graphite transition-transform duration-300">expand_more</span></div><div class="faq-content overflow-hidden max-h-0 transition-all duration-300"><p class="text-graphite mt-4 text-base">Мы принимаем любые российские карты (МИР, Visa, Mastercard) через локальный платежный шлюз. Оплата проходит мгновенно в рублях.</p></div></div></div>
+</section>
+<!-- Footer -->
+<section class="py-24 px-4 md:px-gutter max-w-container-max mx-auto text-center bg-porcelain-white"><div class="fade-up"><h2 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-ink-black mb-4">Попробуйте Heardly сегодня</h2><p class="text-lg text-graphite mb-10 max-w-2xl mx-auto">Одна минута на установку — и ваш Mac умеет слушать.</p><button class="w-full md:w-auto bg-deep-indigo text-white font-cta-label text-cta-label py-4 px-12 rounded-xl hover:bg-opacity-90 transition-all flex justify-center items-center gap-2 active:scale-95 mx-auto mb-4"><svg class="w-5 h-5 shrink-0" fill="currentColor" class="w-4 h-4 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>Скачать для macOS</button><p class="text-sm text-fog">Для macOS 14 и новее</p></div></section><footer class="bg-white border-t border-hairline py-12 px-4 md:px-gutter mt-12">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-2 font-headline-md text-headline-md font-bold text-ink-black">
+<span class="material-symbols-outlined text-deep-indigo" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
+            Heardly
+        </div>
+<p class="text-graphite text-sm">© 2024 Heardly. Все права защищены.</p>
+</div>
+</footer>
+<!-- Script for Interactions -->
+<script>
+        // WebGL Background Animation
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        
+        if (!prefersReducedMotion) {
+            const canvas = document.getElementById('hero-bg-canvas');
+            if(canvas) {
+                const gl = canvas.getContext('webgl');
+                if(gl) {
+                    const vertexShaderSource = `
+                        attribute vec4 aVertexPosition;
+                        varying vec2 v_texCoord;
+                        void main() {
+                            gl_Position = aVertexPosition;
+                            v_texCoord = aVertexPosition.xy * 0.5 + 0.5;
+                        }
+                    `;
+                    const fragmentShaderSource = `
+                        precision highp float;
+                        varying vec2 v_texCoord;
+                        uniform float u_time;
+                        uniform vec2 u_resolution;
+
+                        float wave(vec2 uv, float speed, float freq, float amp) {
+                            return sin(uv.x * freq + u_time * speed) * amp;
+                        }
+
+                        void main() {
+                            vec2 uv = v_texCoord;
+                            
+                            // Create a calm, subtle flowing gradient background
+                            // Using colors inspired by Porcelain White (#FAFAFC) and Soft Indigo Tint (#EEF0FE)
+                            vec3 color1 = vec3(0.98, 0.98, 0.988); // Porcelain White
+                            vec3 color2 = vec3(0.933, 0.941, 0.996); // Soft Indigo Tint
+                            
+                            float noise = wave(uv, 0.5, 3.0, 0.05) + wave(uv, 0.3, 5.0, 0.02);
+                            float mask = smoothstep(0.4, 0.6, uv.y + noise);
+                            
+                            vec3 finalColor = mix(color1, color2, mask);
+                            
+                            gl_FragColor = vec4(finalColor, 1.0);
+                        }
+                    `;
+
+                    function compileShader(gl, type, source) {
+                        const shader = gl.createShader(type);
+                        gl.shaderSource(shader, source);
+                        gl.compileShader(shader);
+                        return shader;
+                    }
+
+                    const vertexShader = compileShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+                    const fragmentShader = compileShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+                    const shaderProgram = gl.createProgram();
+                    gl.attachShader(shaderProgram, vertexShader);
+                    gl.attachShader(shaderProgram, fragmentShader);
+                    gl.linkProgram(shaderProgram);
+                    gl.useProgram(shaderProgram);
+
+                    const positionBuffer = gl.createBuffer();
+                    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+                    const positions = [
+                        -1.0,  1.0,
+                         1.0,  1.0,
+                        -1.0, -1.0,
+                         1.0, -1.0,
+                    ];
+                    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
+
+                    const vertexPosition = gl.getAttribLocation(shaderProgram, 'aVertexPosition');
+                    gl.enableVertexAttribArray(vertexPosition);
+                    gl.vertexAttribPointer(vertexPosition, 2, gl.FLOAT, false, 0, 0);
+
+                    const uTime = gl.getUniformLocation(shaderProgram, 'u_time');
+                    const uResolution = gl.getUniformLocation(shaderProgram, 'u_resolution');
+
+                    let startTime = Date.now();
+
+                    function render() {
+                        if(canvas.width !== canvas.clientWidth || canvas.height !== canvas.clientHeight) {
+                            canvas.width = canvas.clientWidth;
+                            canvas.height = canvas.clientHeight;
+                            gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+                            gl.uniform2f(uResolution, gl.canvas.width, gl.canvas.height);
+                        }
+
+                        let time = (Date.now() - startTime) / 1000.0;
+                        gl.uniform1f(uTime, time);
+
+                        gl.clearColor(0.0, 0.0, 0.0, 1.0);
+                        gl.clear(gl.COLOR_BUFFER_BIT);
+                        gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+                        requestAnimationFrame(render);
+                    }
+                    render();
+                }
+            }
+        }
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('mobile-menu-close');
+        const menu = document.getElementById('mobile-menu');
+        const menuLinks = menu.querySelectorAll('a');
+
+        function toggleMenu() {
+            menu.classList.toggle('translate-x-full');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        btn.addEventListener('click', toggleMenu);
+        closeBtn.addEventListener('click', toggleMenu);
+        menuLinks.forEach(link => link.addEventListener('click', toggleMenu));
+
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const header = item.querySelector('.faq-header');
+            const content = item.querySelector('.faq-content');
+            const icon = item.querySelector('.material-symbols-outlined');
+            
+            header.addEventListener('click', () => {
+                const isOpen = content.style.maxHeight;
+                
+                // Close all others
+                document.querySelectorAll('.faq-content').forEach(c => c.style.maxHeight = null);
+                document.querySelectorAll('.faq-item .material-symbols-outlined').forEach(i => i.style.transform = 'rotate(0deg)');
+                
+                if (!isOpen) {
+                    content.style.maxHeight = content.scrollHeight + "px";
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Scroll Intersection Observer for fade-up animations
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    // Optional: unobserve after showing once
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-up').forEach(element => {
+            observer.observe(element);
+        });
+    </script>
+</body></html>
