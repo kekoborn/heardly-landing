@@ -428,30 +428,40 @@
 </div>
 </section>
 <!-- Pricing Section -->
-<section id="pricing" class="py-section-v-padding px-gutter bg-surface-bright fade-up-enter">
-<div class="max-w-container-max mx-auto flex flex-col items-center">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight text-center mb-8">Одна подписка. Все возможности.</h2>
-<div class="flex items-center space-x-2 bg-mist-gray p-1 rounded-full mb-8 border border-hairline">
-<button class="bg-white text-ink-black px-6 py-2 rounded-full text-sm font-medium shadow-sm">Россия — 499 ₽/мес</button>
-<button class="text-graphite px-6 py-2 rounded-full text-sm font-medium hover:text-ink-black transition-colors">Остальной мир — $9.99/мес</button>
+<section id="pricing" style="padding:7rem 1.5rem;background:#F2F2F7">
+<div style="max-width:1100px;margin:0 auto;text-align:center">
+<h2 style="font:600 2.25rem/1.2 Inter,sans-serif;letter-spacing:-.01em;color:#1D1D1F;margin:0 0 .75rem">Тарифы</h2>
+<p style="color:#6E6E73;margin:0 0 2rem">Начните бесплатно. Pro — когда понадобится больше.</p>
+<div style="display:inline-flex;background:#fff;border:1px solid #E5E5EA;border-radius:999px;padding:.25rem;margin-bottom:2.5rem">
+<button id="rg-ru" onclick="hdlyRegion('ru')" style="border:none;border-radius:999px;padding:.5rem 1.1rem;font:500 .9rem Inter,sans-serif;cursor:pointer;background:#4F46E5;color:#fff">Россия</button>
+<button id="rg-ww" onclick="hdlyRegion('ww')" style="border:none;border-radius:999px;padding:.5rem 1.1rem;font:500 .9rem Inter,sans-serif;cursor:pointer;background:transparent;color:#6E6E73">Остальной мир</button>
 </div>
-<div class="glass w-full max-w-md p-8 rounded-2xl border border-hairline text-center shadow-[0_20px_50px_rgba(0,0,0,0.05)]">
-<h3 class="text-xl font-semibold text-ink-black mb-2">Heardly Pro</h3>
-<div class="text-4xl font-bold text-deep-indigo mb-6">499 ₽ <span class="text-lg text-graphite font-normal">/ мес</span></div>
-<ul class="space-y-4 mb-8 text-left text-ink-black">
-<li class="flex items-start"><span class="material-symbols-outlined text-live-green mr-3 text-xl">check_circle</span> Диктовка в любое приложение</li>
-<li class="flex items-start"><span class="material-symbols-outlined text-live-green mr-3 text-xl">check_circle</span> Живой перевод речи</li>
-<li class="flex items-start"><span class="material-symbols-outlined text-live-green mr-3 text-xl">check_circle</span> Транскрибация файлов с разделением по спикерам</li>
-<li class="flex items-start"><span class="material-symbols-outlined text-live-green mr-3 text-xl">check_circle</span> AI-резюме встреч</li>
-<li class="flex items-start"><span class="material-symbols-outlined text-live-green mr-3 text-xl">check_circle</span> Экспорт текста</li>
-<li class="flex items-start"><span class="material-symbols-outlined text-live-green mr-3 text-xl">check_circle</span> Обновления и поддержка</li>
-</ul>
-<a class="w-full inline-flex items-center justify-center bg-deep-indigo text-white font-cta-label text-cta-label py-3.5 px-8 rounded-full hover:bg-primary transition-all shadow-[0_8px_30px_rgba(79,70,229,0.3)] mb-4" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">
-<svg class="w-5 h-5 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
-    Скачать для macOS
-</a>
-<p class="text-sm text-graphite">Оплата российскими картами — в рублях</p>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;text-align:left">
+<div style="background:#fff;border:1px solid #E5E5EA;border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 8px 30px rgba(0,0,0,.06);position:relative">
+
+<div><p style="font-weight:600;color:#1D1D1F;font-size:1.05rem;margin:0">Бесплатно</p>
+<p style="margin:.5rem 0 0;color:#1D1D1F"><span data-price="free" style="font-size:2rem;font-weight:700;letter-spacing:-.02em">0 ₽</span><span style="color:#6E6E73;font-size:.95rem"> навсегда</span></p>
+<p data-sub="free" style="margin:.25rem 0 0;color:#6E6E73;font-size:.85rem;min-height:1.1rem">без карты и регистрации</p></div>
+<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;flex:1"><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Диктовка в любое приложение</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Живая транскрипция</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>2 000 слов в неделю</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Русский, английский и десятки языков</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Полностью локально, офлайн</span></li></ul>
+<a href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#fff;color:#1D1D1F;border:1px solid #E5E5EA;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none"><svg viewBox="0 0 384 512" width="15" height="15" fill="currentColor" style="flex:none" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> Скачать бесплатно</a>
 </div>
+<div style="background:#fff;border:1px solid #E5E5EA;border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 8px 30px rgba(0,0,0,.06);position:relative">
+
+<div><p style="font-weight:600;color:#1D1D1F;font-size:1.05rem;margin:0">Pro · месяц</p>
+<p style="margin:.5rem 0 0;color:#1D1D1F"><span data-price="month" style="font-size:2rem;font-weight:700;letter-spacing:-.02em">499 ₽</span><span style="color:#6E6E73;font-size:.95rem"> / месяц</span></p>
+<p data-sub="month" style="margin:.25rem 0 0;color:#6E6E73;font-size:.85rem;min-height:1.1rem"></p></div>
+<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;flex:1"><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Всё из бесплатного, без лимита слов</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Живой перевод речи</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Транскрибация файлов + спикеры</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>AI-резюме встреч</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Экспорт текста и CLI</span></li></ul>
+<button data-buy="month" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#4F46E5;color:#fff;border:none;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none">Купить Pro</button>
+</div>
+<div style="background:#fff;border:1px solid #4F46E5;border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 8px 30px rgba(0,0,0,.06);position:relative;outline:1px solid #4F46E5">
+<span style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#4F46E5;color:#fff;font-size:.75rem;font-weight:600;padding:.25rem .75rem;border-radius:999px;white-space:nowrap">Выгода 33%</span>
+<div><p style="font-weight:600;color:#1D1D1F;font-size:1.05rem;margin:0">Pro · год</p>
+<p style="margin:.5rem 0 0;color:#1D1D1F"><span data-price="year" style="font-size:2rem;font-weight:700;letter-spacing:-.02em">3 990 ₽</span><span style="color:#6E6E73;font-size:.95rem"> / год</span></p>
+<p data-sub="year" style="margin:.25rem 0 0;color:#6E6E73;font-size:.85rem;min-height:1.1rem">≈ 333 ₽ в месяц</p></div>
+<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;flex:1"><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Всё из тарифа Pro</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Одна оплата на 12 месяцев</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Два месяца бесплатно против помесячной</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Цена зафиксирована на год</span></li></ul>
+<button data-buy="year" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#4F46E5;color:#fff;border:none;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none">Купить Pro на год</button>
+</div></div>
+<p style="color:#6E6E73;font-size:.85rem;margin-top:1.75rem">Оплата через Robokassa, в рублях. Подписка не продлевается автоматически.<br>Покупая, вы соглашаетесь с <a href="/legal/" style="color:#4F46E5">условиями</a> и <a href="/privacy/" style="color:#4F46E5">политикой обработки данных</a>.</p>
 </div>
 </section>
 <!-- FAQ Section -->
@@ -568,4 +578,42 @@ details > summary::-webkit-details-marker {
   display: none;
 }
 </style>
-</body></html>
+
+<div id="hdly-modal" style="display:none;position:fixed;inset:0;background:rgba(29,29,31,.45);z-index:1000;align-items:center;justify-content:center;padding:1.5rem">
+<div style="background:#fff;border-radius:16px;max-width:420px;width:100%;padding:2rem;font-family:Inter,sans-serif">
+<p id="hdly-m-title" style="font-weight:600;font-size:1.15rem;color:#1D1D1F;margin:0 0 .35rem">Heardly Pro</p>
+<p style="color:#6E6E73;font-size:.92rem;margin:0 0 1.25rem">Укажите e-mail — к нему привяжется подписка. После оплаты откройте Heardly и войдите по этому адресу: Pro включится автоматически.</p>
+<input id="hdly-email" type="email" placeholder="you@example.com" style="width:100%;border:1px solid #E5E5EA;border-radius:12px;padding:.8rem 1rem;font:400 1rem Inter,sans-serif;margin-bottom:.6rem;box-sizing:border-box">
+<p id="hdly-err" style="color:#FF453A;font-size:.85rem;min-height:1.1rem;margin:0 0 .6rem"></p>
+<button id="hdly-pay" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#4F46E5;color:#fff;border:none;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none;width:100%">Перейти к оплате</button>
+<p style="color:#6E6E73;font-size:.78rem;margin:.9rem 0 0;text-align:center">Оплачивая, вы соглашаетесь с <a href="/legal/" style="color:#4F46E5">условиями</a> и <a href="/privacy/" style="color:#4F46E5">политикой данных</a>.</p>
+<button onclick="document.getElementById('hdly-modal').style.display='none'" style="position:absolute;top:0;left:0;width:0;height:0;opacity:0">×</button>
+</div>
+</div>
+<script>
+(function(){
+var API='https://heardly-api.cafmanar.workers.dev';
+var PRICES={ru:{month:['499 ₽',''],year:['3 990 ₽','≈ 333 ₽ в месяц']},ww:{month:['899 ₽','≈ $9.99'],year:['7 190 ₽','≈ $79 · два месяца бесплатно']}};
+var TIERS={ru:{month:'russia',year:'russia_annual'},ww:{month:'standard',year:'standard_annual'}};
+var region='ru',plan='month';
+window.hdlyRegion=function(r){region=r;
+ ['ru','ww'].forEach(function(k){var b=document.getElementById('rg-'+(k==='ru'?'ru':'ww'));if(b){b.style.background=k===r?'#4F46E5':'transparent';b.style.color=k===r?'#fff':'#6E6E73';}});
+ ['month','year'].forEach(function(p){var el=document.querySelector('[data-price="'+p+'"]');var sb=document.querySelector('[data-sub="'+p+'"]');if(el)el.textContent=PRICES[r][p][0];if(sb)sb.textContent=PRICES[r][p][1];});
+};
+document.querySelectorAll('[data-buy]').forEach(function(b){b.addEventListener('click',function(){plan=b.getAttribute('data-buy');
+ document.getElementById('hdly-m-title').textContent=plan==='year'?'Heardly Pro — год':'Heardly Pro — месяц';
+ document.getElementById('hdly-err').textContent='';
+ var m=document.getElementById('hdly-modal');m.style.display='flex';
+ document.getElementById('hdly-email').focus();});});
+document.getElementById('hdly-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
+document.getElementById('hdly-pay').addEventListener('click',function(){
+ var em=document.getElementById('hdly-email').value.trim();var err=document.getElementById('hdly-err');
+ if(!em||em.indexOf('@')<0){err.textContent='Укажите корректный e-mail';return;}
+ var btn=this;btn.disabled=true;btn.textContent='Создаём счёт…';
+ fetch(API+'/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,price_tier:TIERS[region][plan],device_id:'web'})})
+ .then(function(r){return r.json();})
+ .then(function(d){if(d.payment_url){location.href=d.payment_url;}else{err.textContent=d.error||'Не удалось создать счёт, попробуйте позже';btn.disabled=false;btn.textContent='Перейти к оплате';}})
+ .catch(function(){err.textContent='Сеть недоступна, попробуйте позже';btn.disabled=false;btn.textContent='Перейти к оплате';});
+});
+})();
+</script></body></html>
