@@ -48,7 +48,7 @@
   function render() {
     if (!el) return;
     var t = TXT[lang()];
-    el.innerHTML = '<p>' + t.text + ' <a href="/cookies/">' + t.more + '</a></p><div class="hc-row"><button type="button" data-v="rejected">' + t.no + '</button><button type="button" data-v="accepted">' + t.yes + '</button></div>';
+    el.innerHTML = '<p>' + t.text + ' <a href="/cookies/">' + t.more + '</a></p><div class="hc-row"><button type="button" data-v="accepted">' + t.yes + '</button><button type="button" data-v="rejected">' + t.no + '</button></div>';
   }
   function close() { if (el) { el.remove(); el = null; } }
   function show() {
