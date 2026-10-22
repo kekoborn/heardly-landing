@@ -546,6 +546,10 @@ dialog.dldlg::backdrop { background: rgba(35,38,51,.28); }
 .dldlg p { margin: 0 0 18px; font-size: 15px; line-height: 1.5; color: var(--t2); }
 .dldlg .x { position: absolute; top: 18px; right: 18px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: var(--bg-3); cursor: pointer; font-size: 18px; line-height: 1; color: var(--t2); }
 .dldlg .again { text-decoration: underline; text-underline-offset: 3px; }
+/* Окно «Оплата прошла»: та же карточка, кнопка открывает Heardly по ссылке активации. */
+.dldlg .btn { width: 100%; justify-content: center; margin-bottom: 14px; }
+.dldlg .paid-note { font-size: 14px; color: var(--t3); margin: 0; }
+.dldlg .paid-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 .pay { display: grid; gap: 10px; margin-top: 18px; }
 .pay input { height: 52px; border-radius: 999px; border: 0; padding: 0 20px; background: rgba(35,38,51,.05); box-shadow: 0 0 0 1px var(--line-2) inset; color: var(--t1); font: 16px var(--sans); min-width: 0; }
 .pay input::placeholder { color: var(--t3); }
@@ -1055,6 +1059,14 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   <a class="again" id="dlAgain" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать Heardly.dmg</span><span lang="en">Download Heardly.dmg</span></a>
 </dialog>
 
+<dialog class="dldlg noic" id="paidDlg" aria-labelledby="paidTitle">
+  <button class="x" type="button" id="paidClose" aria-label="Закрыть / Close">×</button>
+  <h3 id="paidTitle"><span lang="ru">Оплата прошла</span><span lang="en">Payment complete</span></h3>
+  <p><span lang="ru">Heardly Pro оформлен на&nbsp;<b data-paid-email></b>. Нажмите кнопку на&nbsp;этом Mac: Heardly откроется и&nbsp;сам включит Pro.</span><span lang="en">Heardly Pro is registered to <b data-paid-email></b>. Press the button on this Mac: Heardly will open and turn Pro on by&nbsp;itself.</span></p>
+  <a class="btn btn-w" id="paidOpen" href="/activate/"><span lang="ru">Открыть Heardly и&nbsp;включить Pro</span><span lang="en">Open Heardly and turn on Pro</span></a>
+  <p class="paid-note"><span lang="ru">Эту же ссылку мы&nbsp;отправили на&nbsp;почту: она работает 30&nbsp;дней и&nbsp;на&nbsp;всех ваших Mac. Ещё нет Heardly? <a href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">Скачайте</a>, установите и&nbsp;нажмите кнопку снова.</span><span lang="en">We also emailed you this link: it works for 30&nbsp;days and on all your Macs. No Heardly yet? <a href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">Download it</a>, install and press the button again.</span></p>
+</dialog>
+
 <script>
 (function () {
   "use strict";
@@ -1254,6 +1266,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   // ── Оплата: POST /create-order → страница Robokassa (Россия) или lava.top (остальные).
   // device_id не передаём: лицензию привяжет первый Mac, который войдёт с этим email.
   const form = $("payForm"), emailEl = $("payEmail");
+  const PAID_KEY = "heardly-paid-order";
   const period = () => form.querySelector("input[name=period]:checked").value;
   function renderPrices() {
     const c = PRICES[region][lang][period()];
@@ -1267,7 +1280,12 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   }).catch(() => {});
   form.addEventListener("change", renderPrices);
   const dlg = $("payDlg");
-  $("proBtn").addEventListener("click", () => { renderPrices(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
+  // Перед уходом на шлюз кнопка блокируется. Safari при возврате «Назад» восстанавливает страницу
+  // из памяти вместе с заблокированной кнопкой и «Создаём оплату…», поэтому форму сбрасываем
+  // при каждом открытии окна и при возврате на страницу.
+  function resetPay() { $("payBtn").disabled = false; $("payMsg").textContent = ""; $("payMsg").className = "pay-msg"; }
+  window.addEventListener("pageshow", e => { if (e.persisted) { resetPay(); checkPaid(0); } });
+  $("proBtn").addEventListener("click", () => { resetPay(); renderPrices(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
   $("payClose").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
   emailEl.addEventListener("input", () => emailEl.removeAttribute("aria-invalid"));
   form.addEventListener("submit", async e => {
@@ -1281,9 +1299,31 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, period: period(), tz: TZ, price_tier: (region === "ru" ? "russia" : "standard") + (period() === "year" ? "_annual" : ""), source: "landing", consent: { version: CONSENT_VERSION, at: new Date().toISOString() } }) });
       const d = await r.json();
       if (!r.ok || !d.payment_url) throw new Error(d.error || r.status);
+      // После оплаты шлюз вернёт сюда же: по этому заказу покажем «Оплата прошла» с кнопкой активации.
+      try { localStorage.setItem(PAID_KEY, JSON.stringify({ id: d.order_id, t: d.activation_token, email, at: Date.now() })); } catch (e) {}
       location.href = d.payment_url;
     } catch (err) { msg.textContent = T[lang].fail; msg.className = "pay-msg err"; btn.disabled = false; }
   });
+
+  // ── После оплаты: заказ из этого браузера оплачен → окно с кнопкой «Открыть Heardly».
+  function checkPaid(triesLeft) {
+    let o = null;
+    try { o = JSON.parse(localStorage.getItem(PAID_KEY) || "null"); } catch (e) {}
+    if (!o || !o.id || !o.t || Date.now() - o.at > 2 * 86400000) { try { localStorage.removeItem(PAID_KEY); } catch (e) {} return; }
+    fetch(API + "/check-order/" + encodeURIComponent(o.id)).then(r => r.json()).then(d => {
+      if (d.status === "paid") {
+        try { localStorage.removeItem(PAID_KEY); } catch (e) {}
+        document.querySelectorAll("[data-paid-email]").forEach(n => { n.textContent = o.email; });
+        $("paidOpen").href = "/activate/?t=" + encodeURIComponent(o.t);
+        const pd = $("paidDlg");
+        if (pd.showModal) pd.showModal(); else pd.setAttribute("open", "");
+      } else if (d.status === "pending" && triesLeft > 0) {
+        setTimeout(() => checkPaid(triesLeft - 1), 3000);   // вебхук шлюза может прийти позже возврата
+      }
+    }).catch(() => {});
+  }
+  $("paidClose").addEventListener("click", () => $("paidDlg").close ? $("paidDlg").close() : $("paidDlg").removeAttribute("open"));
+  checkPaid(/[?&]payment=success/.test(location.search) ? 40 : 0);
 
   function setLang(l) {
     lang = l; document.documentElement.dataset.lang = l; document.documentElement.lang = l;
