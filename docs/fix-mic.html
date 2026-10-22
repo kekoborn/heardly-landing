@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Микрофон и Bluetooth — Heardly</title>
+<meta name="description" content="Волна на панели диктовки не двигается, или в расшифровке звонка нет ваших реплик — разбираемся с микрофоном.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Решение проблем</span><span lang="en">Troubleshooting</span></div>
+    <h1><span lang="ru">Микрофон и Bluetooth</span><span lang="en">Microphone and Bluetooth</span></h1>
+    <p class="d-lede"><span lang="ru">Волна на панели диктовки не двигается, или в расшифровке звонка нет ваших реплик — разбираемся с микрофоном.</span><span lang="en">The waveform on the dictation bar stays flat, or a call transcript has none of your own lines — time to look at the microphone.</span></p>
+
+
+    <h2 id="permission"><span lang="ru">Разрешение</span><span lang="en">The permission</span></h2>
+    <div lang="ru"><p>«Системные настройки» → «Конфиденциальность и безопасность» → «Микрофон», Heardly должен быть включён.</p></div>
+    <div lang="en"><p>System Settings → Privacy &amp; Security → Microphone; Heardly has to be switched on.</p></div>
+
+    <h2 id="device"><span lang="ru">Выбор устройства</span><span lang="en">Choosing the device</span></h2>
+    <div lang="ru">
+      <p>По умолчанию стоит «Авто»: Heardly сам выбирает подходящий микрофон. Если в системе много устройств — петличка, веб-камера, виртуальные аудиоустройства от программ записи, — выбор может оказаться неудачным. Задайте нужный микрофон явно в <a href="settings.html">Настройках → Основные</a> или прямо в попапе.</p>
+    </div>
+    <div lang="en">
+      <p>The default is “Auto”, where Heardly picks a microphone for you. With many devices around — a lavalier, a webcam, virtual audio devices installed by recording software — that choice can land badly. Name the microphone you want in <a href="settings.html">Settings → General</a> or right in the panel.</p>
+    </div>
+
+    <h2 id="bluetooth"><span lang="ru">Bluetooth-наушники</span><span lang="en">Bluetooth headphones</span></h2>
+    <div class="note warn">
+      <b><span lang="ru">Звук в наушниках станет хуже</span><span lang="en">Your audio quality will drop</span></b>
+      <p><span lang="ru">Когда микрофоном выбраны беспроводные наушники, macOS переводит их в режим гарнитуры: музыка и голос собеседника в них звучат заметно тише и глуше. Это особенность Bluetooth, а не Heardly.</span><span lang="en">When wireless headphones are used as the microphone, macOS switches them into headset mode: music and the other person’s voice get noticeably quieter and duller. That is how Bluetooth works, not something Heardly does.</span></p>
+    </div>
+    <div lang="ru">
+      <p>На созвоне это обычно терпимо. Для диктовки лучше оставить микрофон ноутбука: качество записи будет выше, а наушники продолжат звучать нормально.</p>
+    </div>
+    <div lang="en">
+      <p>On a call this is usually acceptable. For dictation, the laptop’s own microphone is the better choice: the recording is cleaner and the headphones keep sounding right.</p>
+    </div>
+
+    <h2 id="other"><span lang="ru">Остальное</span><span lang="en">Anything else</span></h2>
+    <table class="ref">
+      <tr><td><span lang="ru">Микрофон занят другой программой</span><span lang="en">Another app is holding the microphone</span></td>
+          <td><span lang="ru">Zoom, Teams и программы записи иногда удерживают устройство. Закройте их и попробуйте снова.</span><span lang="en">Zoom, Teams and recording software sometimes keep the device. Close them and try again.</span></td></tr>
+      <tr><td><span lang="ru">Устройство переключилось во время записи</span><span lang="en">The device switched mid-recording</span></td>
+          <td><span lang="ru">Подключение наушников посреди диктовки меняет устройство ввода. Начните запись заново.</span><span lang="en">Plugging headphones in mid-dictation changes the input device. Start the recording over.</span></td></tr>
+      <tr><td><span lang="ru">Волна двигается, но текст пустой</span><span lang="en">The waveform moves but the text is empty</span></td>
+          <td><span lang="ru">Проверьте <a href="model.html">язык распознавания</a>: при явно выбранном не том языке модель почти ничего не разберёт.</span><span lang="en">Check the <a href="model.html">recognition language</a>: with the wrong language explicitly selected the model will barely make anything out.</span></td></tr>
+    </table>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Экспорт — Heardly</title>
+<meta name="description" content="Любую расшифровку можно выгрузить в восемь форматов — от простого текста до субтитров и документа Word.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Записи</span><span lang="en">Recordings</span></div>
+    <h1><span lang="ru">Экспорт</span><span lang="en">Export</span></h1>
+    <p class="d-lede"><span lang="ru">Любую расшифровку можно выгрузить в восемь форматов — от простого текста до субтитров и документа Word.</span><span lang="en">Any transcript can be exported to eight formats — from plain text to subtitles and a Word document.</span></p>
+
+
+    <h2 id="how"><span lang="ru">Как выгрузить</span><span lang="en">How to export</span></h2>
+    <div lang="ru">
+      <p>Откройте запись в <a href="history.html">Истории</a> и нажмите «Экспорт». Выберите формат, при необходимости включите «С таймкодами» и сохраните файл.</p>
+      <p>Рядом есть «Копировать» — если текст нужен не файлом, а сразу в письмо или задачу.</p>
+    </div>
+    <div lang="en">
+      <p>Open an entry in <a href="history.html">History</a> and press Export. Pick a format, switch “With timecodes” on if you need them, and save the file.</p>
+      <p>Next to it there is Copy — for when you want the text in an email or a task rather than in a file.</p>
+    </div>
+
+    <figure lang="ru">
+      <img class="free" src="img/export-panel.png" alt="Окно Истории с открытой панелью экспорта: восемь форматов, переключатели таймкодов и подписей источников, кнопка «Сохранить как TXT»">
+      <figcaption><span lang="ru">Панель экспорта открывается кнопкой над расшифровкой. Формат, таймкоды и подписи выбираются здесь же.</span><span lang="en">The Export panel opens with the button above the transcript. Format, timecodes and labels are all chosen there.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img class="free" src="img/export-panel-en.png" alt="The History window with the Export panel open: eight formats, switches for timecodes and source labels, and the Save as TXT button">
+      <figcaption><span lang="ru">Панель экспорта открывается кнопкой над расшифровкой. Формат, таймкоды и подписи выбираются здесь же.</span><span lang="en">The Export panel opens with the button above the transcript. Format, timecodes and labels are all chosen there.</span></figcaption>
+    </figure>
+
+    <h2 id="formats"><span lang="ru">Форматы</span><span lang="en">Formats</span></h2>
+    <table class="ref">
+      <tr>
+        <th><span lang="ru">Формат</span><span lang="en">Format</span></th>
+        <th><span lang="ru">Когда нужен</span><span lang="en">When you need it</span></th>
+        <th><span lang="ru">Доступ</span><span lang="en">Access</span></th>
+      </tr>
+      <tr><td>TXT</td><td><span lang="ru">Просто текст — вставить в заметку, письмо, задачу.</span><span lang="en">Plain text — paste into a note, an email, a task.</span></td><td><span lang="ru">Бесплатно</span><span lang="en">Free</span></td></tr>
+      <tr><td>SRT</td><td><span lang="ru">Субтитры для видео. Самый распространённый формат.</span><span lang="en">Video subtitles. The most common format.</span></td><td>Pro</td></tr>
+      <tr><td>VTT</td><td><span lang="ru">Субтитры для веба, формат HTML5-плееров.</span><span lang="en">Web subtitles, the HTML5 player format.</span></td><td>Pro</td></tr>
+      <tr><td>CSV</td><td><span lang="ru">Таблица: реплики строками, чтобы разобрать в Excel или Google Sheets.</span><span lang="en">A table: one line per entry, to work through in Excel or Google Sheets.</span></td><td>Pro</td></tr>
+      <tr><td>Markdown</td><td><span lang="ru">Для Obsidian, Notion и всего, что понимает разметку.</span><span lang="en">For Obsidian, Notion and anything that speaks markup.</span></td><td>Pro</td></tr>
+      <tr><td>HTML</td><td><span lang="ru">Готовая страница — отправить ссылкой или открыть в браузере.</span><span lang="en">A ready page — send it as a link or open it in a browser.</span></td><td>Pro</td></tr>
+      <tr><td>PDF</td><td><span lang="ru">Когда расшифровку надо отдать «как есть» и без правок.</span><span lang="en">When the transcript goes out as-is and must not be edited.</span></td><td>Pro</td></tr>
+      <tr><td>DOCX</td><td><span lang="ru">Word: протокол встречи, который будут дорабатывать руками.</span><span lang="en">Word: a meeting record someone will keep working on.</span></td><td>Pro</td></tr>
+    </table>
+
+    <div class="note tip">
+      <b><span lang="ru">Текст и так лежит файлом</span><span lang="en">The text is already a file</span></b>
+      <p><span lang="ru">Если нужен просто текст, экспорт можно не открывать: расшифровки и без того хранятся как <code>.txt</code> в <a href="folder.html">папке расшифровок</a>.</span><span lang="en">If plain text is all you need, you can skip Export: transcripts are already kept as <code>.txt</code> in the <a href="folder.html">transcripts folder</a>.</span></p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

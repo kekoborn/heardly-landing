@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Первая диктовка — Heardly</title>
+<meta name="description" content="Самый короткий путь познакомиться с Heardly: открыть любое поле ввода, нажать горячую клавишу и сказать пару фраз.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Начало</span><span lang="en">Get started</span></div>
+    <h1><span lang="ru">Первая диктовка</span><span lang="en">Your first dictation</span></h1>
+    <p class="d-lede"><span lang="ru">Самый короткий путь познакомиться с Heardly: открыть любое поле ввода, нажать горячую клавишу и сказать пару фраз.</span><span lang="en">The shortest way to get to know Heardly: open any text field, press the shortcut and say a couple of sentences.</span></p>
+
+
+    <ol class="steps">
+      <li>
+        <b><span lang="ru">Поставьте курсор туда, где нужен текст</span><span lang="en">Put the cursor where you want the text</span></b>
+        <div lang="ru"><p>Подойдёт что угодно: окно сообщения, письмо, поле поиска, редактор кода.</p></div>
+        <div lang="en"><p>Anything will do: a message box, an email, a search field, a code editor.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Нажмите правый <kbd>⌘</kbd></span><span lang="en">Press the right <kbd>⌘</kbd></span></b>
+        <div lang="ru"><p>Это горячая клавиша по умолчанию. Внизу экрана появится панель диктовки с волной — значит, Heardly слышит вас.</p></div>
+        <div lang="en"><p>That’s the default shortcut. The dictation bar with a waveform appears — that means Heardly can hear you.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Говорите обычным голосом</span><span lang="en">Speak normally</span></b>
+        <div lang="ru"><p>Не нужно диктовать по слогам и проговаривать знаки препинания — точки и запятые модель ставит сама.</p></div>
+        <div lang="en"><p>No need to over-articulate or say the punctuation out loud — the model adds full stops and commas itself.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Нажмите клавишу ещё раз</span><span lang="en">Press the key again</span></b>
+        <div lang="ru"><p>Heardly дослушает фразу и вставит текст туда, где стоял курсор. Если передумали — <kbd>esc</kbd> отменяет вставку.</p></div>
+        <div lang="en"><p>Heardly finishes the sentence and inserts the text where the cursor was. Changed your mind? <kbd>esc</kbd> cancels the insert.</p></div>
+      </li>
+    </ol>
+
+    <figure lang="ru">
+      <img src="img/dictation-bar-large.png" alt="Панель диктовки: волна голоса, таймер и подсказки — «Стоп» и «Отмена»">
+      <figcaption><span lang="ru">Панель диктовки во время записи. Подсказки показывают текущее сочетание клавиш: на снимке выбрано своё, по умолчанию стоит правый ⌘.</span><span lang="en">The dictation bar while recording. The hints show the current shortcut — a custom one in this shot; the default is the right ⌘.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/dictation-bar-large-en.png" alt="The large dictation bar: voice waveform, timer and the Stop and Cancel hints">
+      <figcaption><span lang="ru">Панель диктовки во время записи. Подсказки показывают текущее сочетание клавиш: на снимке выбрано своё, по умолчанию стоит правый ⌘.</span><span lang="en">The dictation bar while recording. The hints show the current shortcut — a custom one in this shot; the default is the right ⌘.</span></figcaption>
+    </figure>
+
+    <div class="note tip">
+      <b><span lang="ru">Клавишу можно поменять</span><span lang="en">The key can be changed</span></b>
+      <p><span lang="ru">Если правый <kbd>⌘</kbd> у вас занят, назначьте другое сочетание в <a href="settings.html">Настройках → Основные</a>. Там же выбирается, работает клавиша как выключатель или как кнопка, которую надо держать.</span><span lang="en">If the right <kbd>⌘</kbd> is already taken, assign another shortcut in <a href="settings.html">Settings → General</a>. The same place lets you choose whether the key toggles recording or records only while held.</span></p>
+    </div>
+
+    <h2 id="next"><span lang="ru">Что дальше</span><span lang="en">What next</span></h2>
+    <div class="cards">
+      <a href="dictation.html"><b><span lang="ru">Как диктовать</span><span lang="en">How to dictate</span></b><span><span lang="ru">Режимы клавиши, выделенный текст, буфер обмена.</span><span lang="en">Key modes, selected text, the clipboard.</span></span></a>
+      <a href="replacements.html"><b><span lang="ru">Словарь замен</span><span lang="en">Replacement list</span></b><span><span lang="ru">Научить Heardly именам и терминам вашей работы.</span><span lang="en">Teach Heardly the names and terms you use at work.</span></span></a>
+      <a href="live.html"><b><span lang="ru">Запись звонка</span><span lang="en">Record a call</span></b><span><span lang="ru">Расшифровка встречи целиком, без бота.</span><span lang="en">A whole meeting transcribed, with no bot.</span></span></a>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

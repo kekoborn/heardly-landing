@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Папка расшифровок — Heardly</title>
+<meta name="description" content="Heardly не прячет записи в свою базу: каждая расшифровка — текстовый файл в обычной папке, которую вы можете открыть, перенести в облако или положить под резервное копирование.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Записи</span><span lang="en">Recordings</span></div>
+    <h1><span lang="ru">Папка расшифровок</span><span lang="en">Transcripts folder</span></h1>
+    <p class="d-lede"><span lang="ru">Heardly не прячет записи в свою базу: каждая расшифровка — текстовый файл в обычной папке, которую вы можете открыть, перенести в облако или положить под резервное копирование.</span><span lang="en">Heardly does not hide your recordings in a database: every transcript is a text file in an ordinary folder you can open, move into a cloud drive or put under backup.</span></p>
+
+
+    <h2 id="where"><span lang="ru">Где она</span><span lang="en">Where it is</span></h2>
+    <div lang="ru">
+      <p>По умолчанию — <code>~/Documents/Heardly</code>. Путь виден в <a href="settings.html">Настройках → Записи</a>, там же кнопки «Открыть в Finder» и «Изменить…».</p>
+    </div>
+    <div lang="en">
+      <p>By default, <code>~/Documents/Heardly</code>. The path is shown in <a href="settings.html">Settings → Recordings</a>, together with the “Open in Finder” and “Change…” buttons.</p>
+    </div>
+
+    <figure lang="ru">
+      <img src="img/settings-recordings.png" alt="Раздел «Записи» в настройках: путь к папке расшифровок и кнопка открытия истории">
+      <figcaption><span lang="ru">Путь к папке и кнопки, чтобы открыть её в Finder или перенести в другое место.</span><span lang="en">The folder path, with buttons to open it in Finder or move it somewhere else.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/settings-recordings-en.png" alt="The Recordings section: the transcripts folder path and the button that opens History">
+      <figcaption><span lang="ru">Путь к папке и кнопки, чтобы открыть её в Finder или перенести в другое место.</span><span lang="en">The folder path, with buttons to open it in Finder or move it somewhere else.</span></figcaption>
+    </figure>
+
+    <h2 id="inside"><span lang="ru">Что внутри</span><span lang="en">What is inside</span></h2>
+    <div lang="ru">
+      <p>Один файл <code>.txt</code> на запись, имя файла — название записи. Внутри обычный текст; у звонков и файлов в начале строки стоит время, у звонков ещё и подпись источника:</p>
+      <pre><code>[00:04] [Я] Коллеги, собрались по редизайну лендинга.
+[00:12] [Компьютер] Я вчера посмотрел метрики.</code></pre>
+      <p>Рядом лежит служебный файл <code>.heardly-index.json</code> — он помнит, к какому разделу Истории относится запись. Удалять его не стоит, но и ничего ценного в нём нет.</p>
+    </div>
+    <div lang="en">
+      <p>One <code>.txt</code> file per entry, named after the entry. Inside is plain text; calls and files start each line with a time, and calls add the source label:</p>
+      <pre><code>[00:04] [Me] Right, we’re here about the landing page redesign.
+[00:12] [Computer] I looked at the metrics yesterday.</code></pre>
+      <p>Alongside them sits a housekeeping file, <code>.heardly-index.json</code>, which remembers which History section an entry belongs to. Don’t delete it, but there is nothing valuable in it either.</p>
+    </div>
+
+    <h2 id="move"><span lang="ru">Перенести папку</span><span lang="en">Moving the folder</span></h2>
+    <div lang="ru">
+      <p>Кнопка «Изменить…» в настройках переносит расшифровки в новое место вместе со служебным файлом. Папку можно положить в iCloud Drive или в другое облако — тогда записи будут доступны на других ваших компьютерах, но имейте в виду: это уже синхронизация облаком, а не Heardly, и текст встреч уедет на чужие серверы.</p>
+    </div>
+    <div lang="en">
+      <p>The “Change…” button in Settings moves the transcripts to a new place together with the housekeeping file. You can put the folder in iCloud Drive or another cloud, and the entries will be available on your other computers — but note that this is the cloud syncing them, not Heardly, and the text of your meetings will travel to someone else’s servers.</p>
+    </div>
+
+    <div class="note tip">
+      <b><span lang="ru">Правьте прямо в Finder</span><span lang="en">Edit straight in Finder</span></b>
+      <p><span lang="ru">Переименовали файл, подправили текст, удалили лишнее — История увидит это сама, перезапускать Heardly не нужно.</span><span lang="en">Rename a file, fix the text, delete what you don’t need — History notices by itself, with no need to restart Heardly.</span></p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

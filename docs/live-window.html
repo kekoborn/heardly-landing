@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Окно живой расшифровки — Heardly</title>
+<meta name="description" content="Пока идёт запись, текст появляется в отдельном окне: с временем, подписями источников и кнопками, чтобы забрать нужный кусок прямо посреди разговора.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Звонки и встречи</span><span lang="en">Calls and meetings</span></div>
+    <h1><span lang="ru">Окно живой расшифровки</span><span lang="en">The live window</span></h1>
+    <p class="d-lede"><span lang="ru">Пока идёт запись, текст появляется в отдельном окне: с временем, подписями источников и кнопками, чтобы забрать нужный кусок прямо посреди разговора.</span><span lang="en">While recording runs, the text appears in a window of its own: with timestamps, source labels and buttons that let you grab a piece of it in the middle of the conversation.</span></p>
+
+
+    <figure lang="ru">
+      <img src="img/live-window.png" alt="Окно живой расшифровки: источники «Микрофон» и «Приложения», кнопки «Пауза» и «Стоп», реплики с временем и подписью источника">
+      <figcaption><span lang="ru">Реплики появляются по мере того, как люди договаривают фразы.</span><span lang="en">Lines appear as people finish their sentences.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/live-window-en.png" alt="The live transcription window: Mic and Apps sources, Pause and Stop buttons, lines carrying a time and a source label">
+      <figcaption><span lang="ru">Реплики появляются по мере того, как люди договаривают фразы.</span><span lang="en">Lines appear as people finish their sentences.</span></figcaption>
+    </figure>
+
+    <h2 id="controls"><span lang="ru">Что где</span><span lang="en">What is where</span></h2>
+    <table class="ref">
+      <tr><td><span lang="ru">Микрофон · Приложения</span><span lang="en">Microphone · Apps</span></td>
+          <td><span lang="ru">Источники звука. Любой можно выключить прямо во время записи — например, отключить микрофон, пока говорит другая сторона.</span><span lang="en">The audio sources. Either can be switched off mid-recording — say, mute your microphone while the other side talks.</span></td></tr>
+      <tr><td><span lang="ru">Пауза</span><span lang="en">Pause</span></td>
+          <td><span lang="ru">Останавливает запись, не закрывая сессию. Удобно на перерыве или когда разговор уходит в личное.</span><span lang="en">Stops recording without ending the session. Handy during a break, or when the conversation turns personal.</span></td></tr>
+      <tr><td><span lang="ru">Стоп</span><span lang="en">Stop</span></td>
+          <td><span lang="ru">Завершает запись и сохраняет её в Историю.</span><span lang="en">Ends the recording and saves it to History.</span></td></tr>
+      <tr><td><span lang="ru">Копировать</span><span lang="en">Copy</span></td>
+          <td><span lang="ru">Кладёт в буфер весь текст.</span><span lang="en">Puts the whole text on the clipboard.</span></td></tr>
+      <tr><td><span lang="ru">Последние</span><span lang="en">Last</span></td>
+          <td><span lang="ru">Копирует только последние реплики — когда нужна одна мысль, а не вся встреча.</span><span lang="en">Copies just the last few lines — when you need one thought, not the whole meeting.</span></td></tr>
+      <tr><td><span lang="ru">С подписями</span><span lang="en">With labels</span></td>
+          <td><span lang="ru">Добавляет к копируемому тексту подписи источников.</span><span lang="en">Adds the source labels to the copied text.</span></td></tr>
+      <tr><td><span lang="ru">Очистить</span><span lang="en">Clear</span></td>
+          <td><span lang="ru">Стирает текст на экране и начинает ленту заново.</span><span lang="en">Wipes the text on screen and starts the feed over.</span></td></tr>
+    </table>
+
+    <h2 id="delay"><span lang="ru">Почему текст появляется не мгновенно</span><span lang="en">Why the text is not instant</span></h2>
+    <div lang="ru">
+      <p>Heardly ждёт, пока человек договорит фразу, и только потом отдаёт её целиком. Из-за этого между словом и строчкой на экране проходит несколько секунд, зато в расшифровке не остаётся обрывков, которые пришлось бы переписывать.</p>
+    </div>
+    <div lang="en">
+      <p>Heardly waits for a person to finish the sentence and only then hands it over whole. That puts a few seconds between the spoken word and the line on screen, but it keeps the transcript free of fragments you would have to rewrite afterwards.</p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

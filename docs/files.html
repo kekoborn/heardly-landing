@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Расшифровка аудио и видео — Heardly</title>
+<meta name="description" content="Готовую запись — звонок, интервью, вебинар, голосовое сообщение — можно отдать Heardly файлом. Расшифровка появится в Истории, в разделе «Файлы».">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Файлы</span><span lang="en">Files</span></div>
+    <h1><span lang="ru">Расшифровка аудио и видео</span><span lang="en">Transcribing audio and video</span></h1>
+    <p class="d-lede"><span lang="ru">Готовую запись — звонок, интервью, вебинар, голосовое сообщение — можно отдать Heardly файлом. Расшифровка появится в Истории, в разделе «Файлы».</span><span lang="en">An existing recording — a call, an interview, a webinar, a voice message — can be handed to Heardly as a file. The transcript shows up in History, in the “Files” section.</span></p>
+
+
+    <div class="note pro">
+      <b><span lang="ru">Функция Pro</span><span lang="en">A Pro feature</span></b>
+      <p><span lang="ru">Расшифровка файлов входит в <a href="pricing.html">Pro</a> и в 14-дневный пробный период.</span><span lang="en">File transcription is part of <a href="pricing.html">Pro</a> and of the 14-day trial.</span></p>
+    </div>
+
+    <h2 id="how"><span lang="ru">Два способа отдать файл</span><span lang="en">Two ways to hand over a file</span></h2>
+    <div lang="ru">
+      <ul>
+        <li><b>Перетащить.</b> Откройте попап Heardly и бросьте файл в зону внизу.</li>
+        <li><b>Выбрать.</b> В том же месте нажмите «или выберите файл». Можно отметить сразу несколько — они встанут в очередь.</li>
+      </ul>
+      <p>Откроется История на разделе «Файлы», и там будет видно, что считается сейчас и что уже готово.</p>
+    </div>
+    <div lang="en">
+      <p>Either way, History opens on the “Files” section, where you can see what is being processed and what is already done.</p>
+      <ul>
+        <li><b>Drag it in.</b> Open the Heardly panel and drop the file into the zone at the bottom.</li>
+        <li><b>Pick it.</b> In the same place, click “or choose file”. You can select several at once — they queue up.</li>
+      </ul>
+    </div>
+
+    <figure lang="ru">
+      <img src="img/history-files.png" alt="Раздел «Файлы» в Истории: зона для перетаскивания, кнопка «Выбрать файл», список готовых расшифровок и текст с таймкодами">
+      <figcaption><span lang="ru">Раздел «Файлы»: зона загрузки сверху, готовые расшифровки под ней.</span><span lang="en">The Files section: the drop zone on top, finished transcripts below.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/history-files-en.png" alt="The Files section of History: the drop zone, the Choose file button and a finished transcript with timecodes">
+      <figcaption><span lang="ru">Раздел «Файлы»: зона загрузки сверху, готовые расшифровки под ней.</span><span lang="en">The Files section: the drop zone on top, finished transcripts below.</span></figcaption>
+    </figure>
+
+    <h2 id="formats"><span lang="ru">Какие файлы подходят</span><span lang="en">Which files work</span></h2>
+    <div lang="ru">
+      <p>Любое аудио и видео, которое умеет открывать macOS: <code>m4a</code>, <code>mp3</code>, <code>wav</code>, <code>aac</code>, <code>mp4</code>, <code>mov</code> и прочие. Из видео Heardly берёт звуковую дорожку, картинка не нужна.</p>
+    </div>
+    <div lang="en">
+      <p>Any audio or video macOS can open: <code>m4a</code>, <code>mp3</code>, <code>wav</code>, <code>aac</code>, <code>mp4</code>, <code>mov</code> and the rest. From a video Heardly takes the audio track; the picture is not needed.</p>
+    </div>
+
+    <h2 id="result"><span lang="ru">Что получится</span><span lang="en">What you get</span></h2>
+    <div lang="ru">
+      <p>Текст с таймкодами: у каждой реплики своё время от начала записи, по нему удобно возвращаться к нужному месту в исходнике. Подписей источников здесь нет — в файле нет разделения на микрофон и звук приложений, оно появляется только в <a href="live.html">живой записи</a>.</p>
+      <p>Результат можно <a href="export.html">выгрузить</a> в восемь форматов, в том числе в субтитры SRT и VTT.</p>
+    </div>
+    <div lang="en">
+      <p>Text with timecodes: every line carries its time from the start of the recording, which makes it easy to go back to the right spot in the original. There are no source labels here — a file has no split between microphone and app audio; that only exists in a <a href="live.html">live recording</a>.</p>
+      <p>The result can be <a href="export.html">exported</a> to eight formats, subtitles in SRT and VTT among them.</p>
+    </div>
+
+    <div class="note tip">
+      <b><span lang="ru">Много файлов — через терминал</span><span lang="en">Many files — use the terminal</span></b>
+      <p><span lang="ru">Если расшифровать нужно десятки записей, удобнее <a href="cli.html">команда <code>heardly</code></a>: её можно запустить в цикле и сразу сложить результат в нужные файлы.</span><span lang="en">If you have dozens of recordings, the <a href="cli.html"><code>heardly</code> command</a> is easier: run it in a loop and write the results straight to the files you want.</span></p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

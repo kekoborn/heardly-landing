@@ -1,618 +1,1217 @@
-<!DOCTYPE html>
-
-<html lang="ru"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Heardly - Интеллектуальное распознавание речи для macOS</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<style type="text/tailwindcss">
-        @layer utilities {
-            .glass {
-                @apply bg-white/70 backdrop-blur-md border border-hairline shadow-[0_8px_30px_rgba(0,0,0,0.06)];
-            }
-            .glass-panel {
-                @apply bg-mist-gray/50 backdrop-blur-lg border border-hairline rounded-xl;
-            }
-            .macos-window {
-                @apply bg-surface/90 backdrop-blur-xl border border-hairline rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] overflow-hidden;
-            }
-            .macos-header {
-                @apply h-10 bg-gradient-to-b from-white/50 to-surface/50 border-b border-hairline flex items-center px-4 space-x-2 relative;
-            }
-            .macos-dot {
-                @apply w-3 h-3 rounded-full;
-            }
-            .macos-dot.close {
-                @apply bg-alert-red;
-            }
-            .macos-dot.minimize {
-                @apply bg-yellow-400;
-            }
-            .macos-dot.expand {
-                @apply bg-live-green;
-            }
-            
-            /* Scroll animation classes */
-            .fade-up-enter {
-                @apply opacity-0 translate-y-8 transition-all duration-700 ease-out;
-            }
-            .fade-up-enter.is-visible {
-                @apply opacity-100 translate-y-0;
-            }
-        }
-    </style>
-<script id="tailwind-config">
-        tailwind.config = {
-          darkMode: "class",
-          theme: {
-            extend: {
-              "colors": {
-                      "secondary-fixed-dim": "#c6c6c8",
-                      "error": "#ba1a1a",
-                      "secondary-container": "#dfdfe1",
-                      "on-surface": "#1b1b1d",
-                      "deep-indigo": "#4F46E5",
-                      "on-primary-fixed-variant": "#3323cc",
-                      "surface-variant": "#e4e2e4",
-                      "outline": "#777587",
-                      "inverse-surface": "#303032",
-                      "on-secondary-fixed-variant": "#454749",
-                      "surface-dim": "#dcd9dc",
-                      "primary-fixed-dim": "#c3c0ff",
-                      "alert-red": "#FF453A",
-                      "surface-container-lowest": "#ffffff",
-                      "outline-variant": "#c7c4d8",
-                      "surface": "#fcf8fb",
-                      "on-primary-fixed": "#0f0069",
-                      "on-secondary-fixed": "#1a1c1d",
-                      "on-error-container": "#93000a",
-                      "primary-fixed": "#e2dfff",
-                      "ink-black": "#1D1D1F",
-                      "graphite": "#6E6E73",
-                      "surface-container": "#f0edef",
-                      "secondary-fixed": "#e2e2e4",
-                      "surface-container-low": "#f6f3f5",
-                      "inverse-on-surface": "#f3f0f2",
-                      "on-secondary": "#ffffff",
-                      "porcelain-white": "#FAFAFC",
-                      "surface-container-high": "#eae7ea",
-                      "inverse-primary": "#c3c0ff",
-                      "fog": "#AEAEB2",
-                      "on-tertiary-container": "#dadbe0",
-                      "tertiary-container": "#5e6064",
-                      "hairline": "#E5E5EA",
-                      "tertiary-fixed-dim": "#c6c6cb",
-                      "tertiary-fixed": "#e2e2e7",
-                      "primary-container": "#4f46e5",
-                      "on-background": "#1b1b1d",
-                      "error-container": "#ffdad6",
-                      "surface-tint": "#4d44e3",
-                      "on-primary": "#ffffff",
-                      "frosted-surface": "rgba(255, 255, 255, 0.7)",
-                      "primary": "#3525cd",
-                      "mist-gray": "#F2F2F7",
-                      "on-primary-container": "#dad7ff",
-                      "background": "#fcf8fb",
-                      "surface-bright": "#fcf8fb",
-                      "secondary": "#5d5e60",
-                      "tertiary": "#46484c",
-                      "on-tertiary-fixed": "#1a1c1f",
-                      "on-tertiary": "#ffffff",
-                      "on-error": "#ffffff",
-                      "soft-indigo-tint": "#EEF0FE",
-                      "on-surface-variant": "#464555",
-                      "live-green": "#30D158",
-                      "surface-container-highest": "#e4e2e4",
-                      "on-tertiary-fixed-variant": "#45474b",
-                      "on-secondary-container": "#616365"
-              },
-              "borderRadius": {
-                      "DEFAULT": "0.25rem",
-                      "lg": "0.5rem",
-                      "xl": "0.75rem",
-                      "full": "9999px"
-              },
-              "spacing": {
-                      "section-v-padding": "8rem",
-                      "hero-v-padding": "11rem",
-                      "gutter": "2rem",
-                      "stack-md": "1.5rem",
-                      "container-max": "1200px",
-                      "stack-sm": "0.75rem",
-                      "stack-lg": "3rem"
-              },
-              "fontFamily": {
-                      "headline-xl-mobile": [
-                              "Inter"
-                      ],
-                      "headline-xl": [
-                              "Inter"
-                      ],
-                      "cta-label": [
-                              "Inter"
-                      ],
-                      "transcript": [
-                              "jetbrainsMono"
-                      ],
-                      "headline-lg": [
-                              "Inter"
-                      ],
-                      "headline-md": [
-                              "Inter"
-                      ],
-                      "caption": [
-                              "Inter"
-                      ],
-                      "body-base": [
-                              "Inter"
-                      ]
-              },
-              "fontSize": {
-                      "headline-xl-mobile": [
-                              "3rem",
-                              {
-                                      "lineHeight": "1.1",
-                                      "letterSpacing": "-0.02em",
-                                      "fontWeight": "700"
-                              }
-                      ],
-                      "headline-xl": [
-                              "4.5rem",
-                              {
-                                      "lineHeight": "1.1",
-                                      "letterSpacing": "-0.02em",
-                                      "fontWeight": "700"
-                              }
-                      ],
-                      "cta-label": [
-                              "1rem",
-                              {
-                                      "lineHeight": "1",
-                                      "letterSpacing": "0em",
-                                      "fontWeight": "500"
-                              }
-                      ],
-                      "transcript": [
-                              "0.9375rem",
-                              {
-                                      "lineHeight": "1.6",
-                                      "letterSpacing": "0em",
-                                      "fontWeight": "400"
-                              }
-                      ],
-                      "headline-lg": [
-                              "3rem",
-                              {
-                                      "lineHeight": "1.2",
-                                      "letterSpacing": "-0.01em",
-                                      "fontWeight": "600"
-                              }
-                      ],
-                      "headline-md": [
-                              "1.5rem",
-                              {
-                                      "lineHeight": "1.4",
-                                      "letterSpacing": "0em",
-                                      "fontWeight": "600"
-                              }
-                      ],
-                      "caption": [
-                              "0.875rem",
-                              {
-                                      "lineHeight": "1.5",
-                                      "letterSpacing": "0em",
-                                      "fontWeight": "400"
-                              }
-                      ],
-                      "body-base": [
-                              "1.0625rem",
-                              {
-                                      "lineHeight": "1.65",
-                                      "letterSpacing": "0em",
-                                      "fontWeight": "400"
-                              }
-                      ]
-              }
-      },
-          },
-        }
-      </script>
-<meta name="description" content="Heardly — диктовка, живой перевод речи и транскрибация аудио и видео на вашем Mac. Полностью локально, работает без интернета."><style>h1,h2,h3{overflow-wrap:break-word}</style><script>if(matchMedia("(max-width:767px)").matches&&!location.search.includes("stay"))location.replace("/m/")</script></head>
-<body class="bg-background text-on-background font-body-base antialiased selection:bg-soft-indigo-tint selection:text-deep-indigo overflow-x-hidden">
-<!-- Top Navigation Bar -->
-<nav class="bg-frosted-surface dark:bg-surface-container/80 border-b border-hairline backdrop-blur-md shadow-sm docked full-width top-0 sticky z-50">
-<div class="flex justify-between items-center w-full px-gutter py-4 max-w-container-max mx-auto">
-<a class="font-headline-md text-headline-md font-bold text-ink-black dark:text-porcelain-white flex items-center gap-2" href="/">
-<span class="material-symbols-outlined text-deep-indigo" style="font-variation-settings: 'FILL' 1;">graphic_eq</span>
-                Heardly
-            </a>
-<div class="hidden md:flex items-center space-x-8">
-<a class="text-graphite dark:text-fog hover:text-ink-black dark:hover:text-porcelain-white transition-colors duration-200" href="#features">Возможности</a>
-<a class="text-graphite dark:text-fog hover:text-ink-black dark:hover:text-porcelain-white transition-colors duration-200" href="#privacy">Конфиденциальность</a>
-<a class="text-graphite dark:text-fog hover:text-ink-black dark:hover:text-porcelain-white transition-colors duration-200" href="#pricing">Цены</a>
-<a class="text-graphite dark:text-fog hover:text-ink-black dark:hover:text-porcelain-white transition-colors duration-200" href="/legal/#contacts">Поддержка</a>
-</div>
-<a class="hidden md:inline-flex items-center justify-center bg-deep-indigo text-white font-cta-label text-cta-label py-2.5 px-5 rounded-full hover:bg-primary transition-colors Active: scale-95 transition-transform duration-200" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">
-<svg class="w-4 h-4 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
-                Скачать для macOS
-            </a>
-<button class="md:hidden text-ink-black">
-<span class="material-symbols-outlined">menu</span>
-</button>
-</div>
-</nav>
-<!-- Hero Section -->
-<section class="relative min-h-[90vh] flex flex-col items-center justify-center pt-hero-v-padding pb-section-v-padding px-gutter overflow-hidden">
-<div class="max-w-4xl mx-auto text-center z-10 space-y-stack-md">
-<div class="inline-flex items-center space-x-2 bg-soft-indigo-tint text-deep-indigo px-4 py-1.5 rounded-full font-medium text-sm mb-4">
-<span class="w-2 h-2 rounded-full bg-live-green animate-pulse"></span>
-<span>Распознавание на устройстве</span>
-</div>
-<h1 class="font-headline-xl-mobile md:font-headline-xl text-headline-xl-mobile md:text-headline-xl text-ink-black tracking-tight">
-                Голос в текст.<br/><span class="text-transparent bg-clip-text bg-gradient-to-r from-deep-indigo to-primary">Прямо на вашем Mac.</span>
-</h1>
-<p class="font-body-base text-body-base text-graphite max-w-2xl mx-auto">
-                Heardly превращает вашу речь в текст с непревзойденной точностью прямо на вашем Mac. Конфиденциально, быстро и без интернета.
-            </p>
-<div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-<a class="w-full sm:w-auto inline-flex items-center justify-center bg-deep-indigo text-white font-cta-label text-cta-label py-3.5 px-8 rounded-full hover:bg-primary transition-all hover:-translate-y-[1px] shadow-[0_8px_30px_rgba(79,70,229,0.3)]" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">
-<svg class="w-5 h-5 mr-2 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
-                    Скачать для macOS
-                </a>
-<a class="w-full sm:w-auto inline-flex items-center justify-center glass text-ink-black font-cta-label text-cta-label py-3.5 px-8 rounded-full hover:bg-soft-indigo-tint transition-colors" href="#demo">
-                    Смотреть демо
-                </a>
-</div>
-</div>
-<!-- Hero Image/Mockup Placeholder -->
-<div class="w-full max-w-5xl mx-auto mt-20 relative z-10 perspective-1000">
-<div class="relative rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.15)] transform rotate-x-12 translate-y-8 hover:rotate-x-0 hover:translate-y-0 transition-all duration-700 ease-out">
-<img alt="Heardly on a Mac" class="w-full h-auto object-cover rounded-2xl border border-hairline/50" src="assets/img-f3bbe5204d.png"/>
-</div>
-</div>
-</section>
-<!-- How it works strip -->
-<section class="bg-mist-gray py-20 px-gutter fade-up-enter">
-<div class="max-w-container-max mx-auto">
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-<!-- Step 1 -->
-<div class="flex flex-col items-center text-center space-y-4">
-<div class="w-16 h-16 rounded-full bg-soft-indigo-tint flex items-center justify-center text-deep-indigo">
-<span class="material-symbols-outlined text-3xl">keyboard</span>
-</div>
-<div class="font-headline-md text-ink-black">1. Нажмите горячую клавишу</div>
-</div>
-<!-- Step 2 -->
-<div class="flex flex-col items-center text-center space-y-4">
-<div class="w-16 h-16 rounded-full bg-soft-indigo-tint flex items-center justify-center text-deep-indigo">
-<span class="material-symbols-outlined text-3xl">mic</span>
-</div>
-<div class="font-headline-md text-ink-black">2. Говорите</div>
-</div>
-<!-- Step 3 -->
-<div class="flex flex-col items-center text-center space-y-4">
-<div class="w-16 h-16 rounded-full bg-soft-indigo-tint flex items-center justify-center text-deep-indigo">
-<span class="material-symbols-outlined text-3xl">description</span>
-</div>
-<div class="font-headline-md text-ink-black">3. Готовый текст — в любом приложении</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Dictation section -->
-<section id="features" class="py-section-v-padding px-gutter bg-porcelain-white fade-up-enter">
-<div class="max-w-container-max mx-auto flex flex-col md:flex-row items-center gap-12">
-<div class="w-full md:w-1/2">
-<img alt="Dictation in any app" class="w-full h-auto rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-hairline/50" src="assets/img-aa15c596ed.png"/>
-</div>
-<div class="w-full md:w-1/2 space-y-6">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight">Диктовка в любое приложение</h2>
-<p class="font-body-base text-body-base text-graphite">Нажмите хоткей — и говорите. Текст мгновенно вставляется туда, где стоит курсор: почта, мессенджер, документ.</p>
-</div>
-</div>
-</section>
-<!-- Live translation section -->
-<section class="py-section-v-padding px-gutter bg-surface-bright fade-up-enter">
-<div class="max-w-container-max mx-auto flex flex-col md:flex-row-reverse items-center gap-12">
-<div class="w-full md:w-1/2">
-<img alt="Live translation" class="w-full h-auto rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-hairline/50" src="assets/img-11c66c6455.png"/>
-</div>
-<div class="w-full md:w-1/2 space-y-6">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight">Живой перевод синхронно с речью</h2>
-<p class="font-body-base text-body-base text-graphite">Слушайте на одном языке — читайте на другом. Перевод появляется в реальном времени, пока человек говорит.</p>
-</div>
-</div>
-</section>
-<!-- File transcription section -->
-<section class="py-section-v-padding px-gutter bg-porcelain-white fade-up-enter">
-<div class="max-w-container-max mx-auto flex flex-col md:flex-row items-center gap-12">
-<div class="w-full md:w-1/2">
-<img alt="File transcription" class="w-full h-auto rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-hairline/50" src="assets/img-875cb87c66.png"/>
-</div>
-<div class="w-full md:w-1/2 space-y-6">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight">Транскрибация аудио и видео</h2>
-<p class="font-body-base text-body-base text-graphite">Перетащите файл — получите текст с таймкодами и разделением по спикерам. Часовая запись — за минуты.</p>
-</div>
-</div>
-</section>
-<section id="privacy" class="bg-mist-gray py-section-v-padding px-gutter fade-up-enter">
-<div class="max-w-container-max mx-auto text-center">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight mb-12">Ничего не уходит с вашего Mac</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
-<div class="flex flex-col items-center space-y-4">
-<div class="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center text-deep-indigo shadow-sm">
-<span class="material-symbols-outlined text-3xl">flight</span>
-</div>
-<p class="font-medium text-ink-black">Работает офлайн — хоть в самолёте</p>
-</div>
-<div class="flex flex-col items-center space-y-4">
-<div class="relative">
-<div class="w-24 h-24 rounded-2xl bg-white/80 flex items-center justify-center text-deep-indigo shadow-sm border border-hairline">
-<span class="material-symbols-outlined text-5xl">laptop_mac</span>
-</div>
-<div class="absolute -top-2 -right-2 w-10 h-10 bg-live-green rounded-full flex items-center justify-center text-white border-4 border-mist-gray">
-<span class="material-symbols-outlined text-xl">lock</span>
-</div>
-<div class="absolute -bottom-2 -left-2 w-10 h-10 bg-alert-red rounded-full flex items-center justify-center text-white border-4 border-mist-gray">
-<span class="material-symbols-outlined text-xl">cloud_off</span>
-</div>
-</div>
-<p class="font-medium text-ink-black mt-4">Без облака и чужих серверов — распознавание на устройстве</p>
-</div>
-<div class="flex flex-col items-center space-y-4">
-<div class="w-16 h-16 rounded-full bg-white/50 flex items-center justify-center text-deep-indigo shadow-sm">
-<span class="material-symbols-outlined text-3xl">visibility_off</span>
-</div>
-<p class="font-medium text-ink-black">Ваши записи видите только вы</p>
-</div>
-</div>
-</div>
-</section>
-<section class="py-section-v-padding px-gutter bg-porcelain-white fade-up-enter">
-<div class="max-w-container-max mx-auto">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight text-center mb-12">И это ещё не всё</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-<div class="glass p-8 rounded-2xl border border-hairline space-y-4">
-<span class="material-symbols-outlined text-deep-indigo text-3xl">auto_awesome</span>
-<p class="font-medium text-ink-black">AI-резюме встречи — итоги одним кликом, тоже локально</p>
-</div>
-<div class="glass p-8 rounded-2xl border border-hairline space-y-4">
-<span class="material-symbols-outlined text-deep-indigo text-3xl">history</span>
-<p class="font-medium text-ink-black">История сессий — все транскрипты под рукой</p>
-</div>
-<div class="glass p-8 rounded-2xl border border-hairline space-y-4">
-<span class="material-symbols-outlined text-deep-indigo text-3xl">ios_share</span>
-<p class="font-medium text-ink-black">Экспорт текста — заберите результат в один клик</p>
-</div>
-<div class="glass p-8 rounded-2xl border border-hairline space-y-4">
-<span class="material-symbols-outlined text-deep-indigo text-3xl">keyboard_command_key</span>
-<p class="font-medium text-ink-black">Горячие клавиши — всё управление без мыши</p>
-</div>
-<div class="glass p-8 rounded-2xl border border-hairline space-y-4">
-<span class="material-symbols-outlined text-deep-indigo text-3xl">language</span>
-<p class="font-medium text-ink-black">Русский, английский и десятки других языков</p>
-</div>
-<div class="glass p-8 rounded-2xl border border-hairline space-y-4">
-<span class="material-symbols-outlined text-deep-indigo text-3xl">widgets</span>
-<p class="font-medium text-ink-black">Живёт в строке меню — не занимает док и не мешает</p>
-</div>
-</div>
-</div>
-</section>
-<section class="py-section-v-padding px-gutter bg-surface-bright fade-up-enter">
-<div class="max-w-container-max mx-auto">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight text-center mb-12">Для тех, кто работает голосом</h2>
-<div class="grid grid-cols-2 md:grid-cols-5 gap-4">
-<div class="bg-white border border-hairline p-6 rounded-xl text-center space-y-3 shadow-sm">
-<span class="material-symbols-outlined text-deep-indigo">groups</span>
-<div class="text-sm font-medium">Созвоны и встречи</div>
-</div>
-<div class="bg-white border border-hairline p-6 rounded-xl text-center space-y-3 shadow-sm">
-<span class="material-symbols-outlined text-deep-indigo">record_voice_over</span>
-<div class="text-sm font-medium">Интервью</div>
-</div>
-<div class="bg-white border border-hairline p-6 rounded-xl text-center space-y-3 shadow-sm">
-<span class="material-symbols-outlined text-deep-indigo">school</span>
-<div class="text-sm font-medium">Лекции и вебинары</div>
-</div>
-<div class="bg-white border border-hairline p-6 rounded-xl text-center space-y-3 shadow-sm">
-<span class="material-symbols-outlined text-deep-indigo">mic_external_on</span>
-<div class="text-sm font-medium">Голосовые заметки</div>
-</div>
-<div class="bg-white border border-hairline p-6 rounded-xl text-center space-y-3 shadow-sm col-span-2 md:col-span-1">
-<span class="material-symbols-outlined text-deep-indigo">podcasts</span>
-<div class="text-sm font-medium">Подкасты</div>
-</div>
-</div>
-</div>
-</section>
-<!-- Pricing Section -->
-<section id="pricing" style="padding:7rem 1.5rem;background:#F2F2F7">
-<div style="max-width:1100px;margin:0 auto;text-align:center">
-<h2 style="font:600 2.25rem/1.2 Inter,sans-serif;letter-spacing:-.01em;color:#1D1D1F;margin:0 0 .75rem">Тарифы</h2>
-<p style="color:#6E6E73;margin:0 0 2rem">Начните бесплатно. Pro — когда понадобится больше.</p>
-<div style="display:inline-flex;background:#fff;border:1px solid #E5E5EA;border-radius:999px;padding:.25rem;margin-bottom:2.5rem">
-<button id="rg-ru" onclick="hdlyRegion('ru')" style="border:none;border-radius:999px;padding:.5rem 1.1rem;font:500 .9rem Inter,sans-serif;cursor:pointer;background:#4F46E5;color:#fff">Россия</button>
-<button id="rg-ww" onclick="hdlyRegion('ww')" style="border:none;border-radius:999px;padding:.5rem 1.1rem;font:500 .9rem Inter,sans-serif;cursor:pointer;background:transparent;color:#6E6E73">Остальной мир</button>
-</div>
-<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.25rem;text-align:left">
-<div style="background:#fff;border:1px solid #E5E5EA;border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 8px 30px rgba(0,0,0,.06);position:relative">
-
-<div><p style="font-weight:600;color:#1D1D1F;font-size:1.05rem;margin:0">Бесплатно</p>
-<p style="margin:.5rem 0 0;color:#1D1D1F"><span data-price="free" style="font-size:2rem;font-weight:700;letter-spacing:-.02em">0 ₽</span><span style="color:#6E6E73;font-size:.95rem"> навсегда</span></p>
-<p data-sub="free" style="margin:.25rem 0 0;color:#6E6E73;font-size:.85rem;min-height:1.1rem">без карты и регистрации</p></div>
-<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;flex:1"><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Диктовка в любое приложение</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Живая транскрипция</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>2 000 слов в неделю</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Русский, английский и десятки языков</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Полностью локально, офлайн</span></li></ul>
-<a href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#fff;color:#1D1D1F;border:1px solid #E5E5EA;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none"><svg viewBox="0 0 384 512" width="15" height="15" fill="currentColor" style="flex:none" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/></svg> Скачать бесплатно</a>
-</div>
-<div style="background:#fff;border:1px solid #E5E5EA;border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 8px 30px rgba(0,0,0,.06);position:relative">
-
-<div><p style="font-weight:600;color:#1D1D1F;font-size:1.05rem;margin:0">Pro · месяц</p>
-<p style="margin:.5rem 0 0;color:#1D1D1F"><span data-price="month" style="font-size:2rem;font-weight:700;letter-spacing:-.02em">499 ₽</span><span style="color:#6E6E73;font-size:.95rem"> / месяц</span></p>
-<p data-sub="month" style="margin:.25rem 0 0;color:#6E6E73;font-size:.85rem;min-height:1.1rem"></p></div>
-<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;flex:1"><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Всё из бесплатного, без лимита слов</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Живой перевод речи</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Транскрибация файлов + спикеры</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>AI-резюме встреч</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Экспорт текста и CLI</span></li></ul>
-<button data-buy="month" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#4F46E5;color:#fff;border:none;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none">Купить Pro</button>
-</div>
-<div style="background:#fff;border:1px solid #4F46E5;border-radius:16px;padding:1.75rem;display:flex;flex-direction:column;gap:1rem;box-shadow:0 8px 30px rgba(0,0,0,.06);position:relative;outline:1px solid #4F46E5">
-<span style="position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:#4F46E5;color:#fff;font-size:.75rem;font-weight:600;padding:.25rem .75rem;border-radius:999px;white-space:nowrap">Выгода 33%</span>
-<div><p style="font-weight:600;color:#1D1D1F;font-size:1.05rem;margin:0">Pro · год</p>
-<p style="margin:.5rem 0 0;color:#1D1D1F"><span data-price="year" style="font-size:2rem;font-weight:700;letter-spacing:-.02em">3 990 ₽</span><span style="color:#6E6E73;font-size:.95rem"> / год</span></p>
-<p data-sub="year" style="margin:.25rem 0 0;color:#6E6E73;font-size:.85rem;min-height:1.1rem">≈ 333 ₽ в месяц</p></div>
-<ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:.5rem;flex:1"><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Всё из тарифа Pro</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Одна оплата на 12 месяцев</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Два месяца бесплатно против помесячной</span></li><li style="display:flex;gap:.5rem;color:#6E6E73;font-size:.92rem;line-height:1.45"><span style="color:#30D158;flex:none">✓</span><span>Цена зафиксирована на год</span></li></ul>
-<button data-buy="year" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#4F46E5;color:#fff;border:none;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none">Купить Pro на год</button>
-</div></div>
-<p style="color:#6E6E73;font-size:.85rem;margin-top:1.75rem">Оплата через Robokassa, в рублях. Подписка не продлевается автоматически.<br>Покупая, вы соглашаетесь с <a href="/legal/" style="color:#4F46E5">условиями</a> и <a href="/privacy/" style="color:#4F46E5">политикой обработки данных</a>.</p>
-</div>
-</section>
-<!-- FAQ Section -->
-<section class="py-section-v-padding px-gutter bg-porcelain-white fade-up-enter">
-<div class="max-w-3xl mx-auto">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight text-center mb-12">Частые вопросы</h2>
-<div class="space-y-4">
-<!-- Q1 -->
-<details class="glass rounded-xl border border-hairline overflow-hidden group" open="">
-<summary class="flex justify-between items-center cursor-pointer p-6 font-medium text-ink-black list-none group-open:bg-mist-gray/30 transition-colors">
-<span>Heardly правда работает без интернета?</span>
-<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-graphite">expand_more</span>
-</summary>
-<div class="px-6 pb-6 text-graphite">
-Да. Распознавание, перевод и резюме выполняются на вашем Mac. Интернет нужен только для скачивания приложения и оплаты подписки.
-</div>
-</details>
-<!-- Q2 -->
-<details class="glass rounded-xl border border-hairline overflow-hidden group">
-<summary class="flex justify-between items-center cursor-pointer p-6 font-medium text-ink-black list-none hover:bg-mist-gray/30 transition-colors">
-<span>Куда уходят мои записи?</span>
-<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-graphite">expand_more</span>
-</summary>
-<div class="px-6 pb-6 text-graphite">
-Никуда. Все аудио обрабатываются локально на вашем устройстве, обеспечивая полную конфиденциальность. Мы не собираем и не храним ваши данные.
-</div>
-</details>
-<!-- Q3 -->
-<details class="glass rounded-xl border border-hairline overflow-hidden group">
-<summary class="flex justify-between items-center cursor-pointer p-6 font-medium text-ink-black list-none hover:bg-mist-gray/30 transition-colors">
-<span>Какие языки поддерживаются?</span>
-<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-graphite">expand_more</span>
-</summary>
-<div class="px-6 pb-6 text-graphite">
-Heardly поддерживает десятки языков, включая русский, английский, испанский, немецкий, французский и многие другие, как для диктовки, так и для перевода.
-</div>
-</details>
-<!-- Q4 -->
-<details class="glass rounded-xl border border-hairline overflow-hidden group">
-<summary class="flex justify-between items-center cursor-pointer p-6 font-medium text-ink-black list-none hover:bg-mist-gray/30 transition-colors">
-<span>Какие требования к Mac?</span>
-<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-graphite">expand_more</span>
-</summary>
-<div class="px-6 pb-6 text-graphite">
-Для работы приложения необходим Mac с операционной системой macOS 14 и новее. Рекомендуются процессоры Apple Silicon (M1 и новее) для максимальной производительности.
-</div>
-</details>
-<!-- Q5 -->
-<details class="glass rounded-xl border border-hairline overflow-hidden group">
-<summary class="flex justify-between items-center cursor-pointer p-6 font-medium text-ink-black list-none hover:bg-mist-gray/30 transition-colors">
-<span>Как оплатить из России?</span>
-<span class="material-symbols-outlined transition-transform duration-300 group-open:rotate-180 text-graphite">expand_more</span>
-</summary>
-<div class="px-6 pb-6 text-graphite">
-Мы принимаем карты любых российских банков. Оплата происходит в рублях через надежный российский платежный шлюз без дополнительных комиссий.
-</div>
-</details>
-</div>
-</div>
-</section>
-<!-- Final CTA Section -->
-<section class="py-section-v-padding px-gutter bg-surface-bright fade-up-enter text-center">
-<div class="max-w-container-max mx-auto space-y-8">
-<h2 class="font-headline-lg text-headline-lg text-ink-black tracking-tight">Попробуйте Heardly сегодня</h2>
-<p class="font-body-base text-body-base text-graphite max-w-xl mx-auto">Одна минута на установку — и ваш Mac умеет слушать.</p>
-<div class="pt-4 flex flex-col items-center">
-<a class="inline-flex items-center justify-center bg-deep-indigo text-white font-cta-label text-cta-label py-4 px-10 rounded-full hover:bg-primary transition-all shadow-[0_8px_30px_rgba(79,70,229,0.3)] mb-4 text-lg" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">
-<svg class="w-6 h-6 mr-3 fill-current" viewbox="0 0 384 512" xmlns="http://www.w3.org/2000/svg"><path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"></path></svg>
-    Скачать для macOS
-</a>
-<p class="text-sm text-graphite">Для macOS 14 и новее</p>
-</div>
-</div>
-</section>
-<!-- Footer -->
-<footer class="bg-mist-gray dark:bg-surface-container-low border-t border-hairline w-full py-section-v-padding mt-20"><div style="max-width:1200px;margin:0 auto;padding:0 2rem;display:flex;flex-direction:column;align-items:center;gap:1rem;text-align:center;font:400 .875rem/1.6 Inter,-apple-system,sans-serif;color:#6E6E73">
-<nav style="display:flex;flex-wrap:wrap;justify-content:center;gap:.5rem 1.5rem">
-<a href="/legal/#product" style="color:#6E6E73;text-decoration:none;border-bottom:1px solid rgba(110,110,115,.35);padding-bottom:1px">О продукте</a>
-<a href="/legal/" style="color:#6E6E73;text-decoration:none;border-bottom:1px solid rgba(110,110,115,.35);padding-bottom:1px">Публичная оферта</a>
-<a href="/legal/#refund" style="color:#6E6E73;text-decoration:none;border-bottom:1px solid rgba(110,110,115,.35);padding-bottom:1px">Возврат</a>
-<a href="/privacy/" style="color:#6E6E73;text-decoration:none;border-bottom:1px solid rgba(110,110,115,.35);padding-bottom:1px">Политика обработки персональных данных</a>
-<a href="/legal/#contacts" style="color:#6E6E73;text-decoration:none;border-bottom:1px solid rgba(110,110,115,.35);padding-bottom:1px">Контакты</a>
-</nav>
-<div>Алыев Руслан Мусаевич · самозанятый (НПД) · ИНН 762706328316<br>
-<a href="mailto:cafmanar@gmail.com" style="color:#4F46E5;text-decoration:none">cafmanar@gmail.com</a></div>
-<div style="color:#AEAEB2">© 2026 Heardly. Сделано для macOS.</div>
-</div></footer>
-<script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const observerOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.1
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-up-enter').forEach(section => {
-            observer.observe(section);
-        });
-    });
-</script>
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heardly — диктовка, звонки и файлы в текст на Mac</title>
+<meta name="description" content="Диктовка, звонки и файлы в текст прямо на Mac. Звук не уходит в интернет, бота в звонке нет.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
 <style>
-/* Optional: remove default marker for standard browsers if details/summary is used */
-details > summary::-webkit-details-marker {
-  display: none;
+:root {
+  /* Страница */
+  --bg: #F6F4EF; --bg-2: #FCFBF8; --bg-3: #EFECE5; --line: rgba(35,38,51,.09); --line-2: rgba(35,38,51,.16);
+  --t1: #1D1F2A; --t2: #4F515C; --t3: #686A74;
+  /* Приложение, светлая тема (docs/design-system.md) */
+  --a-surface: #FBF9F4; --a-fill: #EFEBE2; --a-border: #E6E1D6; --a-ink: #232633; --a-ink2: #6B6C76; --a-ink3: #8E8D93;
+  --mic: #5E6AD2; --mic-l: #8F98E6; --app: #D9845A; --app-l: #EBB08F; --rec: #2A2E44; --dot: #E8735A; --ok: #3F9A6B; --warn: #D08A2E; --danger: #D5534B;
+  --sans: "Onest", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --sys: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  --serif: ui-serif, Georgia, serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--t1); font: 400 17px/1.6 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+a { color: inherit; }
+img, svg, canvas { display: block; }
+button { font: inherit; color: inherit; }
+p { text-wrap: pretty; margin: 0; }
+html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not(html) { display: none !important; }
+:focus-visible { outline: 2px solid var(--mic); outline-offset: 3px; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 32px; }
+@media (max-width: 640px) { .wrap { padding: 0 18px; } body { font-size: 16px; } }
+
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.035em; line-height: 1.05; text-wrap: balance; }
+h1 { font-size: clamp(40px, 5vw, 66px); }
+.desktop, .stage, .fv { text-align: left; }
+h2 { font-size: clamp(34px, 4.4vw, 58px); }
+@media (max-width: 760px) { .br { display: none; } }
+h3 { font-size: 22px; letter-spacing: -0.02em; line-height: 1.25; }
+.sub { font-size: clamp(17px, 1.6vw, 21px); color: var(--t2); line-height: 1.55; max-width: 640px; }
+.muted { color: var(--t2); } .faint { color: var(--t3); }
+section { position: relative; padding: 160px 0; }
+@media (max-width: 760px) { section { padding: 100px 0; } }
+.center { text-align: center; } .center .sub { margin-left: auto; margin-right: auto; }
+.sec-head { margin-bottom: 72px; } .sec-head .sub { margin-top: 22px; }
+
+/* Кнопки */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; height: 52px; padding: 0 24px; border-radius: 999px; border: 0; cursor: pointer;
+  font: 500 16px var(--sans); text-decoration: none; white-space: nowrap; transition: background-color .3s, box-shadow .3s, transform .3s var(--ease); }
+.btn svg { width: 17px; height: 17px; flex: none; }
+.btn-w { background: var(--t1); color: #FBFAF7; } .btn-w:hover { background: #000; transform: translateY(-1px); }
+.btn-g { color: var(--t1); box-shadow: 0 0 0 1px var(--line-2) inset; } .btn-g:hover { background: rgba(35,38,51,.05); }
+.btn-sm { height: 38px; padding: 0 16px; font-size: 14.5px; }
+.btn[disabled] { opacity: .6; cursor: progress; }
+
+/* Шапка */
+header { position: fixed; inset: 0 0 auto; z-index: 40; transition: background-color .4s, box-shadow .4s; }
+header.on { background: var(--bg); box-shadow: 0 1px 0 var(--line); }
+.nav { height: 68px; display: flex; align-items: center; gap: 36px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 18px; letter-spacing: -0.02em; text-decoration: none; }
+.brand img { width: 28px; height: 28px; border-radius: 7px; }
+.links { display: flex; gap: 28px; } .links a { text-decoration: none; color: var(--t2); font-size: 14.5px; transition: color .2s; } .links a:hover { color: var(--t1); }
+.nav-r { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.lang { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; box-shadow: 0 0 0 1px var(--line-2) inset; }
+.lang button { border: 0; background: transparent; color: var(--t3); font: 500 12px var(--sans); padding: 5px 9px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: rgba(35,38,51,.1); color: var(--t1); }
+@media (max-width: 960px) { .links { display: none; } }
+@media (max-width: 440px) { .nav { gap: 12px; } .nav .btn .tail { display: none; } }
+
+/* Свет за сценами: цвета волны Heardly как освещение */
+.light { position: absolute; pointer-events: none; inset: 0; z-index: 0; }
+.light::before, .light::after { content: ""; position: absolute; border-radius: 50%; filter: blur(80px); opacity: .45; }
+.light::before { width: 46%; height: 60%; left: 12%; top: 18%; background: radial-gradient(closest-side, rgba(94,106,210,.55), transparent); }
+.light::after { width: 40%; height: 54%; right: 10%; top: 28%; background: radial-gradient(closest-side, rgba(217,132,90,.38), transparent); }
+
+/* ── Первый экран ──────────────────────────────── */
+.hero { padding: 150px 0 24px; overflow: hidden; }
+.hero h1 { max-width: 1180px; margin: 0 auto; }
+.hero .sub { margin-top: 26px; }
+.hero .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 40px; }
+.hero .note { margin-top: 18px; font-size: 14px; color: var(--t3); }
+.desktop { position: relative; z-index: 1; margin: 72px auto 0; max-width: 1100px; height: 560px; border-radius: 22px 22px 0 0; overflow: hidden;
+  background: radial-gradient(70% 80% at 18% 10%, #DCDFF6 0%, transparent 70%), radial-gradient(60% 70% at 88% 60%, #F5DCCB 0%, transparent 70%), #ECEAF0; box-shadow: 0 0 0 1px var(--line) inset;
+  -webkit-mask: linear-gradient(#000 82%, transparent); mask: linear-gradient(#000 82%, transparent); }
+.menubar { height: 30px; display: flex; align-items: center; gap: 18px; padding: 0 16px; background: rgba(255,255,255,.6); font: 500 13px var(--sys); color: #1D1F2A; }
+.menubar .apple { width: 13px; height: 13px; }
+.menubar .r { margin-left: auto; display: flex; align-items: center; gap: 16px; color: #3A3C47; }
+.menubar .r svg { width: 15px; height: 15px; }
+.mb-icon { width: 22px; height: 18px; border-radius: 5px; display: grid; place-items: center; background: rgba(35,38,51,.12); }
+.mb-icon i { width: 12px; height: 8px; display: block; background: currentColor; -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 4h1M3 2v4M5 1v6M7 3v2M9 2v4M11 4h0' stroke='black' stroke-width='1.3' stroke-linecap='round'/></svg>") center/contain no-repeat; mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 4h1M3 2v4M5 1v6M7 3v2M9 2v4M11 4h0' stroke='black' stroke-width='1.3' stroke-linecap='round'/></svg>") center/contain no-repeat; }
+@media (max-width: 760px) { .desktop { height: 560px; margin-top: 64px; -webkit-mask: linear-gradient(#000 90%, transparent); mask: linear-gradient(#000 90%, transparent); } .menubar .l { display: none; } }
+
+/* Окна приложения (светлая тема Heardly «Лён и барвинок») */
+.win { background: var(--a-surface); color: var(--a-ink); border-radius: 16px; box-shadow: 0 0 0 1px var(--a-border) inset, 0 24px 60px -24px rgba(35,38,51,.28); font-family: var(--sys); }
+.popup { position: absolute; right: 120px; top: 42px; width: 296px; padding: 12px; display: grid; gap: 10px; }
+.pp-head { display: flex; align-items: center; gap: 8px; }
+.pp-logo { width: 20px; height: 20px; border-radius: 6px; background: var(--rec); color: var(--a-surface); display: grid; place-items: center; }
+.pp-logo svg { width: 12px; height: 12px; }
+.pp-head b { font: 600 15px var(--serif); }
+.pp-head .st { margin-left: auto; display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--a-ink2); }
+.pp-head .st i { width: 6px; height: 6px; border-radius: 50%; background: var(--ok); }
+.recbtn { height: 36px; border-radius: 12px; background: var(--rec); color: var(--a-surface); display: flex; align-items: center; justify-content: center; gap: 8px; font: 500 13px var(--sys); }
+.recbtn i { width: 8px; height: 8px; border-radius: 50%; background: var(--dot); }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.stats div { background: var(--a-fill); border-radius: 8px; padding: 8px 10px; }
+.stats div > span { display: flex; align-items: center; gap: 4px; font-size: 11px; color: var(--a-ink2); }
+.stats span svg { width: 10px; height: 10px; }
+.stats b { display: block; margin-top: 2px; font: 600 20px var(--sys); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.rows { background: var(--a-fill); border-radius: 12px; padding: 2px 0; }
+.row { display: flex; align-items: center; gap: 8px; padding: 6px 10px; min-height: 34px; font-size: 13px; }
+.row + .row { border-top: 1px solid var(--a-border); margin: 0 10px; padding-left: 0; padding-right: 0; }
+.row .ic { width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; flex: none; }
+.row .ic svg { width: 11px; height: 11px; }
+.row .ic.m { background: rgba(94,106,210,.12); color: var(--mic); } .row .ic.a { background: rgba(217,132,90,.12); color: var(--app); }
+.row .ic.n { background: var(--a-surface); color: var(--a-ink2); }
+.row .chev { margin-left: auto; width: 9px; height: 9px; color: var(--a-ink3); }
+.row.sub { min-height: 30px; border-top: 0; padding-top: 0; }
+.dd { margin-left: 22px; height: 26px; flex: 1; display: flex; align-items: center; padding: 0 8px; border-radius: 8px; background: var(--a-surface); font-size: 12px; color: var(--a-ink2); }
+.dd svg { margin-left: auto; width: 9px; height: 9px; transform: rotate(90deg); }
+.sw { margin-left: auto; width: 30px; height: 18px; border-radius: 9px; background: var(--mic); position: relative; flex: none; }
+.sw::after { content: ""; position: absolute; top: 2px; left: 14px; width: 14px; height: 14px; border-radius: 50%; background: #FFFFFF; transition: left .3s var(--ease); }
+.sw.off { background: rgba(35,38,51,.14); } .sw.off::after { left: 2px; }
+.pdrop { border: 1.2px dashed var(--a-border); border-radius: 12px; padding: 12px 16px; display: grid; justify-items: center; gap: 2px; font-size: 11px; color: var(--a-ink2); }
+.pdrop svg { width: 18px; height: 18px; color: var(--a-ink3); margin-bottom: 4px; }
+.pdrop .a { color: var(--mic); font-weight: 500; }
+@media (max-width: 760px) { .pdrop { display: none; } }
+/* Плашка диктовки: карточка 280×80 (FloatingBarView) */
+.dpanel { position: absolute; width: 280px; padding: 10px 12px; border-radius: 14px; }
+.dtop { display: flex; align-items: center; gap: 10px; height: 28px; }
+.dtop canvas { flex: 1; min-width: 0; height: 28px; }
+.dtime { font: 13px var(--sys); font-variant-numeric: tabular-nums; color: var(--a-ink2); min-width: 28px; text-align: right; }
+.dfoot { display: flex; align-items: center; justify-content: space-between; height: 20px; margin-top: 8px; font: 500 13px var(--sys); color: var(--a-ink); }
+.dfoot .l, .dfoot .r { display: flex; align-items: center; gap: 6px; }
+.kbd { font: 500 11px var(--sys); padding: 2px 6px; border-radius: 4px; background: var(--a-fill); color: var(--a-ink2); }
+.hero .dpanel { left: 250px; bottom: 120px; }
+.notes { position: absolute; left: 70px; top: 70px; width: 420px; padding: 0; overflow: hidden; }
+.notes .bar { height: 34px; display: flex; align-items: center; gap: 7px; padding: 0 12px; border-bottom: 1px solid var(--a-border); }
+.notes .bar i { width: 11px; height: 11px; border-radius: 50%; background: #DCD7CC; }
+.notes .bar span { margin-left: 8px; font-size: 12.5px; color: var(--a-ink2); }
+.notes .body { padding: 16px 18px 18px; font-size: 14.5px; line-height: 1.6; min-height: 150px; }
+.caret::after { content: ""; display: inline-block; width: 2px; height: 1.1em; background: var(--mic); vertical-align: -3px; margin-left: 1px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+@media (max-width: 1060px) { .popup { right: 24px; } .notes { left: 24px; width: 360px; } }
+@media (max-width: 760px) { .popup { right: 50%; transform: translateX(50%); top: 44px; width: 300px; } .notes { display: none; } .hero .dpanel { left: 50%; transform: translateX(-50%); bottom: 60px; } }
+
+.works { padding: 56px 0 0; text-align: center; }
+.works p { font-size: 14px; color: var(--t3); }
+.apps { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 34px; margin-top: 18px; font: 500 17px var(--sans); color: #6B6C76; letter-spacing: -0.01em; }
+
+/* ── Как работает: рабочий стол Mac слева, три режима справа, смена по прокрутке ── */
+.tour { padding: 24px 0 120px; }
+.tour-grid { display: grid; grid-template-columns: minmax(0, 1.9fr) minmax(0, 1fr); gap: 56px; align-items: start; max-width: 1320px; }
+.tour-stage { position: sticky; top: calc(50vh - var(--mh, 320px) / 2 + 34px); z-index: 2; }
+.mac-fit { position: relative; width: 100%; height: var(--mh, 320px); }
+.mac { position: absolute; left: 0; top: 0; width: 1100px; height: 700px; transform-origin: 0 0; border-radius: 18px; overflow: hidden; text-align: left;
+  background: #F3EEE8 url(assets/wallpaper.jpg) center / cover no-repeat;
+  box-shadow: 0 0 0 1px var(--line) inset, 0 40px 90px -50px rgba(35,38,51,.45); }
+.mac .menubar { position: relative; z-index: 3; }
+.mac .menubar .l b { font-weight: 600; }
+.scene { position: absolute; inset: 30px 0 0; opacity: 0; visibility: hidden; transition: opacity .6s var(--ease), visibility 0s .6s; }
+.scene.on { opacity: 1; visibility: visible; transition: opacity .6s var(--ease); }
+.dock { position: absolute; z-index: 3; left: 50%; bottom: 10px; transform: translateX(-50%); display: flex; align-items: flex-end; gap: 10px; padding: 8px 10px; border-radius: 20px; background: rgba(255,255,255,.6); box-shadow: 0 0 0 1px rgba(35,38,51,.08) inset; }
+.dock i { width: 46px; height: 46px; border-radius: 12px; background: var(--c, #fff); box-shadow: 0 0 0 1px rgba(35,38,51,.06) inset; }
+.dock img { width: 46px; height: 46px; border-radius: 12px; }
+.dock .run { position: relative; } .dock .run::after { content: ""; position: absolute; left: 50%; bottom: -6px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: #3A3C47; }
+.tour-steps { padding: 14vh 0 8vh; }
+.step { min-height: 62vh; display: flex; flex-direction: column; justify-content: center; opacity: .28; transition: opacity .5s var(--ease); }
+.step.on { opacity: 1; }
+.sn { font: 600 14px var(--sans); color: var(--mic); font-variant-numeric: tabular-nums; }
+.step h3 { margin-top: 14px; font-size: clamp(28px, 2.8vw, 40px); letter-spacing: -0.03em; line-height: 1.1; }
+.step p { margin-top: 18px; color: var(--t2); font-size: 18px; line-height: 1.6; }
+.step .apps-s { margin-top: 14px; font-size: 15px; color: var(--t3); }
+@media (max-width: 960px) {
+  .tour-grid { grid-template-columns: 1fr; gap: 0; }
+  .tour-stage { top: 68px; background: var(--bg); padding: 12px 0 16px; }
+  .tour-steps { padding: 4vh 0 10vh; }
+  .step { min-height: 60vh; padding-top: 30vh; }
+  .step h3 { font-size: 28px; } .step p { font-size: 16px; }
+}
+/* Окна внутри рабочего стола */
+.call { position: absolute; left: 40px; top: 40px; width: 560px; height: 420px; overflow: hidden; display: flex; flex-direction: column; }
+.call .tiles { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
+.call .tile { position: relative; border-radius: 10px; background: #E4E0F2; display: grid; place-items: center; }
+.call .tile.b { background: #F3E2D6; }
+.call .tile > span { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; font: 600 24px var(--sys); color: #fff; background: var(--mic); }
+.call .tile.b > span { background: var(--app); }
+.call .tile em { position: absolute; left: 10px; bottom: 8px; font: 500 12px var(--sys); font-style: normal; color: var(--a-ink); background: rgba(255,255,255,.75); padding: 2px 8px; border-radius: 6px; }
+.call .ctl { display: flex; justify-content: center; gap: 10px; padding: 10px; border-top: 1px solid var(--a-border); }
+.call .ctl i { width: 34px; height: 34px; border-radius: 50%; background: var(--a-fill); } .call .ctl i.x { background: var(--danger); width: 54px; border-radius: 17px; }
+.finder { position: absolute; left: 40px; top: 50px; width: 430px; overflow: hidden; }
+.finder .fl { padding: 6px; display: grid; gap: 2px; }
+.finder .fl div { display: flex; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 6px; font: 13px var(--sys); color: var(--a-ink); }
+.finder .fl div.on { background: var(--mic); color: #fff; } .finder .fl div.on small { color: rgba(255,255,255,.8); }
+.finder .fl svg { width: 15px; height: 15px; color: var(--a-ink2); flex: none; } .finder .fl div.on svg { color: #fff; }
+.finder .fl small { margin-left: auto; font-size: 11px; color: var(--a-ink3); }
+.mac .chat { top: 50px; width: 760px; }
+.mac .keys { bottom: 230px; }
+.mac .scene .dpanel { bottom: 120px; }
+.mac .livewin { left: auto; right: 36px; top: 150px; transform: none; width: 620px; }
+.mac .filewin { left: auto; right: 36px; top: 140px; transform: none; width: 650px; }
+.mac .fres { min-height: 150px; }
+.mac .livewin { top: 250px; width: 600px; } .mac .livewin .lines { min-height: 150px; }
+.call { left: 34px; top: 22px; width: 700px; height: 330px; }
+.call .tiles { grid-template-columns: repeat(3, 1fr); }
+.call .tile { overflow: hidden; background: #E4E0F2; }
+
+.call .tile { background: #ECE7F5; box-shadow: inset 0 0 0 0 transparent; transition: box-shadow .25s var(--ease); }
+.call .tile.t2 { background: #E2EFEA; } .call .tile.t3 { background: #F4E8DD; }
+.call .tile .ava { position: relative; width: 84px; height: 84px; font-size: 30px; background: #D9845A; }
+.call .tile.t2 .ava { background: #4E9C8F; } .call .tile.t3 .ava { background: var(--mic); }
+.call .tile .ava::before { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 3px solid var(--app); opacity: 0; }
+.call .tile.t3 .ava::before { border-color: var(--mic); }
+.call .tile em { display: inline-flex; align-items: center; gap: 6px; }
+.call .tile em .eq { display: none; gap: 2px; align-items: center; height: 10px; }
+.call .tile em .eq i { width: 2px; height: 3px; border-radius: 1px; background: var(--app); }
+.call .tile.t3 em .eq i { background: var(--mic); }
+.call .tile.talk { box-shadow: inset 0 0 0 3px var(--app); } .call .tile.t3.talk { box-shadow: inset 0 0 0 3px var(--mic); }
+.call .tile.talk .ava::before { animation: talkRing 1s var(--ease) infinite; }
+.call .tile.talk em .eq { display: inline-flex; } .call .tile.talk em .eq i { animation: talkEq .5s ease-in-out infinite alternate; }
+.call .tile.talk em .eq i:nth-child(2) { animation-delay: -.2s; } .call .tile.talk em .eq i:nth-child(3) { animation-delay: -.35s; }
+@keyframes talkRing { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.25); } }
+@keyframes talkEq { to { height: 10px; } }
+/* Окно «История транскрипций» (1.9.9), раздел «Файлы» */
+.hist { position: absolute; right: 26px; top: 46px; width: 760px; height: 470px; overflow: hidden; display: flex; flex-direction: column; }
+.hist .hb { flex: 1; display: grid; grid-template-columns: 184px 226px 1fr; min-height: 0; }
+.hside { background: var(--a-fill); padding: 12px 10px; display: flex; flex-direction: column; gap: 2px; font-family: var(--sys); }
+.hside .hcap { font: 500 10px var(--sys); letter-spacing: .08em; color: var(--a-ink3); padding: 0 8px 6px; }
+.hside .it { display: flex; align-items: center; gap: 8px; height: 30px; white-space: nowrap; padding: 0 8px; border-radius: 8px; font-size: 12.5px; color: var(--a-ink2); }
+.hside .it svg { width: 13px; height: 13px; flex: none; }
+.hside .it small { margin-left: auto; font-size: 11px; color: var(--a-ink3); font-variant-numeric: tabular-nums; }
+.hside .it.on { background: rgba(94,106,210,.12); color: var(--a-ink); font-weight: 500; } .hside .it.on svg { color: var(--mic); }
+.hside .loc { margin-top: auto; display: flex; align-items: center; gap: 6px; padding: 0 8px; font-size: 10.5px; color: var(--a-ink3); }
+.hside .loc svg { width: 10px; height: 10px; }
+.hlist { border-left: 1px solid var(--a-border); border-right: 1px solid var(--a-border); padding: 12px; display: flex; flex-direction: column; gap: 8px; font-family: var(--sys); min-width: 0; }
+.hlist h4 { margin: 0; font: 600 18px var(--serif); color: var(--a-ink); }
+.hdz { border: 1px dashed var(--a-ink3); border-radius: 12px; padding: 12px; display: grid; justify-items: center; gap: 6px; font-size: 11.5px; color: var(--a-ink2); transition: border-color .3s, background-color .3s; }
+.hdz svg { width: 16px; height: 16px; color: var(--mic); }
+.hdz .b { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 7px; background: var(--mic); color: var(--a-surface); font: 500 11px var(--sys); }
+.hdz .b svg { width: 10px; height: 10px; color: var(--a-surface); }
+.hdz.hot { border-color: var(--mic); border-style: solid; background: rgba(94,106,210,.08); }
+.hgrp { font: 500 10px var(--sys); letter-spacing: .08em; color: var(--a-ink3); margin-top: 4px; }
+.hrow { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 8px; padding: 6px; border-radius: 8px; }
+.hrow.on { background: rgba(94,106,210,.12); }
+.hrow .bd { width: 28px; height: 28px; border-radius: 7px; display: grid; place-items: center; background: rgba(35,38,51,.07); font: 600 8px var(--sys); color: var(--a-ink2); }
+.hrow.q .bd { background: rgba(94,106,210,.14); color: var(--mic); }
+.hrow b { display: block; font-size: 12px; font-weight: 500; color: var(--a-ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.hrow span { font-size: 10.5px; color: var(--a-ink2); }
+.hrow small { font-size: 10.5px; color: var(--a-ink3); font-variant-numeric: tabular-nums; }
+.hrow .pb { display: block; height: 4px; border-radius: 2px; background: rgba(35,38,51,.08); margin-top: 4px; overflow: hidden; } .hrow .pb i { display: block; height: 100%; background: var(--mic); transform-origin: left; transform: scaleX(0); }
+.hdet { padding: 16px 18px; font-family: var(--sys); min-width: 0; position: relative; }
+.hdet h4 { margin: 0; font: 600 20px var(--serif); color: var(--a-ink); }
+.hdet .meta { margin-top: 4px; font-size: 11.5px; color: var(--a-ink2); }
+.hdet .acts { display: flex; gap: 6px; margin-top: 10px; }
+.hdet .acts span { display: inline-flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-radius: 8px; background: rgba(35,38,51,.08); font: 500 11.5px var(--sys); color: var(--a-ink); }
+.hdet .acts svg { width: 11px; height: 11px; }
+.stages { margin-top: 12px; border-radius: 12px; background: var(--a-fill); padding: 12px 14px; display: grid; gap: 10px; }
+.stages div { display: flex; align-items: center; gap: 8px; font-size: 12.5px; color: var(--a-ink); }
+.stages svg { width: 14px; height: 14px; color: var(--a-ink3); flex: none; } .stages .done svg { color: var(--ok); }
+.stages em { margin-left: auto; font-style: normal; font-size: 11px; color: var(--a-ink2); font-variant-numeric: tabular-nums; }
+.stages .pb { height: 4px; border-radius: 2px; background: rgba(35,38,51,.08); margin-left: 22px; overflow: hidden; } .stages .pb i { display: block; height: 100%; background: var(--mic); transform-origin: left; transform: scaleX(0); }
+.hlines { margin-top: 14px; display: grid; gap: 8px; }
+.hlines .ln { grid-template-columns: 46px 1fr; font-size: 12.5px; }
+.hempty { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; gap: 8px; font-size: 12.5px; color: var(--a-ink3); }
+.hempty svg { width: 22px; height: 22px; }
+.hdet > .view { display: none; } .hdet[data-v="q"] .vq, .hdet[data-v="r"] .vr { display: block; } .hdet[data-v="e"] .hempty { display: grid; } .hdet:not([data-v="e"]) .hempty { display: none; }
+.dragf { position: absolute; z-index: 5; left: 64px; top: 92px; display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 10px; background: var(--a-surface); box-shadow: 0 0 0 1px var(--a-border) inset, 0 14px 30px -12px rgba(35,38,51,.45); font: 500 12.5px var(--sys); color: var(--a-ink); opacity: 0; transition: transform 1.1s cubic-bezier(.45,0,.2,1), opacity .25s; pointer-events: none; }
+.dragf svg { width: 15px; height: 15px; color: var(--app); }
+.dragf.go { transform: translate(410px, 120px) rotate(-4deg); }
+.finder { width: 340px; top: 40px; }
+
+
+/* Сцена: диктовка */
+.chat { position: absolute; left: 50%; top: 52px; transform: translateX(-50%); width: min(900px, 90%); z-index: 1; overflow: hidden; }
+.chat .bar { height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 14px; border-bottom: 1px solid var(--a-border); font-size: 13px; color: var(--a-ink2); }
+.chat .bar b { color: var(--a-ink); font-weight: 600; }
+.msgs { padding: 16px 18px 6px; display: grid; gap: 14px; }
+.msg { display: grid; grid-template-columns: 32px 1fr; gap: 10px; font-size: 14px; }
+.ava { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; font: 600 13px var(--sys); color: #FBF9F4; }
+.msg b { font-size: 13.5px; } .msg time { font-size: 11.5px; color: var(--a-ink3); margin-left: 6px; }
+.msg p { color: var(--a-ink); margin-top: 2px; line-height: 1.5; }
+.composer { margin: 10px 14px 14px; border-radius: 12px; box-shadow: 0 0 0 1px var(--a-border) inset; padding: 12px 14px; min-height: 72px; font-size: 14.5px; line-height: 1.55; color: var(--a-ink); }
+.composer .ph { color: var(--a-ink3); }
+.composer .ins { animation: ins .8s var(--ease); }
+@keyframes ins { from { opacity: 0; filter: blur(4px); } to { opacity: 1; filter: none; } }
+.keys { position: absolute; left: 50%; transform: translateX(-50%); bottom: 200px; display: flex; gap: 10px; z-index: 2; }
+.cap { width: 74px; height: 66px; border-radius: 14px; display: grid; place-items: center; font: 500 22px var(--sys); color: #3A3C47;
+  background: linear-gradient(#FFFFFF, #F1EFEA); box-shadow: 0 5px 0 #D9D5CB, 0 0 0 1px rgba(35,38,51,.10) inset, 0 18px 26px -16px rgba(35,38,51,.35); transition: transform .18s var(--ease), box-shadow .18s; }
+.cap.w { width: 168px; font: 500 14px var(--sys); }
+.cap.dn { transform: translateY(5px); box-shadow: 0 1px 0 #D9D5CB, 0 0 0 1.5px rgba(94,106,210,.55) inset; color: var(--mic); }
+.scene .dpanel { left: 50%; bottom: 84px; transform: translate(-50%, 24px); opacity: 0; transition: opacity .4s var(--ease), transform .5s var(--ease); z-index: 2; }
+.scene .dpanel.up { opacity: 1; transform: translate(-50%, 0); }
+
+/* Сцена: живой режим */
+.livewin { position: absolute; left: 50%; top: calc(50% - 26px); transform: translate(-50%, -50%); width: min(900px, 92%); z-index: 1; overflow: hidden; }
+.wbar { position: relative; height: 30px; display: flex; align-items: center; gap: 8px; padding: 0 12px; }
+.wbar i { width: 12px; height: 12px; border-radius: 50%; background: #DCD7CC; }
+.wbar span { position: absolute; left: 0; right: 0; text-align: center; font: 600 13px var(--sys); color: var(--a-ink2); pointer-events: none; }
+.lw-head { display: flex; align-items: center; gap: 12px; padding: 10px 16px; border-bottom: 1px solid var(--a-border); }
+.lw-head canvas { width: 120px; height: 28px; flex: none; }
+.chip { display: inline-flex; align-items: center; gap: 4px; font: 500 10px var(--sys); padding: 3px 6px; border-radius: 999px; }
+.chip svg { width: 9px; height: 9px; }
+.chip.m { color: var(--mic); background: rgba(94,106,210,.13); } .chip.a { color: var(--app); background: rgba(217,132,90,.13); }
+.wsp { flex: 1; }
+.wbtn { display: inline-flex; align-items: center; gap: 5px; padding: 5px 12px; border-radius: 8px; background: var(--a-fill); font: 500 12px var(--sys); color: var(--a-ink); white-space: nowrap; }
+.wbtn svg { width: 10px; height: 10px; }
+.wbtn.stop { background: var(--rec); color: var(--a-surface); } .wbtn.stop i { width: 8px; height: 8px; border-radius: 2px; background: var(--dot); }
+.lines { padding: 12px 18px 16px; min-height: 196px; display: grid; align-content: start; gap: 8px; }
+.ln { display: grid; grid-template-columns: 62px 1fr; gap: 4px; font: 13px/1.55 var(--sys); }
+.ln time { font: 11px var(--sys); color: var(--a-ink3); font-variant-numeric: tabular-nums; padding-top: 2px; }
+.ln .who { font-size: 11px; font-weight: 600; margin-right: 4px; }
+.ln .who.m { color: var(--mic); } .ln .who.a { color: var(--app); } .ln .who.s { color: var(--a-ink2); }
+.wfoot { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-top: 1px solid var(--a-border); }
+.wb { display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; border-radius: 5px; background: var(--a-fill); font: 500 12px var(--sys); color: var(--a-ink2); white-space: nowrap; }
+.wb svg { width: 11px; height: 11px; }
+.wc { margin-left: auto; font: 11px var(--sys); color: var(--a-ink3); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.ln.new { animation: ins .6s var(--ease); }
+
+/* Сцена: файлы */
+.filewin { position: absolute; left: 50%; top: calc(50% - 26px); transform: translate(-50%, -50%); width: min(900px, 92%); z-index: 1; overflow: hidden; }
+.fw { display: grid; grid-template-columns: 1fr 190px; border-top: 1px solid var(--a-border); }
+.fw-main { padding: 12px 16px 16px; min-width: 0; }
+.fw-head { display: flex; align-items: center; gap: 8px; }
+.fw-head svg { width: 14px; height: 14px; color: var(--a-ink2); flex: none; }
+.fw-head b { font: 500 17px var(--serif); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.okk { margin-left: auto; display: inline-flex; align-items: center; gap: 4px; font: 500 12px var(--sys); color: var(--ok); opacity: 0; transition: opacity .4s; white-space: nowrap; }
+.okk svg { width: 12px; height: 12px; } .okk.on { opacity: 1; }
+.fw-prog { margin-top: 10px; transition: opacity .4s, height .4s; }
+.fw-prog.done { opacity: 0; height: 0; margin: 0; overflow: hidden; }
+.pbar { height: 6px; border-radius: 3px; background: var(--a-fill); overflow: hidden; } .pbar i { display: block; height: 100%; width: 100%; background: var(--mic); transform: scaleX(0); transform-origin: left; }
+.pl { display: flex; justify-content: space-between; margin-top: 5px; font: 11px var(--sys); color: var(--a-ink2); font-variant-numeric: tabular-nums; } .pl span + span { color: var(--a-ink3); }
+.fmeta { margin-top: 8px; font: 11px var(--sys); color: var(--a-ink3); }
+.fres { margin-top: 12px; display: grid; gap: 6px; min-height: 180px; align-content: start; }
+.fres .ln { grid-template-columns: 55px 1fr; gap: 10px; } .fres .ln time { text-align: right; }
+.fw-side { border-left: 1px solid var(--a-border); display: flex; flex-direction: column; }
+.fw-side > b { font: 600 15px var(--serif); padding: 10px 12px; border-bottom: 1px solid var(--a-border); }
+.fmt { padding: 6px; display: grid; gap: 1px; }
+.fmt div { display: flex; align-items: center; gap: 8px; padding: 6px 10px; border-radius: 6px; font: 500 12px var(--sys); }
+.fmt div.on { background: rgba(94,106,210,.11); }
+.fmt svg { width: 13px; height: 13px; color: var(--mic); }
+.fmt small { margin-left: auto; font-size: 10px; font-weight: 400; color: var(--a-ink3); }
+.xbtn { margin: auto 12px 12px; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 8px; border-radius: 7px; background: var(--mic); color: var(--a-surface); font: 600 13px var(--sys); }
+.xbtn svg { width: 13px; height: 13px; }
+
+/* ── Разделы функций ───────────────────────────── */
+.feat { display: grid; grid-template-columns: 1fr 1.15fr; gap: 96px; align-items: center; }
+.feat.rev .ft { order: 2; }
+.ft h2 { font-size: clamp(32px, 3.8vw, 50px); }
+.ft .sub { margin-top: 22px; font-size: 18px; }
+.ft ul { list-style: none; margin: 30px 0 0; padding: 0; display: grid; gap: 12px; color: var(--t2); font-size: 16px; }
+.ft li { display: flex; gap: 12px; } .ft li svg { width: 18px; height: 18px; flex: none; margin-top: 4px; color: var(--mic); }
+.fv { position: relative; min-height: 460px; display: grid; place-items: center; padding: 40px; }
+.fv > .win { position: relative; width: 100%; max-width: 480px; z-index: 1; }
+@media (max-width: 960px) { .feat { grid-template-columns: 1fr; gap: 48px; } .feat.rev .ft { order: 0; } .fv { min-height: 380px; padding: 24px; } }
+
+/* Приватность: изометрическая схема Mac ↔ серверы, по линиям бегут служебные данные */
+.priv { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: center; }
+.priv h2 { font-size: clamp(32px, 3.8vw, 50px); }
+.priv .sub { margin-top: 18px; font-size: 17px; }
+.svc { list-style: none; margin: 14px 0 0; padding: 0; display: grid; gap: 0; }
+.svc-h { margin-top: 26px; font-size: 18px; }
+.svc li { display: grid; grid-template-columns: 40px 1fr; gap: 1px 14px; padding: 10px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.svc li:last-child { border-bottom: 1px solid var(--line); }
+.svc .d { grid-row: span 2; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; align-self: start; }
+.svc .d svg { width: 21px; height: 21px; }
+.svc .d.in { background: rgba(94,106,210,.12); color: var(--mic); } .svc .d.out { background: rgba(35,38,51,.07); color: #3A3C47; }
+.svc b { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; } .svc .dir { font: 500 11.5px var(--sans); font-style: normal; padding: 2px 8px; border-radius: 999px; background: rgba(35,38,51,.07); color: #4F515C; } .svc .dir.in { background: rgba(94,106,210,.12); color: var(--mic); }
+.svc b { font-weight: 600; } .svc span { color: var(--t3); font-size: 13.5px; line-height: 1.45; }
+.net-svg { width: 100%; height: auto; overflow: visible; font-family: var(--sans); }
+.net-svg .en { display: none; } html[data-lang="en"] .net-svg .ru { display: none; } html[data-lang="en"] .net-svg .en { display: inline; }
+.i-sh { fill: rgba(35,38,51,.07); filter: blur(14px); }
+.i-lap.s-t, .i-srv.s-t { fill: #FFFFFF; } .i-lap.s-y, .i-srv.s-y { fill: #F1EEE8; } .i-lap.s-x, .i-srv.s-x { fill: #E4DFD5; }
+.i-lap, .i-srv { stroke: rgba(35,38,51,.55); stroke-width: 1; stroke-linejoin: round; }
+.i-srv.acc.s-t { fill: #DDE1FA; } .i-srv.acc.s-y { fill: #C9CFF6; } .i-srv.acc.s-x { fill: #B4BCF2; }
+.i-kb { fill: #F4F1EB; stroke: rgba(35,38,51,.25); stroke-width: .8; } .i-key { fill: #FFFFFF; stroke: rgba(35,38,51,.22); stroke-width: .6; } .i-pad { fill: #F7F5F0; stroke: rgba(35,38,51,.25); stroke-width: .8; }
+.i-scr { fill: #23252F; }
+.i-win { fill: #FBF9F4; } .i-dot { fill: #DCD7CC; }
+.i-badge { fill: rgba(94,106,210,.12); } .i-badge-ic { color: var(--mic); } .i-badge-t { font: 600 6.5px var(--sans); fill: var(--mic); }
+.i-node { fill: #EFEBE2; } .i-node.hl { fill: #5E6AD2; } .i-node-ic { color: #4F515C; } .i-node-ic.hl { color: #FFFFFF; }
+.i-flow { stroke: rgba(35,38,51,.35); stroke-width: 1.2; stroke-dasharray: 2 3; fill: none; }
+.i-loc circle { fill: #D9845A; } .i-loc use { color: #FFFFFF; }
+.i-cap { font: 600 8px var(--sans); fill: #232633; }
+.i-wt { font: 600 9px var(--serif); fill: #232633; } .i-sep { stroke: #E6E1D6; stroke-width: 1; }
+.i-pill { fill: var(--mic); } .i-pill.a { fill: var(--app); }
+.i-chipbg { fill: rgba(94,106,210,.12); } .i-chipic { color: var(--mic); } .i-chipt { font: 600 6.5px var(--sans); fill: var(--mic); }
+.i-lab { font: 700 6.5px var(--sans); } .i-lab.m { fill: var(--mic); } .i-lab.a { fill: var(--app); }
+.i-bar { fill: #DCD7CC; } .i-bar.t { fill: #C9C4B8; }
+.i-stop { stroke: rgba(213,83,75,.5); stroke-width: 1.5; stroke-dasharray: 3 4; fill: none; }
+.i-x circle { fill: #FFFFFF; stroke: var(--danger); stroke-width: 1.6; } .i-x path { stroke: var(--danger); stroke-width: 2; stroke-linecap: round; }
+.i-puck.loc circle { fill: var(--app); stroke: none; } .i-puck.loc use { color: #FFFFFF; }
+.i-led { fill: #3F9A6B; } .i-srv.acc ~ g .i-led { fill: #3F9A6B; }
+.i-slot { fill: rgba(35,38,51,.18); } .i-vent { fill: rgba(35,38,51,.16); }
+.i-link { fill: none; stroke-width: 1.5; stroke-dasharray: 5 5; }
+.i-link.in { stroke: rgba(94,106,210,.7); } .i-link.out { stroke: rgba(35,38,51,.4); }
+.i-wall { fill: rgba(213,83,75,.06); stroke: rgba(213,83,75,.55); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.i-puck circle { fill: #FFFFFF; stroke-width: 1.6; filter: drop-shadow(0 4px 8px rgba(35,38,51,.18)); }
+.i-puck.in circle { stroke: var(--mic); } .i-puck.in use { color: var(--mic); }
+.i-puck.out circle { stroke: #4F515C; } .i-puck.out use { color: #4F515C; }
+.i-call path { stroke: rgba(35,38,51,.45); stroke-width: 1; fill: none; } .i-call circle { fill: #232633; }
+.i-call text { font: 500 11px var(--mono); letter-spacing: .06em; fill: #4F515C; }
+.i-call.blk path { stroke: rgba(213,83,75,.6); } .i-call.blk circle { fill: var(--danger); } .i-call.blk text { fill: var(--danger); }
+@media (max-width: 960px) { .priv { grid-template-columns: 1fr; gap: 0; } .priv .ft { display: contents; } .priv h2 { order: 1; } .priv .sub { order: 2; } .priv .net { order: 3; margin-top: 28px; } .priv .svc { order: 4; } }
+
+/* Бенто фишек */
+.bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
+.cell { position: relative; border-radius: 22px; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line) inset; padding: 30px; overflow: hidden; display: flex; flex-direction: column; }
+.cell h3 { font-size: 19px; } .cell p { margin-top: 8px; color: var(--t2); font-size: 15px; }
+.cell .demo { margin-top: auto; padding-top: 28px; }
+.cell .demo.search { padding-top: 0; margin-top: 24px; }
+.cell .demo.shotwrap { padding-top: 24px; }
+.c3 { grid-column: span 3; } .c2 { grid-column: span 2; } .c4 { grid-column: span 4; } .c6 { grid-column: span 6; }
+@media (max-width: 960px) { .bento { grid-template-columns: 1fr 1fr; } .c3, .c2, .c4, .c6 { grid-column: span 2; } }
+@media (max-width: 600px) { .cell { padding: 24px; } }
+.strike { font: 500 17px/1.6 var(--sys); color: var(--t1); }
+.strike s { color: var(--t3); text-decoration-color: var(--dot); text-decoration-thickness: 2px; transition: opacity .7s 1s var(--ease), color .7s 1s; }
+.cell.in .strike s { opacity: .35; }
+.num { display: flex; align-items: center; gap: 14px; font: 500 16px var(--sys); flex-wrap: wrap; }
+.num .from { color: var(--t3); } .num .to { font: 600 26px var(--sans); letter-spacing: -0.03em; }
+.num svg { width: 18px; height: 18px; color: var(--t3); }
+.fix { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; font: 500 15px var(--sys); }
+.fix .from { color: var(--t3); text-decoration: line-through; text-decoration-color: var(--dot); } .fix svg { width: 16px; height: 16px; color: var(--t3); } .fix .to { color: var(--t1); }
+.dict-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.dict-chips span { font: 500 13px var(--sys); padding: 6px 11px; border-radius: 9px; background: rgba(94,106,210,.12); color: var(--mic); }
+.search { border-radius: 14px; background: var(--a-surface); overflow: hidden; font-family: var(--sys); }
+.search .f { display: flex; align-items: center; gap: 8px; padding: 11px 14px; border-bottom: 1px solid var(--a-border); font-size: 14px; }
+.search .f svg { width: 15px; height: 15px; color: var(--a-ink3); }
+.search .r { padding: 10px 14px; font-size: 13.5px; color: var(--a-ink2); }
+.search .r + .r { border-top: 1px solid var(--a-border); }
+.search .r b { display: block; color: var(--a-ink); font-weight: 500; font-size: 13px; }
+.search mark { background: rgba(94,106,210,.18); color: var(--a-ink); border-radius: 3px; padding: 0 2px; }
+.agent { max-width: 640px; display: grid; gap: 10px; font: 14.5px/1.5 var(--sys); }
+.agent .q { justify-self: end; padding: 10px 14px; border-radius: 14px 14px 4px 14px; background: var(--t1); color: var(--bg-2); }
+.agent .tool { justify-self: start; font: 500 12px var(--mono); color: var(--mic); padding: 4px 10px; border-radius: 999px; background: rgba(94,106,210,.1); }
+.agent .a { padding: 10px 14px; border-radius: 14px 14px 14px 4px; background: var(--a-fill); color: var(--a-ink); }
+.fmts { display: flex; flex-wrap: wrap; gap: 8px; }
+.fmts span { font: 500 13px var(--sys); padding: 7px 12px; border-radius: 9px; background: rgba(35,38,51,.05); box-shadow: 0 0 0 1px var(--line) inset; color: var(--t1); }
+.term { border-radius: 12px; background: #23252F; box-shadow: 0 0 0 1px var(--line) inset; padding: 16px 18px; font: 13px/1.75 var(--mono); color: #E6E3DB; overflow-x: auto; white-space: pre; }
+@media (max-width: 600px) { .term { white-space: pre-wrap; overflow-wrap: normal; } }
+.term .p { color: #6CC496; } .term .c { color: #A4A4AF; }
+.sum { border-radius: 12px; background: var(--a-fill); padding: 16px 18px; font: 14px/1.6 var(--sys); color: var(--a-ink); }
+.sum b { display: block; font: 600 13px var(--sys); color: var(--a-ink2); margin-bottom: 6px; }
+.sum li { margin: 2px 0; }
+.sum ul { margin: 0; padding-left: 18px; }
+.macs { display: grid; gap: 8px; font: 14px var(--sys); }
+.macs div { display: flex; align-items: center; justify-content: space-between; padding: 10px 14px; border-radius: 10px; background: rgba(35,38,51,.04); box-shadow: 0 0 0 1px var(--line) inset; }
+.macs .add { box-shadow: 0 0 0 1px rgba(94,106,210,.35) inset; background: rgba(94,106,210,.06); }
+.otp { display: flex; gap: 4px; } .otp i { font: 500 13px var(--sys); font-style: normal; color: var(--t1); width: 20px; height: 24px; display: grid; place-items: center; border-radius: 5px; background: rgba(35,38,51,.07); }
+.macs b { font-weight: 500; } .macs span { color: var(--ok); font-size: 12.5px; }
+
+/* Три инструмента: визуал из приложения + текст */
+.tools { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.tool { border-radius: 22px; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line) inset; overflow: hidden; display: flex; flex-direction: column; }
+.tool .tv { position: relative; height: 210px; display: grid; place-items: center; padding: 20px; overflow: hidden; }
+.tool .tv .light { opacity: .7; }
+.tool .tx { padding: 0 26px 26px; }
+.tool .tx b { display: block; font: 600 20px var(--sans); letter-spacing: -0.02em; }
+.tool .tx p { margin-top: 8px; color: var(--t2); font-size: 15.5px; }
+.tv .win { position: relative; z-index: 1; width: 100%; max-width: 300px; font-family: var(--sys); }
+.tv-field { padding: 12px 14px; font-size: 13px; line-height: 1.5; color: var(--a-ink); }
+.tv-field small { display: block; font-size: 10.5px; color: var(--a-ink3); margin-bottom: 4px; }
+.tv .dpanel { position: relative; left: auto; bottom: auto; transform: none; width: 230px; margin: -6px auto 0; padding: 8px 10px; }
+.tv .dpanel .dtop { height: 22px; } .tv .dpanel canvas { height: 22px; }
+.tv-live { padding: 10px 12px; display: grid; gap: 6px; }
+.tv-live .h { display: flex; align-items: center; gap: 8px; padding-bottom: 8px; border-bottom: 1px solid var(--a-border); }
+.tv-live canvas { width: 72px; height: 20px; }
+.tv-live .ln { grid-template-columns: 1fr; font-size: 12px; }
+.tv-files { padding: 10px; display: grid; gap: 4px; }
+.plaques { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 16px; }
+.plaque { border-radius: 22px; padding: 28px; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line) inset; }
+.plaque .ic { width: 52px; height: 52px; border-radius: 16px; display: grid; place-items: center; background: rgba(94,106,210,.1); color: var(--mic); }
+.plaque .ic svg { width: 26px; height: 26px; }
+.plaque b { display: block; margin-top: 20px; font: 600 21px var(--sans); letter-spacing: -0.02em; }
+.plaque p { margin-top: 8px; color: var(--t2); font-size: 15.5px; }
+@media (max-width: 960px) { .tools, .plaques { grid-template-columns: 1fr; } }
+/* Бенто: карточки как кадры приложения, один акцент */
+.shot { position: relative; border-radius: 14px; background: var(--a-surface); box-shadow: 0 0 0 1px var(--a-border) inset, 0 18px 40px -26px rgba(35,38,51,.35); font-family: var(--sys); color: var(--a-ink); overflow: hidden; }
+.shot .sh { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-bottom: 1px solid var(--a-border); font-size: 12px; font-weight: 600; color: var(--a-ink2); }
+.shot .sh i { width: 9px; height: 9px; border-radius: 50%; background: #DCD7CC; }
+.shot .sh span { margin-left: 4px; }
+.said { padding: 14px 16px; display: grid; gap: 10px; }
+.said small { display: block; font-size: 11px; color: var(--a-ink3); margin-bottom: 3px; }
+.said .raw { font-size: 15px; color: var(--a-ink2); } .said .raw s { color: var(--a-ink3); text-decoration-color: var(--a-ink3); }
+.said .out { font-size: 15px; font-weight: 500; color: var(--a-ink); padding-top: 10px; border-top: 1px solid var(--a-border); }
+.rules { padding: 6px 0; }
+.rules div { display: grid; grid-template-columns: 1fr 16px 1fr; align-items: center; gap: 10px; padding: 9px 16px; font-size: 14px; }
+.rules div + div { border-top: 1px solid var(--a-border); }
+.rules .h { color: var(--a-ink3); } .rules .w { font-weight: 500; } .rules svg { width: 14px; height: 14px; color: var(--mic); }
+.rules .sub { display: block; padding: 0 16px 8px; font-size: 11.5px; color: var(--a-ink3); }
+.fgrid { padding: 12px 14px 14px; }
+.fgrid .hcap { font: 500 10px var(--sys); letter-spacing: .08em; color: var(--a-ink3); }
+.fgrid .g { display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; margin-top: 8px; }
+.fgrid .g span { height: 30px; border-radius: 8px; display: grid; place-items: center; background: rgba(35,38,51,.06); font: 500 11.5px var(--sys); }
+.fgrid .g span.on { background: rgba(94,106,210,.14); color: var(--mic); }
+.fgrid .sv { margin-top: 10px; height: 32px; border-radius: 8px; display: grid; place-items: center; background: var(--mic); color: var(--a-surface); font: 500 12.5px var(--sys); }
+.cell.soon .blur { filter: blur(5px); opacity: .55; pointer-events: none; user-select: none; }
+.cell.soon .tag { align-self: flex-start; display: inline-flex; align-items: center; gap: 6px; font: 600 12px var(--sans); color: var(--mic); background: rgba(94,106,210,.1); padding: 5px 12px; border-radius: 999px; }
+.cell.soon h3 { margin-top: 14px; }
+.cell.soon .overlay { position: absolute; inset: auto 30px 30px 30px; }
+/* Цены: спокойная подача, как у Wispr Flow и Superwhisper — бесплатная первой, цена не крупнее названия, оплата в окне */
+.seg { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--bg-3); margin: 0 auto 40px; }
+.seg label { position: relative; display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 999px; font: 500 15px var(--sans); color: var(--t2); cursor: pointer; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg label:has(input:checked) { background: var(--bg-2); color: var(--t1); box-shadow: 0 0 0 1px var(--line) inset; }
+.seg label:has(input:focus-visible) { outline: 2px solid var(--mic); outline-offset: 2px; }
+.seg em { font: 500 12px var(--sans); font-style: normal; color: var(--ok); }
+.plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; max-width: 920px; margin: 0 auto; text-align: left; }
+@media (max-width: 760px) { .plans { grid-template-columns: 1fr; } }
+.plan { border-radius: 24px; padding: 32px; display: flex; flex-direction: column; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line) inset; }
+.plan.pro { box-shadow: 0 0 0 1.5px rgba(94,106,210,.45) inset; }
+.plan h3 { font-size: 22px; }
+.plan .for { margin-top: 6px; font-size: 15px; color: var(--t2); }
+.price { display: flex; align-items: baseline; gap: 8px; margin-top: 22px; }
+.price b { font: 500 34px/1 var(--sans); letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.price span { color: var(--t2); font-size: 15px; }
+.price-sub { min-height: 20px; margin-top: 6px; font-size: 13.5px; color: var(--t3); }
+.plan .btn { width: 100%; margin-top: 24px; }
+.plan .reassure { margin-top: 10px; font-size: 13.5px; color: var(--t3); text-align: center; }
+.plan .inc { margin-top: 28px; font-size: 14px; font-weight: 500; color: var(--t2); }
+.plan ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; color: var(--t2); font-size: 15px; }
+.plan li { display: flex; gap: 10px; } .plan li svg { width: 17px; height: 17px; color: var(--mic); flex: none; margin-top: 3px; }
+@media (max-width: 520px) { .plan { padding: 26px 22px; } }
+dialog.paydlg { width: min(460px, calc(100vw - 32px)); border: 0; border-radius: 22px; padding: 28px; background: var(--bg-2); color: var(--t1); box-shadow: 0 0 0 1px var(--line) inset, 0 30px 80px -30px rgba(35,38,51,.45); }
+dialog.paydlg::backdrop { background: rgba(35,38,51,.28); }
+.paydlg h3 { font-size: 22px; padding-right: 32px; }
+.paydlg .x { position: absolute; top: 18px; right: 18px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: var(--bg-3); cursor: pointer; font-size: 18px; line-height: 1; color: var(--t2); }
+.pay { display: grid; gap: 10px; margin-top: 18px; }
+.pay input { height: 52px; border-radius: 999px; border: 0; padding: 0 20px; background: rgba(35,38,51,.05); box-shadow: 0 0 0 1px var(--line-2) inset; color: var(--t1); font: 16px var(--sans); min-width: 0; }
+.pay input::placeholder { color: var(--t3); }
+.pay input:focus-visible { outline: 2px solid var(--mic); outline-offset: 0; }
+.pay input[aria-invalid="true"] { box-shadow: 0 0 0 2px var(--danger) inset; }
+.pay-msg { min-height: 22px; margin-top: 10px; font-size: 14px; color: var(--t2); } .pay-msg.err { color: var(--danger); }
+.pay-note { font-size: 14px; color: var(--t3); margin-top: 2px; }
+.after { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--t3); }
+.after b { color: var(--t2); font-weight: 500; }
+code { font-family: var(--mono); font-size: .9em; }
+
+/* FAQ */
+.faq { max-width: 820px; margin: 0 auto; }
+details { border-bottom: 1px solid var(--line); }
+details:first-child { border-top: 1px solid var(--line); }
+summary { list-style: none; cursor: pointer; padding: 24px 48px 24px 0; font: 500 18px var(--sans); position: relative; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: ""; position: absolute; right: 8px; top: 30px; width: 9px; height: 9px; border-right: 1.5px solid var(--t3); border-bottom: 1.5px solid var(--t3); transform: rotate(45deg); transition: transform .35s var(--ease); }
+details[open] summary::after { transform: rotate(-135deg); top: 34px; }
+details p { padding: 0 0 26px; color: var(--t2); max-width: 66ch; }
+.todo { background: rgba(208,138,46,.14); color: #8A5A16; border-radius: 5px; padding: 1px 6px; font-size: 13px; }
+
+/* Финал */
+.final { text-align: center; padding: 180px 0 160px; overflow: hidden; }
+.final .icon { width: 96px; height: 96px; border-radius: 22px; margin: 0 auto 40px; box-shadow: 0 0 0 1px var(--line) inset, 0 20px 40px -20px rgba(35,38,51,.35); }
+.final h2 { max-width: 760px; margin: 0 auto; }
+.hw { white-space: nowrap; } .hw img { display: inline-block; width: .92em; height: .92em; border-radius: .24em; vertical-align: -0.12em; margin-right: .24em; box-shadow: 0 0 0 1px rgba(35,38,51,.08); }
+.final .sub { margin: 22px auto 0; }
+.final .cta { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-top: 40px; }
+.btn.soon { color: var(--t3); box-shadow: 0 0 0 1px var(--line) inset; cursor: default; }
+.btn.soon em { font: 500 12px var(--sans); font-style: normal; padding: 3px 8px; border-radius: 999px; background: var(--bg-3); color: var(--t2); }
+footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14px; color: var(--t3); }
+.foot { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
+.foot a { text-decoration: none; } .foot a:hover { color: var(--t1); }
+
+/* Появление */
+.js .rv { opacity: 0; transform: translateY(16px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+.js .rv.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; } .js .rv { opacity: 1; transform: none; transition: none; }
+  .caret::after { animation: none; } .scene, .scene .dpanel, .cap { transition: none; } .composer .ins, .ln.new, .call .tile.talk .ava::before, .call .tile.talk em .eq i { animation: none; }
 }
 </style>
+</head>
+<body>
+<!--
+THESIS: Show the real product doing each job, nothing else: dictation, live calls and file transcription demonstrated in Heardly's own windows, with every feature proven by a working micro-demo. Refuses page-wide metaphors (rejected: stenographer) and the screenshot-plus-three-tiles template.
+OWN-WORLD: Light warm-neutral page (#F6F4EF) with generous air, the light twin of v3; Heardly's real light-theme windows «Лён и барвинок» (surface #FBF9F4, fill #EFEBE2, barvinok #5E6AD2 for mic, apricot #D9845A for app audio, the app's current pill/bar waveform from WaveformView); those two brand colors used only as soft light fields behind scenes. Onest for the page voice, system SF inside app windows, New York for the app's own wordmarks. Pill buttons, hairline rules, no cards-of-icons.
+STORY: A hero that names every function, then a scroll tour (Mac desktop pinned left, three modes on the right switching the scene as you scroll), then a privacy diagram (everything on your Mac, only service data goes out), a bento of real feature demos, comparison, who it is not for, pricing with payment, FAQ, download.
+FIRST VIEWPORT: Centered headline, a descriptor that lists every function (dictation, live calls and computer audio, audio and video files), two pill actions (ink Download, ghost See-it-work) and the trial note; the scroll tour's Mac desktop starts right below.
+FORM: category standard at full craft. No concept roll: the owner rejected the rolled «Стенограмма» world and directed this form explicitly (2026-10-21: product page without metaphor; then «светлая тема текущего дизайна», approved v4 as main).
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md
+-->
 
-<div id="hdly-modal" style="display:none;position:fixed;inset:0;background:rgba(29,29,31,.45);z-index:1000;align-items:center;justify-content:center;padding:1.5rem">
-<div style="background:#fff;border-radius:16px;max-width:420px;width:100%;padding:2rem;font-family:Inter,sans-serif">
-<p id="hdly-m-title" style="font-weight:600;font-size:1.15rem;color:#1D1D1F;margin:0 0 .35rem">Heardly Pro</p>
-<p style="color:#6E6E73;font-size:.92rem;margin:0 0 1.25rem">Укажите e-mail — к нему привяжется подписка. После оплаты откройте Heardly и войдите по этому адресу: Pro включится автоматически.</p>
-<input id="hdly-email" type="email" placeholder="you@example.com" style="width:100%;border:1px solid #E5E5EA;border-radius:12px;padding:.8rem 1rem;font:400 1rem Inter,sans-serif;margin-bottom:.6rem;box-sizing:border-box">
-<p id="hdly-err" style="color:#FF453A;font-size:.85rem;min-height:1.1rem;margin:0 0 .6rem"></p>
-<button id="hdly-pay" style="display:flex;align-items:center;justify-content:center;gap:.5rem;background:#4F46E5;color:#fff;border:none;border-radius:12px;padding:.85rem 1.25rem;font:500 1rem Inter,sans-serif;cursor:pointer;text-decoration:none;width:100%">Перейти к оплате</button>
-<p style="color:#6E6E73;font-size:.78rem;margin:.9rem 0 0;text-align:center">Оплачивая, вы соглашаетесь с <a href="/legal/" style="color:#4F46E5">условиями</a> и <a href="/privacy/" style="color:#4F46E5">политикой данных</a>.</p>
-<button onclick="document.getElementById('hdly-modal').style.display='none'" style="position:absolute;top:0;left:0;width:0;height:0;opacity:0">×</button>
-</div>
-</div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-ear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9a6 6 0 0 1 12 0c0 3.5-3.5 4.5-3.5 8a3 3 0 0 1-6 0"/><path d="M9.5 9.5a2.5 2.5 0 0 1 5 0c0 1.5-1.5 2-1.5 3"/></symbol>
+  <symbol id="i-bubble" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-hist" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.5 15a9 9 0 1 0 2.1-9.4L1 10"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1.5"/><rect x="14" y="4" width="5" height="16" rx="1.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6m3 0V4a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2"/></symbol>
+  <symbol id="i-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></symbol>
+  <symbol id="i-okc" viewBox="0 0 24 24" fill="currentColor"><path d="M12 1.5a10.5 10.5 0 1 0 0 21 10.5 10.5 0 0 0 0-21zm5.2 7.6-6.1 6.4a1 1 0 0 1-1.45 0L6.8 12.6a1 1 0 1 1 1.45-1.4l2.1 2.2 5.4-5.7a1 1 0 0 1 1.45 1.4z"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-laptop" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="11" rx="1.5"/><path d="M2 19h20"/></symbol>
+  <symbol id="i-server" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></symbol>
+  <symbol id="i-win" viewBox="0 0 24 24" fill="currentColor"><path d="M3 5.5l7.5-1v7H3zM11.5 4.3L21 3v8.5h-9.5zM3 12.5h7.5v7L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+  <symbol id="i-wifioff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l20 20"/><path d="M8.5 16.4a5 5 0 0 1 6.6-.3"/><path d="M5 12.9a10 10 0 0 1 5.2-2.8"/><path d="M14.2 10.3A10 10 0 0 1 19 12.9"/><path d="M1.5 9a15 15 0 0 1 4.6-2.9"/><path d="M10.7 5A15 15 0 0 1 22.5 9"/><path d="M12 20h.01"/></symbol>
+  <symbol id="i-nobot" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="8" width="16" height="12" rx="3"/><path d="M12 8V4"/><circle cx="12" cy="3" r="1"/><path d="M9 13h.01M15 13h.01"/><path d="M9.5 17h5"/><path d="M2 22L22 2"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 14l4-4"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/><circle cx="12" cy="14" r="1.5"/></symbol>
+  <symbol id="i-people" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7"/><path d="M18 14.5a6.5 6.5 0 0 1 3.5 5.5"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-dropin" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-5"/><path d="M8 10l4 4 4-4"/><path d="M12 3v11"/></symbol>
+  <symbol id="i-dots" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-dasharray="1 4"><circle cx="12" cy="12" r="9"/></symbol>
+  <symbol id="i-bug" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="8" width="10" height="12" rx="5"/><path d="M9 8a3 3 0 0 1 6 0"/><path d="M3 13h4M17 13h4M4 7l3 2M20 7l-3 2M4 19l3-2M20 19l-3-2M12 12v8"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></symbol>
+  <symbol id="i-wave" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 10v4M8 7v10M12 4v16M16 8v8M20 11v2"/></symbol>
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.5-1-2.5-3.9ZM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4Z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-spk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></symbol>
+  <symbol id="i-file" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a1 1 0 0 0-1 1v16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8l-5-5Z"/><path d="M14 3v5h5M9 13v4M12 11v6M15 14v3"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 8.8a15 15 0 0 1 20 0M5.5 12.4a10 10 0 0 1 13 0M9 16a5 5 0 0 1 6 0"/><circle cx="12" cy="19.5" r="1" fill="currentColor"/></symbol>
+  <symbol id="i-bat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="7" width="18" height="10" rx="2.5"/><path d="M22 10.5v3" stroke-linecap="round"/><rect x="4" y="9" width="11" height="6" rx="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></symbol>
+</svg>
+
+<header id="hdr">
+  <div class="wrap nav">
+    <a class="brand" href="#top"><img src="assets/logo.png" alt="" width="28" height="28">Heardly</a>
+    <nav class="links" aria-label="Разделы / Sections">
+      <a href="#how"><span lang="ru">Как работает</span><span lang="en">How it works</span></a>
+      <a href="#privacy"><span lang="ru">Приватность</span><span lang="en">Privacy</span></a>
+      <a href="#features"><span lang="ru">Возможности</span><span lang="en">Features</span></a>
+      <a href="#pricing"><span lang="ru">Цены</span><span lang="en">Pricing</span></a>
+      <a href="#faq">FAQ</a>
+      <a href="docs/index.html"><span lang="ru">Документация</span><span lang="en">Docs</span></a>
+    </nav>
+    <div class="nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w btn-sm" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><svg aria-hidden="true"><use href="#i-apple"/></svg><span lang="ru">Скачать<span class="tail"> для Mac</span></span><span lang="en">Download<span class="tail"> for Mac</span></span></a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+
+<!-- 1. Первый экран -->
+<section class="hero center">
+  <div class="wrap">
+    <h1 class="rv"><span lang="ru">Говорите. Heardly превратит это<br class="br"> в&nbsp;текст прямо на&nbsp;компьютере</span><span lang="en">Speak. Heardly turns it into text right on&nbsp;your&nbsp;computer</span></h1>
+    <p class="sub rv"><span lang="ru">Диктовка текста голосом, живая расшифровка звонков и&nbsp;звука с&nbsp;компьютера, расшифровка аудио и&nbsp;видео. Всё работает на&nbsp;вашем&nbsp;компьютере, без интернета.</span><span lang="en">Voice dictation, live transcription of calls and computer audio, and audio and video file transcription. All of it runs on your computer, offline.</span></p>
+    <div class="cta rv">
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><svg aria-hidden="true"><use href="#i-apple"/></svg><span lang="ru">Скачать для Mac</span><span lang="en">Download for Mac</span></a>
+      <a class="btn btn-g" href="#how"><span lang="ru">Посмотреть, как работает</span><span lang="en">See it work</span></a>
+    </div>
+    <p class="note rv"><span lang="ru">14 дней всех функций бесплатно, без карты</span><span lang="en">14 days of everything free, no card</span></p>
+  </div>
+
+</section>
+
+<!-- 2. Как работает: рабочий стол и три режима -->
+<section id="how" class="tour">
+  <div class="wrap tour-grid">
+    <div class="tour-stage">
+      <div class="mac-fit" id="macFit"><div class="mac" id="mac" aria-hidden="true">
+        <div class="light"></div>
+        <div class="menubar">
+          <svg class="apple"><use href="#i-apple"/></svg><span class="l"><b id="mbApp">Slack</b></span><span class="l">File</span><span class="l">Edit</span><span class="l">View</span><span class="l">Window</span>
+          <span class="r"><span class="mb-icon"><i></i></span><svg><use href="#i-wifi"/></svg><svg><use href="#i-bat"/></svg><span lang="ru">Вт 12:04</span><span lang="en">Tue 12:04</span></span>
+        </div>
+        <div class="scene on" data-scene="dict">
+        <div class="win chat">
+          <div class="bar"><b>#design</b><span>Slack</span></div>
+          <div class="msgs">
+            <div class="msg"><span class="ava" style="background:#D9845A"><span lang="ru">А</span><span lang="en">A</span></span><div><b lang="ru">Аня</b><b lang="en">Anya</b><time>12:02</time><p lang="ru">Скинь, пожалуйста, итог по&nbsp;обложкам, хочу сегодня отдать в&nbsp;печать.</p><p lang="en">Could you send the cover decision? I want to send it to print today.</p></div></div>
+          </div>
+          <div class="composer" id="composer"><span class="ph" lang="ru">Сообщение в&nbsp;#design</span><span class="ph" lang="en">Message #design</span></div>
+        </div>
+        
+        <div class="win dpanel" id="dictPanel">
+          <div class="dtop"><canvas class="wave" data-mode="dict" data-bar="8"></canvas><span class="dtime" id="dictTime">0:00</span></div>
+          <div class="dfoot"><span class="l"><span lang="ru">Стоп</span><span lang="en">Stop</span></span><span class="r"><span lang="ru">Отмена</span><span lang="en">Cancel</span><span class="kbd">esc</span></span></div>
+        </div>
+        </div>
+        <div class="scene" data-scene="live">
+          <div class="win call">
+            <div class="wbar"><i></i><i></i><i></i><span lang="ru">Видеозвонок · Планёрка</span><span lang="en">Video call · Stand-up</span></div>
+            <div class="tiles" id="callTiles"><div class="tile t1"><span class="ava"><span lang="ru">М</span><span lang="en">M</span></span><em><span class="eq"><i></i><i></i><i></i></span><span lang="ru">Марина</span><span lang="en">Marina</span></em></div><div class="tile t2"><span class="ava"><span lang="ru">О</span><span lang="en">O</span></span><em><span class="eq"><i></i><i></i><i></i></span><span lang="ru">Ольга</span><span lang="en">Olga</span></em></div><div class="tile t3"><span class="ava"><span lang="ru">Я</span><span lang="en">Me</span></span><em><span class="eq"><i></i><i></i><i></i></span><span lang="ru">Вы</span><span lang="en">You</span></em></div></div>
+            <div class="ctl"><i></i><i></i><i></i><i class="x"></i></div>
+          </div>
+        <div class="win livewin">
+          <div class="wbar"><i></i><i></i><i></i><span lang="ru">Живая транскрипция</span><span lang="en">Live Transcription</span></div>
+          <div class="lw-head"><canvas class="wave" data-mode="live"></canvas>
+            <span class="chip m"><svg><use href="#i-mic"/></svg><span lang="ru">Микрофон</span><span lang="en">Microphone</span></span><span class="chip a"><svg><use href="#i-spk"/></svg><span lang="ru">Приложения</span><span lang="en">Apps</span></span>
+            <span class="wsp"></span><span class="wbtn"><svg><use href="#i-pause"/></svg><span lang="ru">Пауза</span><span lang="en">Pause</span></span><span class="wbtn stop"><i></i><span lang="ru">Стоп</span><span lang="en">Stop</span></span></div>
+          <div class="lines" id="liveLines"></div>
+          <div class="wfoot"><span class="wb"><svg><use href="#i-copy"/></svg><span lang="ru">Копировать</span><span lang="en">Copy All</span></span><span class="wb"><svg><use href="#i-hist"/></svg><span lang="ru">Последние</span><span lang="en">Copy last</span></span><span class="wb"><svg><use href="#i-trash"/></svg><span lang="ru">Очистить</span><span lang="en">Clear</span></span><span class="wc" id="liveWords"></span></div>
+        </div>
+        </div>
+        <div class="scene" data-scene="file">
+          <div class="win finder">
+            <div class="wbar"><i></i><i></i><i></i><span lang="ru">Загрузки</span><span lang="en">Downloads</span></div>
+            <div class="fl">
+              <div class="on"><svg><use href="#i-file"/></svg>interview_oct.m4a<small>58:12</small></div>
+              <div><svg><use href="#i-file"/></svg>webinar_rec.mp4<small>1:24:05</small></div>
+              <div><svg><use href="#i-file"/></svg>lecture_03.mov<small>47:30</small></div>
+              <div><svg><use href="#i-folder"/></svg><span lang="ru">Скриншоты</span><span lang="en">Screenshots</span></div>
+            </div>
+          </div>
+        <div class="dragf" id="dragF"><svg><use href="#i-file"/></svg>interview_oct.m4a</div>
+        <div class="win hist">
+          <div class="wbar"><i></i><i></i><i></i><span lang="ru">История транскрипций</span><span lang="en">Transcription History</span></div>
+          <div class="hb">
+            <div class="hside">
+              <div class="hcap" lang="ru">ИСТОРИЯ</div><div class="hcap" lang="en">HISTORY</div>
+              <div class="it"><svg><use href="#i-mic"/></svg><span lang="ru">Диктовки</span><span lang="en">Dictations</span><small>128</small></div>
+              <div class="it"><svg><use href="#i-people"/></svg><span lang="ru">Звонки и&nbsp;встречи</span><span lang="en">Calls and meetings</span><small>24</small></div>
+              <div class="it on"><svg><use href="#i-file"/></svg><span lang="ru">Файлы</span><span lang="en">Files</span><small id="hCount">2</small></div>
+              <div class="loc"><svg><use href="#i-lock"/></svg><span lang="ru">Хранится только на&nbsp;этом Mac</span><span lang="en">Stored only on this Mac</span></div>
+            </div>
+            <div class="hlist">
+              <h4 lang="ru">Файлы</h4><h4 lang="en">Files</h4>
+              <div class="hdz" id="hDrop"><svg><use href="#i-dropin"/></svg><span lang="ru">Перетащите аудио или видео</span><span lang="en">Drop audio or video here</span><span class="b"><svg><use href="#i-plus"/></svg><span lang="ru">Выбрать файл</span><span lang="en">Choose file</span></span></div>
+              <div id="hWork" hidden><div class="hgrp" lang="ru">В РАБОТЕ</div><div class="hgrp" lang="en">IN PROGRESS</div>
+                <div class="hrow q on"><span class="bd">M4A</span><span><b>interview_oct.m4a</b><span class="pb"><i id="hRowBar"></i></span></span><small id="hRowPct">0%</small></div></div>
+              <div class="hgrp" lang="ru">ГОТОВО</div><div class="hgrp" lang="en">READY</div>
+              <div class="hrow on" id="hNew" hidden><span class="bd">M4A</span><span><b>interview_oct.m4a</b><span lang="ru">Сегодня · 48 МБ</span><span lang="en">Today · 48 MB</span></span><small lang="ru">58 мин</small><small lang="en">58 min</small></div>
+              <div class="hrow"><span class="bd">MOV</span><span><b>lecture_03.mov</b><span lang="ru">Вчера · 312 МБ</span><span lang="en">Yesterday · 312 MB</span></span><small lang="ru">47 мин</small><small lang="en">47 min</small></div>
+              <div class="hrow"><span class="bd">MP4</span><span><b>webinar_rec.mp4</b><span lang="ru">18 окт · 1,1 ГБ</span><span lang="en">Oct 18 · 1.1 GB</span></span><small lang="ru">1 ч 24 мин</small><small lang="en">1 h 24 min</small></div>
+            </div>
+            <div class="hdet" id="hDet" data-v="e">
+              <div class="hempty"><svg><use href="#i-search"/></svg><span lang="ru">Выберите транскрипцию</span><span lang="en">Select a transcription</span></div>
+              <div class="view vq"><h4>interview_oct.m4a</h4><div class="meta" lang="ru">58 мин · 48 МБ · добавлен сегодня, 14:10</div><div class="meta" lang="en">58 min · 48 MB · added today, 14:10</div>
+                <div class="stages"><div id="stPrep"><svg><use href="#i-dots"/></svg><span lang="ru">Подготовка звука</span><span lang="en">Preparing audio</span></div>
+                  <div id="stTr"><svg><use href="#i-dots"/></svg><span lang="ru">Расшифровка</span><span lang="en">Transcribing</span><em id="stPct"></em></div><div class="pb"><i id="stBar"></i></div></div></div>
+              <div class="view vr"><h4>interview_oct.m4a</h4><div class="meta" lang="ru">Сегодня, 14:10 · 58 мин · 7&nbsp;940 слов</div><div class="meta" lang="en">Today, 14:10 · 58 min · 7,940 words</div>
+                <div class="acts"><span><svg><use href="#i-copy"/></svg><span lang="ru">Копировать</span><span lang="en">Copy</span></span><span><svg><use href="#i-share"/></svg><span lang="ru">Экспорт</span><span lang="en">Export</span></span></div>
+                <div class="hlines" id="fileLines"></div></div>
+            </div>
+          </div>
+        </div>
+        </div>
+        <div class="dock"><i style="--c:#FFFFFF"></i><i style="--c:#DCE3F7"></i><i style="--c:#F6E3D4"></i><i style="--c:#E2EEE6" class="run"></i><i style="--c:#EFEBE2"></i><i style="--c:#E7E1F3"></i><img class="run" src="assets/logo.png" alt=""></div>
+      </div></div>
+    </div>
+    <div class="tour-steps">
+      <article class="step on"><span class="sn">01</span><h3><span lang="ru">Диктовка в&nbsp;любое&nbsp;приложение</span><span lang="en">Dictation into any app</span></h3>
+        <p lang="ru">Зажмите горячую клавишу и&nbsp;говорите. Отпустите её, и&nbsp;текст появится там, где стоит курсор: в&nbsp;мессенджере, почте, заметках или коде.</p><p lang="en">Hold your hotkey and talk. Let go, and the text lands where your cursor is: in a messenger, email, notes or code.</p></article>
+      <article class="step"><span class="sn">02</span><h3><span lang="ru">Живой режим: звонки и&nbsp;звук с&nbsp;компьютера</span><span lang="en">Live mode: calls and computer audio</span></h3>
+        <p lang="ru">Heardly слушает микрофон и&nbsp;звук из&nbsp;приложений одновременно и&nbsp;расшифровывает разговор по&nbsp;ходу. Бот в&nbsp;звонок не&nbsp;заходит.</p><p lang="en">Heardly listens to your mic and app audio at once and transcribes the conversation as it happens. No bot joins the call.</p>
+        <p class="apps-s">Zoom, Google Meet, Telegram, Microsoft Teams, <span lang="ru">Яндекс Телемост, МТС Линк, </span>FaceTime</p></article>
+      <article class="step"><span class="sn">03</span><h3><span lang="ru">Расшифровка аудио и&nbsp;видео</span><span lang="en">Audio and video transcription</span></h3>
+        <p lang="ru">Перетащите запись в&nbsp;раздел «Файлы». Heardly расшифрует её в&nbsp;фоне, а&nbsp;готовый текст с&nbsp;таймкодами можно сохранить в&nbsp;DOCX, PDF, субтитры или таблицу.</p><p lang="en">Drop a recording into Files. Heardly transcribes it in the background, and you can save the timestamped text as DOCX, PDF, subtitles or a spreadsheet.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- 3. Приватность -->
+<section id="privacy">
+  <div class="wrap priv">
+    <div class="ft rv">
+      <h2><span lang="ru">Звук и&nbsp;текст остаются на&nbsp;вашем&nbsp;компьютере</span><span lang="en">Your audio and text stay on your&nbsp;computer</span></h2>
+      <p class="sub"><span lang="ru">Модель распознавания работает прямо на&nbsp;компьютере. Записи, расшифровки и&nbsp;история хранятся у&nbsp;вас.</span><span lang="en">The speech model runs right on your computer. Recordings, transcripts and history are stored with you.</span></p>
+      <h3 class="svc-h"><span lang="ru">Зачем Heardly связывается с&nbsp;сервером</span><span lang="en">Why Heardly talks to a server</span></h3>
+      <ul class="svc">
+        <li><span class="d in"><svg><use href="#i-dropin"/></svg></span><b><span lang="ru">Обновления</span><span lang="en">Updates</span></b><span lang="ru">Чтобы вы получали новые версии и&nbsp;исправления.</span><span lang="en">So you get new versions and fixes.</span></li>
+        <li><span class="d in"><svg><use href="#i-chip"/></svg></span><b><span lang="ru">Новая модель</span><span lang="en">New model</span></b><span lang="ru">Чтобы расшифровка была точнее. Учим на&nbsp;своих и&nbsp;открытых данных, не&nbsp;на&nbsp;ваших записях.</span><span lang="en">So transcription gets more accurate. Trained on our own and open data, not your recordings.</span></li>
+        <li><span class="d out"><svg><use href="#i-bug"/></svg></span><b><span lang="ru">Отчёты о&nbsp;сбоях</span><span lang="en">Crash reports</span></b><span lang="ru">Чтобы быстро чинить ошибки. Анонимно, без&nbsp;звука и&nbsp;текста.</span><span lang="en">So we can fix bugs fast. Anonymous, no audio or text.</span></li>
+        <li><span class="d out"><svg><use href="#i-mail"/></svg></span><b><span lang="ru">Проверка подписки</span><span lang="en">Subscription check</span></b><span lang="ru">Чтобы включить Pro. Передаём только email.</span><span lang="en">To turn on Pro. Only your email is sent.</span></li>
+      </ul>
+    </div>
+    <div class="net rv">
+      <svg class="net-svg" id="netSvg" viewBox="40 -86 700 560" role="img" aria-labelledby="netTitle">
+        <title id="netTitle">Звук и текст остаются на компьютере; с серверами Heardly ходят только обновления, модель, отчёты о сбоях и проверка подписки / Audio and text stay on the computer; only updates, the model, crash reports and the subscription check travel to Heardly servers</title>
+<ellipse class="i-sh" cx="280" cy="230" rx="190" ry="60"/>
+<ellipse class="i-sh" cx="596" cy="410" rx="120" ry="44"/>
+<path class="i-link in" id="l1" d="M435.3 245.0L591.2 335.0"/>
+<path class="i-link in" id="l2" d="M407.6 261.0L563.5 351.0"/>
+<path class="i-link out" id="l3" d="M376.4 279.0L532.3 369.0"/>
+<path class="i-link out" id="l4" d="M348.7 295.0L504.6 385.0"/>
+<polygon class="i-wall" points="478.6,246.0 343.5,324.0 343.5,278.0 478.6,200.0"/>
+<path class="i-stop" id="pStop" d="M319.3 302.0L348.7 319.0"/>
+<polygon class="i-lap s-y" points="120.1,186.0 310.6,296.0 310.6,305.0 120.1,195.0"/><polygon class="i-lap s-x" points="440.5,221.0 310.6,296.0 310.6,305.0 440.5,230.0"/><polygon class="i-lap s-t" points="250.0,111.0 440.5,221.0 310.6,296.0 120.1,186.0"/>
+<g transform="matrix(0.8660,0.5000,-0.8660,0.5000,250.0,111.0)"><rect class="i-kb" x="22" y="18" width="176" height="64" rx="5"/><rect class="i-key" x="28" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="45" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="62" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="79" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="96" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="113" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="130" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="147" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="164" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="181" y="24" width="13" height="11" rx="2"/><rect class="i-key" x="28" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="45" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="62" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="79" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="96" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="113" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="130" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="147" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="164" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="181" y="39" width="13" height="11" rx="2"/><rect class="i-key" x="28" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="45" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="62" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="79" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="96" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="113" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="130" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="147" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="164" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="181" y="54" width="13" height="11" rx="2"/><rect class="i-key" x="28" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="45" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="62" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="79" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="96" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="113" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="130" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="147" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="164" y="69" width="13" height="11" rx="2"/><rect class="i-key" x="181" y="69" width="13" height="11" rx="2"/><rect class="i-pad" x="76" y="94" width="68" height="40" rx="5"/></g>
+<polygon class="i-lap s-y" points="250.0,-39.0 440.5,71.0 440.5,221.0 250.0,111.0"/><polygon class="i-lap s-x" points="446.6,67.5 440.5,71.0 440.5,221.0 446.6,217.5"/><polygon class="i-lap s-t" points="256.1,-42.5 446.6,67.5 440.5,71.0 250.0,-39.0"/>
+<g transform="matrix(0.8660,0.5000,0,1,250.0,-39.0)">
+  <rect class="i-scr" x="8" y="8" width="204" height="134" rx="6"/>
+  <rect class="i-win" x="20" y="18" width="180" height="114" rx="7"/>
+  <circle class="i-dot" cx="29" cy="27" r="2.2"/><circle class="i-dot" cx="36" cy="27" r="2.2"/><circle class="i-dot" cx="43" cy="27" r="2.2"/>
+  <image href="assets/logo.png" x="94" y="21" width="11" height="11"/>
+  <text class="i-wt" x="108" y="30">Heardly</text>
+  <path class="i-sep" d="M20 37H200"/>
+  <rect class="i-pill" x="30" y="44" width="5" height="10" rx="2.5"/><rect class="i-pill" x="38" y="41" width="5" height="16" rx="2.5"/><rect class="i-pill" x="46" y="43" width="5" height="12" rx="2.5"/><rect class="i-pill a" x="54" y="45" width="5" height="8" rx="2.5"/>
+  <text class="i-lab m" x="30" y="72"><tspan class="ru">Я:</tspan><tspan class="en">Me:</tspan></text><rect class="i-bar" x="46" y="67" width="110" height="6" rx="3"/>
+  <text class="i-lab a" x="30" y="87"><tspan class="ru">Компьютер:</tspan><tspan class="en">Computer:</tspan></text><rect class="i-bar" x="78" y="82" width="96" height="6" rx="3"/>
+  <text class="i-lab m" x="30" y="102"><tspan class="ru">Я:</tspan><tspan class="en">Me:</tspan></text><rect class="i-bar t" x="46" y="97" width="0" height="6" rx="3"><animate attributeName="width" values="0;84;84" keyTimes="0;.6;1" dur="2.8s" repeatCount="indefinite"/></rect>
+  <rect class="i-badge" x="30" y="112" width="160" height="13" rx="6.5"/>
+  <use href="#i-lock" x="36" y="114.5" width="8" height="8" class="i-badge-ic"/>
+  <text class="i-badge-t" x="48" y="121.5"><tspan class="ru">расшифровка на этом компьютере</tspan><tspan class="en">transcribed on this computer</tspan></text>
+</g>
+<polygon class="i-srv s-y" points="494.2,365.0 598.1,425.0 598.1,451.0 494.2,391.0"/><polygon class="i-srv s-x" points="702.1,365.0 598.1,425.0 598.1,451.0 702.1,391.0"/><polygon class="i-srv s-t" points="598.1,305.0 702.1,365.0 598.1,425.0 494.2,365.0"/>
+<g transform="matrix(0.8660,0.5000,0,1,494.2,365.0)"><circle class="i-led" cx="14" cy="13" r="3"/><rect class="i-slot" x="26" y="11" width="56" height="4" rx="2"/></g>
+<g transform="matrix(-0.8660,0.5000,0,1,702.1,365.0)"><rect class="i-vent" x="12" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="22" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="32" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="42" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="52" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="62" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="72" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="82" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="92" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="102" y="9" width="5" height="9" rx="1.5"/></g>
+<polygon class="i-srv s-y" points="494.2,331.0 598.1,391.0 598.1,417.0 494.2,357.0"/><polygon class="i-srv s-x" points="702.1,331.0 598.1,391.0 598.1,417.0 702.1,357.0"/><polygon class="i-srv s-t" points="598.1,271.0 702.1,331.0 598.1,391.0 494.2,331.0"/>
+<g transform="matrix(0.8660,0.5000,0,1,494.2,331.0)"><circle class="i-led" cx="14" cy="13" r="3"/><rect class="i-slot" x="26" y="11" width="56" height="4" rx="2"/></g>
+<g transform="matrix(-0.8660,0.5000,0,1,702.1,331.0)"><rect class="i-vent" x="12" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="22" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="32" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="42" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="52" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="62" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="72" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="82" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="92" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="102" y="9" width="5" height="9" rx="1.5"/></g>
+<polygon class="i-srv acc s-y" points="494.2,297.0 598.1,357.0 598.1,383.0 494.2,323.0"/><polygon class="i-srv acc s-x" points="702.1,297.0 598.1,357.0 598.1,383.0 702.1,323.0"/><polygon class="i-srv acc s-t" points="598.1,237.0 702.1,297.0 598.1,357.0 494.2,297.0"/>
+<g transform="matrix(0.8660,0.5000,0,1,494.2,297.0)"><circle class="i-led" cx="14" cy="13" r="3"/><rect class="i-slot" x="26" y="11" width="56" height="4" rx="2"/></g>
+<g transform="matrix(-0.8660,0.5000,0,1,702.1,297.0)"><rect class="i-vent" x="12" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="22" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="32" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="42" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="52" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="62" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="72" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="82" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="92" y="9" width="5" height="9" rx="1.5"/><rect class="i-vent" x="102" y="9" width="5" height="9" rx="1.5"/></g>
+<g class="i-puck loc"><circle r="11"/><use href="#i-wave" x="-6.5" y="-6.5" width="13" height="13"/><animateMotion dur="2.2s" repeatCount="indefinite"><mpath href="#pStop"/></animateMotion><animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.15;.8;1" dur="2.2s" repeatCount="indefinite"/></g>
+<g class="i-x"><circle cx="353.9" cy="322.0" r="11"/><path d="M349.9 318.0l8 8M357.9 318.0l-8 8"/></g>
+<g class="i-puck in"><circle r="13"/><use href="#i-dropin" x="-7.5" y="-7.5" width="15" height="15"/><animateMotion dur="3.4s" begin="0s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l1"/></animateMotion></g>
+<g class="i-puck in"><circle r="13"/><use href="#i-chip" x="-7.5" y="-7.5" width="15" height="15"/><animateMotion dur="3.4s" begin="1.2s" repeatCount="indefinite" keyPoints="1;0" keyTimes="0;1" calcMode="linear"><mpath href="#l2"/></animateMotion></g>
+<g class="i-puck out"><circle r="13"/><use href="#i-bug" x="-7.5" y="-7.5" width="15" height="15"/><animateMotion dur="3.4s" begin=".6s" repeatCount="indefinite"><mpath href="#l3"/></animateMotion></g>
+<g class="i-puck out"><circle r="13"/><use href="#i-mail" x="-7.5" y="-7.5" width="15" height="15"/><animateMotion dur="3.4s" begin="1.8s" repeatCount="indefinite"><mpath href="#l4"/></animateMotion></g>
+<g class="i-call "><path d="M256.1 -42.5L226.1 -68.5"/><circle cx="256.1" cy="-42.5" r="2"/><text x="220.1" y="-64.5" text-anchor="end"><tspan class="ru">ВАШ КОМПЬЮТЕР</tspan><tspan class="en">YOUR COMPUTER</tspan></text></g>
+<g class="i-call "><path d="M598.1 237.0L598.1 189.0"/><circle cx="598.1" cy="237.0" r="2"/><text x="604.1" y="193.0" text-anchor="start"><tspan class="ru">СЕРВЕРЫ HEARDLY</tspan><tspan class="en">HEARDLY SERVERS</tspan></text></g>
+<image href="assets/logo.png" x="576.1" y="181.0" width="15" height="15"/>
+<g class="i-call blk"><path d="M353.9 322.0L333.9 392.0"/><circle cx="353.9" cy="322.0" r="2"/><text x="327.9" y="396.0" text-anchor="end"><tspan class="ru">ЗВУК И ТЕКСТ НЕ ПОКИДАЮТ КОМПЬЮТЕР</tspan><tspan class="en">AUDIO AND TEXT NEVER LEAVE</tspan></text></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<!-- 4. Возможности -->
+<section id="features" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2><span lang="ru">Готовый текст без&nbsp;ручных правок</span><span lang="en">Clean text, no manual fixes</span></h2>
+    </div>
+    <div class="bento">
+      <div class="cell c3 rv"><h3 lang="ru">Убирает слова-паразиты</h3><h3 lang="en">Removes filler words</h3><p lang="ru">«Ну», «типа» и&nbsp;«короче» не&nbsp;попадают в&nbsp;текст, смысл фразы остаётся.</p><p lang="en">"Um", "like" and "you know" stay out of the text, the meaning stays.</p>
+        <div class="demo shotwrap"><div class="shot said">
+          <div class="raw"><small lang="ru">Вы сказали</small><small lang="en">You said</small><span lang="ru"><s>Ну, короче,</s> давай созвонимся <s>типа</s> завтра в&nbsp;десять</span><span lang="en"><s>Um, so,</s> let's call <s>like</s> tomorrow at ten</span></div>
+          <div class="out"><small lang="ru">Heardly напечатал</small><small lang="en">Heardly typed</small><span lang="ru">Давай созвонимся завтра в&nbsp;десять.</span><span lang="en">Let's call tomorrow at ten.</span></div>
+        </div></div></div>
+      <div class="cell c3 rv"><h3 lang="ru">Свой словарь</h3><h3 lang="en">Your own vocabulary</h3><p lang="ru">Добавьте имена коллег, названия компаний и&nbsp;рабочие термины, и&nbsp;Heardly будет писать их&nbsp;правильно.</p><p lang="en">Add colleagues' names, company names and your jargon, and Heardly spells them right.</p>
+        <div class="demo shotwrap"><div class="shot">
+          <div class="sh"><i></i><i></i><i></i><span lang="ru">Словарь замен</span><span lang="en">Replacement list</span></div>
+          <div class="rules">
+            <div><span class="h" lang="ru">кубернетис</span><span class="h" lang="en">cooper netties</span><svg><use href="#i-arrow"/></svg><span class="w">Kubernetes</span></div>
+            <div><span class="h" lang="ru">хердли</span><span class="h" lang="en">heard lee</span><svg><use href="#i-arrow"/></svg><span class="w">Heardly</span></div>
+            <div><span class="h" lang="ru">ксюша бэ</span><span class="h" lang="en">ksenia bee</span><svg><use href="#i-arrow"/></svg><span class="w" lang="ru">Ксения Б.</span><span class="w" lang="en">Ksenia B.</span></div>
+          </div>
+        </div></div></div>
+      <div class="cell c4 rv"><h3 lang="ru">Удобный поиск по&nbsp;слову</h3><h3 lang="en">Search by any word</h3><p lang="ru">Все звонки, диктовки и&nbsp;файлы хранятся у&nbsp;вас. Введите слово и&nbsp;найдите нужный разговор.</p><p lang="en">Every call, dictation and file stays on your computer. Type a word and find the conversation.</p>
+        <div class="demo shotwrap"><div class="shot search"><div class="f"><svg><use href="#i-search"/></svg><span lang="ru">бюджет</span><span lang="en">budget</span></div>
+          <div class="r"><b lang="ru">Созвон с&nbsp;агентством · 14 окт</b><b lang="en">Agency call · Oct 14</b><span lang="ru">…фиксируем <mark>бюджет</mark> на&nbsp;ноябрь: 180&nbsp;тысяч, запуск третьего…</span><span lang="en">…let's lock the November <mark>budget</mark>: 180k, launch on the 3rd…</span></div>
+          <div class="r"><b lang="ru">Диктовка · 9 окт</b><b lang="en">Dictation · Oct 9</b><span lang="ru">…<mark>бюджет</mark> на&nbsp;креативы согласован с&nbsp;Аней…</span><span lang="en">…creative <mark>budget</mark> approved with Anya…</span></div></div></div></div>
+      <div class="cell c2 rv"><h3 lang="ru">Экспорт в&nbsp;любом формате</h3><h3 lang="en">Export to any format</h3><p lang="ru">Документы, субтитры и&nbsp;таблицы.</p><p lang="en">Documents, subtitles and spreadsheets.</p>
+        <div class="demo shotwrap"><div class="shot fgrid"><div class="hcap" lang="ru">ФОРМАТ</div><div class="hcap" lang="en">FORMAT</div>
+          <div class="g"><span>TXT</span><span>SRT</span><span>VTT</span><span>CSV</span><span>MD</span><span>HTML</span><span>PDF</span><span class="on">DOCX</span></div>
+          <div class="sv" lang="ru">Сохранить как DOCX</div><div class="sv" lang="en">Save as DOCX</div></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. Три инструмента -->
+<section id="why" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <h2><span lang="ru">Три инструмента в&nbsp;одном приложении</span><span lang="en">Three tools in one&nbsp;app</span></h2>
+      <p class="sub"><span lang="ru">Диктовка, живая расшифровка и&nbsp;расшифровка файлов работают на&nbsp;вашем компьютере и&nbsp;живут в&nbsp;одной строке меню.</span><span lang="en">Dictation, live transcription and file transcription run on your computer and live in one menu bar app.</span></p>
+    </div>
+    <div class="tools rv">
+      <div class="tool"><div class="tv"><div class="light"></div>
+          <div><div class="win tv-field"><small lang="ru">Почта · Ответ</small><small lang="en">Mail · Reply</small><span lang="ru">Договорились: макеты в&nbsp;пятницу, созвон в&nbsp;понедельник.</span><span lang="en">Agreed: mockups on Friday, call on Monday.</span></div>
+          <div class="win dpanel"><div class="dtop"><canvas class="wave" data-mode="tdict" data-bar="6"></canvas><span class="dtime">0:04</span></div></div></div></div>
+        <div class="tx"><b lang="ru">Диктовка</b><b lang="en">Dictation</b><p lang="ru">Текст голосом в&nbsp;любое поле любого приложения по&nbsp;горячей клавише.</p><p lang="en">Voice to text in any field of any app, on a hotkey.</p></div></div>
+      <div class="tool"><div class="tv"><div class="light"></div>
+          <div class="win tv-live"><div class="h"><canvas class="wave" data-mode="live"></canvas><span class="chip m"><svg><use href="#i-mic"/></svg><span lang="ru">Микрофон</span><span lang="en">Microphone</span></span><span class="chip a"><svg><use href="#i-spk"/></svg><span lang="ru">Приложения</span><span lang="en">Apps</span></span></div>
+            <div class="ln"><span><span class="who a" lang="ru">Компьютер:</span><span class="who a" lang="en">Computer:</span><span lang="ru">Когда покажете первую версию?</span><span lang="en">When can we see a first version?</span></span></div>
+            <div class="ln"><span><span class="who m" lang="ru">Я:</span><span class="who m" lang="en">Me:</span><span lang="ru">Прототип в&nbsp;пятницу.</span><span lang="en">Prototype on Friday.</span></span></div></div></div>
+        <div class="tx"><b lang="ru">Живой режим</b><b lang="en">Live mode</b><p lang="ru">Звонки и&nbsp;любой звук с&nbsp;компьютера превращаются в&nbsp;текст по&nbsp;ходу разговора.</p><p lang="en">Calls and any computer audio turn into text as you talk.</p></div></div>
+      <div class="tool"><div class="tv"><div class="light"></div>
+          <div class="win tv-files">
+            <div class="hrow q on"><span class="bd">MP4</span><span><b>webinar_rec.mp4</b><span class="pb"><i style="transform:scaleX(.62)"></i></span></span><small>62%</small></div>
+            <div class="hrow"><span class="bd">M4A</span><span><b>interview_oct.m4a</b><span lang="ru">Готово · 58 мин</span><span lang="en">Ready · 58 min</span></span><small></small></div>
+            <div class="hrow"><span class="bd">MOV</span><span><b>lecture_03.mov</b><span lang="ru">Готово · 47 мин</span><span lang="en">Ready · 47 min</span></span><small></small></div></div></div>
+        <div class="tx"><b lang="ru">Файлы</b><b lang="en">Files</b><p lang="ru">Аудио и&nbsp;видео в&nbsp;текст с&nbsp;таймкодами, в&nbsp;фоне и&nbsp;по&nbsp;очереди.</p><p lang="en">Audio and video to timestamped text, in the background, one by one.</p></div></div>
+    </div>
+    <div class="plaques rv">
+      <div class="plaque"><span class="ic"><svg><use href="#i-wifioff"/></svg></span><b lang="ru">Работает без интернета</b><b lang="en">Works offline</b><p lang="ru">Распознавание идёт на&nbsp;вашем компьютере. Интернет нужен один раз, чтобы&nbsp;скачать модель.</p><p lang="en">Recognition happens on your computer. You only need internet once, to download the model.</p></div>
+      <div class="plaque"><span class="ic"><svg><use href="#i-nobot"/></svg></span><b lang="ru">Бот не&nbsp;заходит в&nbsp;звонок</b><b lang="en">No bot joins the call</b><p lang="ru">Heardly слушает звук на&nbsp;вашем компьютере. В&nbsp;списке участников лишнего нет.</p><p lang="en">Heardly listens on your computer. No extra participant shows up in the call.</p></div>
+      <div class="plaque"><span class="ic"><svg><use href="#i-gauge"/></svg></span><b lang="ru">Не&nbsp;тормозит даже на&nbsp;простом компьютере</b><b lang="en">Light even on a basic computer</b><p lang="ru">Пока Heardly расшифровывает, звонок и&nbsp;другие приложения работают без&nbsp;подвисаний.</p><p lang="en">While Heardly transcribes, calls and other apps keep running smoothly.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. Цены -->
+<section id="pricing" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head center rv">
+      <h2><span lang="ru">Пользуйтесь бесплатно</span><span lang="en">Use it for free</span></h2>
+      <p class="sub"><span lang="ru">Бесплатная версия остаётся навсегда. Первые 14 дней открыты все функции Pro, карта не&nbsp;нужна.</span><span lang="en">The free version is yours for good. All Pro features are open for the first 14 days, no card needed.</span></p>
+    </div>
+    <form class="center rv" id="payForm" novalidate>
+      <div class="seg" role="radiogroup" aria-label="Период / Period">
+        <label><input type="radio" name="period" value="month"><span lang="ru">Месяц</span><span lang="en">Monthly</span></label>
+        <label><input type="radio" name="period" value="year" checked><span lang="ru">Год</span><span lang="en">Yearly</span><em lang="ru">−33%</em><em lang="en">−33%</em></label>
+      </div>
+      <div class="plans">
+        <div class="plan">
+          <h3 lang="ru">Бесплатно</h3><h3 lang="en">Free</h3>
+          <p class="for" lang="ru">Для диктовки и&nbsp;коротких звонков.</p><p class="for" lang="en">For dictation and short calls.</p>
+          <div class="price"><b lang="ru">0 ₽</b><b lang="en">$0</b></div>
+          <p class="price-sub" lang="ru">навсегда</p><p class="price-sub" lang="en">forever</p>
+          <a class="btn btn-g" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><svg aria-hidden="true"><use href="#i-apple"/></svg><span lang="ru">Скачать для Mac</span><span lang="en">Download for Mac</span></a>
+          <p class="reassure" lang="ru">Без регистрации и&nbsp;карты</p><p class="reassure" lang="en">No sign-up, no card</p>
+          <p class="inc" lang="ru">Что входит:</p><p class="inc" lang="en">Includes:</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span lang="ru">Диктовка и&nbsp;живой режим: 2&nbsp;000 слов в&nbsp;неделю</span><span lang="en">Dictation and live mode: 2,000 words a week</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span lang="ru">14 дней всех функций Pro после установки</span><span lang="en">14 days of every Pro feature after install</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span lang="ru">Работает без интернета и&nbsp;без&nbsp;аккаунта</span><span lang="en">Works offline, no account</span></li>
+          </ul>
+        </div>
+        <div class="plan pro">
+          <h3>Heardly Pro</h3>
+          <p class="for" lang="ru">Для тех, кто работает с&nbsp;речью каждый день.</p><p class="for" lang="en">For people who work with speech every day.</p>
+          <div class="price"><b id="proPrice"></b><span id="proUnit"></span></div>
+          <p class="price-sub" id="proSub"></p>
+          <button class="btn btn-w" type="button" id="proBtn"><span lang="ru">Оформить Pro</span><span lang="en">Get Pro</span></button>
+          <p class="reassure" lang="ru">Без автопродления: продлеваете сами</p><p class="reassure" lang="en">No auto-renewal: you renew yourself</p>
+          <p class="inc" lang="ru">Всё из бесплатной, плюс:</p><p class="inc" lang="en">Everything in Free, plus:</p>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span lang="ru">Без лимита слов в&nbsp;диктовке и&nbsp;живом режиме</span><span lang="en">Unlimited dictation and live mode</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span lang="ru">Расшифровка аудио и&nbsp;видео</span><span lang="en">Audio and video transcription</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span lang="ru">Экспорт в&nbsp;любом формате</span><span lang="en">Export to any format</span></li>
+          </ul>
+        </div>
+      </div>
+      <dialog class="paydlg" id="payDlg" aria-labelledby="payTitle">
+        <button class="x" type="button" id="payClose" aria-label="Закрыть / Close">×</button>
+        <h3 id="payTitle"></h3>
+        <div class="pay">
+          <input type="email" name="email" id="payEmail" autocomplete="email" required placeholder="you@mail.ru" aria-label="Email" aria-describedby="payMsg">
+          <button class="btn btn-w" type="submit" id="payBtn"><span id="payLabel"></span></button>
+        </div>
+        <div class="pay-msg" id="payMsg" role="status"></div>
+        <p class="pay-note" lang="ru">Разовая оплата картой через Robokassa. Деньги не&nbsp;спишутся без вашего ведома, продлеваете сами.</p>
+        <p class="pay-note" lang="en">One-time card payment via Robokassa, charged in rubles (<span data-rub></span>); your bank converts the amount. You renew yourself.</p>
+        <p class="after"><span lang="ru"><b>После оплаты:</b> Heardly → Настройки → Подписка → «У&nbsp;меня уже есть лицензия» → этот email.</span><span lang="en"><b>After paying:</b> Heardly → Settings → Subscription → "I already have a license" → this email.</span></p>
+      </dialog>
+    </form>
+  </div>
+</section>
+
+<!-- 9. FAQ -->
+<section id="faq" style="padding-top:40px">
+  <div class="wrap">
+    <div class="sec-head center rv"><h2><span lang="ru">Вопросы</span><span lang="en">Questions</span></h2></div>
+    <div class="faq rv">
+      <details><summary><span lang="ru">Нужен ли интернет?</span><span lang="en">Do I need internet?</span></summary><p lang="ru">Чтобы скачать модель (около 600&nbsp;МБ) и&nbsp;раз в&nbsp;две недели проверить подписку Pro. Диктовка и&nbsp;расшифровка работают без&nbsp;сети.</p><p lang="en">To download the model (about 600 MB) and to check your Pro subscription once every two weeks. Dictation and transcription work offline.</p></details>
+      <details><summary><span lang="ru">Какой Mac нужен?</span><span lang="en">Which Mac do I need?</span></summary><p lang="ru">Mac на&nbsp;Apple Silicon (M1 и&nbsp;новее) с&nbsp;macOS 14 Sonoma или новее. Mac на&nbsp;Intel не&nbsp;поддерживаются.</p><p lang="en">An Apple Silicon Mac (M1 or later) on macOS 14 Sonoma or newer. Intel Macs aren't supported.</p></details>
+      <details><summary><span lang="ru">Какие языки понимает?</span><span lang="en">Which languages?</span></summary><p lang="ru">Русский и&nbsp;ещё 24 европейских языка, среди них английский, украинский, немецкий, французский и&nbsp;испанский. Язык определяется сам. Лучше всего Heardly знает русский: модель дообучена на&nbsp;нём.</p><p lang="en">Russian and 24 other European languages, including English, Ukrainian, German, French and Spanish. The language is detected automatically. Heardly is strongest in Russian: the model is fine-tuned for it.</p></details>
+      <details><summary><span lang="ru">С&nbsp;какими приложениями для&nbsp;звонков работает?</span><span lang="en">Which call apps does it work with?</span></summary><p lang="ru">С&nbsp;любыми: Zoom, Google Meet, Телемост, Telegram, Slack. Heardly слушает микрофон и&nbsp;звук компьютера, поэтому ни&nbsp;бот, ни&nbsp;ссылка на&nbsp;встречу не&nbsp;нужны.</p><p lang="en">Any of them: Zoom, Google Meet, Teams, Telegram, Slack. Heardly listens to your microphone and your computer's sound, so no bot or meeting link is needed.</p></details>
+      <details><summary><span lang="ru">Какие файлы можно расшифровать?</span><span lang="en">Which files can it transcribe?</span></summary><p lang="ru">Аудио и&nbsp;видео: MP3, M4A, WAV, AIFF, MP4, MOV. Перетащите файл в&nbsp;«Историю транскрипций», и&nbsp;текст с&nbsp;таймкодами появится там&nbsp;же.</p><p lang="en">Audio and video: MP3, M4A, WAV, AIFF, MP4, MOV. Drop a file into Transcription History and the text with timestamps appears right there.</p></details>
+      <details><summary><span lang="ru">Где хранятся расшифровки?</span><span lang="en">Where are my transcripts stored?</span></summary><p lang="ru">На&nbsp;вашем компьютере, в&nbsp;папке «<span class="noic">Документы → Heardly</span>». Папку можно сменить. Звук и&nbsp;текст на&nbsp;сервер не&nbsp;уходят.</p><p lang="en">On your computer, in <span class="noic">Documents → Heardly</span>. You can pick another folder. Audio and text never go to a server.</p></details>
+      <details><summary><span lang="ru">Чем лучше встроенной диктовки macOS?</span><span lang="en">Why not built-in macOS dictation?</span></summary><p lang="ru">Встроенная диктовка не&nbsp;расшифровывает звонки и&nbsp;файлы. В&nbsp;Heardly диктовка, звонки и&nbsp;файлы собраны в&nbsp;одном приложении и&nbsp;работают без интернета.</p><p lang="en">Built-in dictation doesn't transcribe calls or files. Heardly does dictation, calls and files in one app, all offline.</p></details>
+      <details><summary><span lang="ru">Узнает ли собеседник, что я&nbsp;записываю?</span><span lang="en">Will the other person know?</span></summary><p lang="ru">В&nbsp;списке участников Heardly нет. Правила записи разговоров в&nbsp;разных странах разные, предупреждать собеседников — ваша ответственность.</p><p lang="en">Heardly isn't in the participant list. Recording laws differ by country; telling people is your responsibility.</p></details>
+      <details><summary><span lang="ru">На&nbsp;скольких компьютерах работает Pro?</span><span lang="en">How many computers can use Pro?</span></summary><p lang="ru">На&nbsp;любом числе. Первый подключается сам, каждый следующий — кодом из&nbsp;письма на&nbsp;вашу почту.</p><p lang="en">As many as you like. The first one connects on its own, each next one with a code sent to your email.</p></details>
+      <details><summary><span lang="ru">Что будет после 14 дней?</span><span lang="en">What happens after 14 days?</span></summary><p lang="ru">Останется бесплатная версия: 2&nbsp;000 слов живого режима и&nbsp;диктовки в&nbsp;неделю, счётчик обнуляется по&nbsp;понедельникам. Файлы, экспорт и&nbsp;безлимит остаются в&nbsp;Pro.</p><p lang="en">You keep the free version: 2,000 words of live mode and dictation a week, reset at the start of each week. Files, export and unlimited use are Pro.</p></details>
+      <details><summary><span lang="ru">Деньги спишутся автоматически?</span><span lang="en">Will I be charged automatically?</span></summary><p lang="ru">Нет. Вы платите российской картой один раз за&nbsp;месяц или год. Когда срок подойдёт к&nbsp;концу, Heardly напомнит, а&nbsp;продлите вы сами.</p><p lang="en">No. You pay once for a month or a year, by Russian bank card. Heardly reminds you near the end, and you renew yourself.</p></details>
+      <details><summary><span lang="ru">Можно вернуть деньги?</span><span lang="en">Refunds?</span></summary><p><span class="todo">[нужен факт: политика возврата]</span></p></details>
+    </div>
+  </div>
+</section>
+
+<!-- 10. Финал -->
+<section class="final">
+  <div class="light" style="opacity:.6"></div>
+  <div class="wrap" style="position:relative">
+    <img class="icon rv" src="assets/logo.png" alt="">
+    <h2 class="rv"><span lang="ru">Поставьте Heardly перед следующим&nbsp;звонком</span><span lang="en">Install Heardly before your next&nbsp;call</span></h2>
+    <p class="sub rv"><span lang="ru">Скачайте, перетащите в&nbsp;Программы, разрешите доступ к&nbsp;микрофону. 14 дней всё открыто, карта не&nbsp;нужна.</span><span lang="en">Download, drag to Applications, allow the microphone. Everything is open for 14 days, no card.</span></p>
+    <div class="cta rv">
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><svg aria-hidden="true"><use href="#i-apple"/></svg><span lang="ru">Скачать для Mac</span><span lang="en">Download for Mac</span></a>
+      <span class="btn soon" aria-disabled="true"><svg aria-hidden="true"><use href="#i-win"/></svg><span lang="ru">Для Windows</span><span lang="en">For Windows</span><em lang="ru">скоро</em><em lang="en">soon</em></span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>© 2026 Heardly</span>
+    <a href="#"><span lang="ru">Публичная оферта</span><span lang="en">Terms</span></a>
+    <a href="#"><span lang="ru">Политика конфиденциальности</span><span lang="en">Privacy policy</span></a>
+    <span class="todo">[нужен факт: реквизиты продавца, ссылки на&nbsp;оферту и&nbsp;политику, адрес поддержки]</span>
+  </div>
+</footer>
+
 <script>
-(function(){
-var API='https://heardly-api.cafmanar.workers.dev';
-var PRICES={ru:{month:['499 ₽',''],year:['3 990 ₽','≈ 333 ₽ в месяц']},ww:{month:['899 ₽','≈ $9.99'],year:['7 190 ₽','≈ $79 · два месяца бесплатно']}};
-var TIERS={ru:{month:'russia',year:'russia_annual'},ww:{month:'standard',year:'standard_annual'}};
-var region='ru',plan='month';
-window.hdlyRegion=function(r){region=r;
- ['ru','ww'].forEach(function(k){var b=document.getElementById('rg-'+(k==='ru'?'ru':'ww'));if(b){b.style.background=k===r?'#4F46E5':'transparent';b.style.color=k===r?'#fff':'#6E6E73';}});
- ['month','year'].forEach(function(p){var el=document.querySelector('[data-price="'+p+'"]');var sb=document.querySelector('[data-sub="'+p+'"]');if(el)el.textContent=PRICES[r][p][0];if(sb)sb.textContent=PRICES[r][p][1];});
-};
-document.querySelectorAll('[data-buy]').forEach(function(b){b.addEventListener('click',function(){plan=b.getAttribute('data-buy');
- document.getElementById('hdly-m-title').textContent=plan==='year'?'Heardly Pro — год':'Heardly Pro — месяц';
- document.getElementById('hdly-err').textContent='';
- var m=document.getElementById('hdly-modal');m.style.display='flex';
- document.getElementById('hdly-email').focus();});});
-document.getElementById('hdly-modal').addEventListener('click',function(e){if(e.target===this)this.style.display='none';});
-document.getElementById('hdly-pay').addEventListener('click',function(){
- var em=document.getElementById('hdly-email').value.trim();var err=document.getElementById('hdly-err');
- if(!em||em.indexOf('@')<0){err.textContent='Укажите корректный e-mail';return;}
- var btn=this;btn.disabled=true;btn.textContent='Создаём счёт…';
- fetch(API+'/create-order',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:em,price_tier:TIERS[region][plan],device_id:'web'})})
- .then(function(r){return r.json();})
- .then(function(d){if(d.payment_url){location.href=d.payment_url;}else{err.textContent=d.error||'Не удалось создать счёт, попробуйте позже';btn.disabled=false;btn.textContent='Перейти к оплате';}})
- .catch(function(){err.textContent='Сеть недоступна, попробуйте позже';btn.disabled=false;btn.textContent='Перейти к оплате';});
-});
+(function () {
+  "use strict";
+  document.documentElement.classList.add("js");
+  const API = "https://heardly-api.cafmanar.workers.dev";
+  // Тиры воркера (PRICE_TIERS в backend/worker.js): RU — рубли, EN — витрина в долларах, списание в рублях.
+  const PRICES = {
+    ru: { month: { tier: "russia", label: "499 ₽", unit: "в месяц", sub: "", title: "Heardly Pro на месяц", pay: "Оплатить 499 ₽" },
+          year:  { tier: "russia_annual", label: "3 990 ₽", unit: "в год", sub: "332 ₽ в месяц", title: "Heardly Pro на год", pay: "Оплатить 3 990 ₽" } },
+    en: { month: { tier: "standard", label: "$9.99", unit: "a month", sub: "", title: "Heardly Pro, one month", pay: "Pay $9.99", rub: "899 ₽" },
+          year:  { tier: "standard_annual", label: "$79.99", unit: "a year", sub: "$6.67 a month", title: "Heardly Pro, one year", pay: "Pay $79.99", rub: "7,190 ₽" } }
+  };
+  const T = {
+    ru: { email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…",
+          me: "Я", them: "Компьютер", s1: "Спикер 1", s2: "Спикер 2", words: n => n + " слов", on: "Wi‑Fi включён", off: "Wi‑Fi выключен", going: "● расшифровка идёт",
+          proc: "Транскрибирую..." },
+    en: { email: "Enter your email: the subscription is tied to it", fail: "Couldn't start the payment. Try again or contact support.", wait: "Creating payment…",
+          me: "Me", them: "Computer", s1: "Speaker 1", s2: "Speaker 2", words: n => n + " words", on: "Wi‑Fi on", off: "Wi‑Fi off", going: "● transcribing",
+          proc: "Transcribing..." }
+  };
+  // Демонстрационные тексты (синтетические).
+  const D = {
+    ru: { note: "Запуск в ноябре: лендинг к 1-му, рассылка 3-го, вебинар 10-го. Проверить, что оплата в рублях работает.",
+          dict: "Итог по обложкам: берём второй вариант, синий фон, шрифт крупнее. Файлы скину до трёх.",
+          live: [["a", "12:04:02", "Давайте по срокам: когда покажете первую версию?"], ["m", "12:04:09", "Прототип в пятницу, полную версию 14-го."], ["a", "12:05:01", "Хорошо. Доступ к данным клиента вам уже дали?"], ["m", "12:05:07", "Да, вчера. Выгрузку посмотрим до пятницы."]],
+          off: [["m", "09:41:12", "Слайд с выручкой ставим вторым."], ["a", "09:41:18", "Согласна, и добавим разбивку по регионам."], ["m", "09:42:03", "Регионы возьму из октябрьского отчёта."]],
+          file: [["a", "00:00", "Расскажите, как вы пришли в профессию."], ["m", "00:06", "Случайно: в университете попал на практику в редакцию."], ["a", "00:14", "И что оказалось самым сложным?"], ["m", "00:17", "Научиться задавать короткие вопросы."]] },
+    en: { note: "November launch: landing by the 1st, newsletter on the 3rd, webinar on the 10th. Check that ruble payments work.",
+          dict: "Cover decision: we're going with option two, blue background, bigger type. Files coming before three.",
+          live: [["a", "12:04:02", "Timing: when can we see a first version?"], ["m", "12:04:09", "Prototype on Friday, the full version on the 14th."], ["a", "12:05:01", "Good. Did you get access to the client data?"], ["m", "12:05:07", "Yes, yesterday. We'll go through the export by Friday."]],
+          off: [["m", "09:41:12", "Put the revenue slide second."], ["a", "09:41:18", "Agreed, and add the regional split."], ["m", "09:42:03", "I'll take regions from the October report."]],
+          file: [["a", "00:00", "Tell me how you got into the profession."], ["m", "00:06", "By accident: an internship at a newsroom at university."], ["a", "00:14", "And what turned out to be hardest?"], ["m", "00:17", "Learning to ask short questions."]] }
+  };
+
+  let reduce = false; try { reduce = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+  let lang = "ru";
+  try { const s = localStorage.getItem("heardly-lang"); if (s === "ru" || s === "en") lang = s; else if (!/^(ru|uk|be|kk)/i.test(navigator.language || "ru")) lang = "en"; } catch (e) {}
+  const q = new URLSearchParams(location.search).get("lang"); if (q === "ru" || q === "en") lang = q;
+  const $ = id => document.getElementById(id);
+  const nb = t => String(t).replace(/(?<=^|[\s>(])(в|на|и|с|к|о|у|а|по|до|за|из|или|без|её|На|В|И|По|Бот|Да,) /g, "$1 ");
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  addEventListener("scroll", () => $("hdr").classList.toggle("on", scrollY > 20), { passive: true });
+
+  // ── Иконка приложения рядом со словом Heardly в текстах страницы (окна приложения и шапку не трогаем).
+  (() => {
+    const w = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT), hits = [];
+    while (w.nextNode()) { const n = w.currentNode, el = n.parentElement; if (/Heardly/.test(n.textContent) && el && !el.closest("script,style,svg,title,.brand,.win,.mac,.tv,.hw,.noic")) hits.push(n); }
+    hits.forEach(n => { const f = document.createDocumentFragment();
+      let lead = ""; n.textContent.split(/(Heardly)/).forEach((p, k, all) => { if (p !== "Heardly") { if (all[k + 1] === "Heardly") { const m = p.match(/(^|\s)(\S{1,3})[\s\u00a0]$/); if (m) { lead = m[2] + "\u00a0"; p = p.slice(0, p.length - m[2].length - 1); } } if (p) f.append(p); return; } const h = document.createElement("span"); h.className = "hw"; h.innerHTML = lead + '<img src="assets/logo.png" alt="">Heardly'; lead = ""; f.append(h); });
+      n.replaceWith(f); });
+  })();
+
+  // ── Волна: порт WaveformView.swift (DotsWaveform): пилюли без градиента. data-bar="8" — столбики во всю ширину, иначе четыре точки.
+  // Микрофон — барвинок, звук приложений — абрикос непрозрачным слоем поверх; тишина — круглые точки с дыханием, обработка — поочерёдный подскок.
+  const MIC = "#5E6AD2", APP = "#D9845A", EMPH = [.7, 1, .9, .65];
+  const waves = [...document.querySelectorAll("canvas.wave")].map(c => ({ c, mode: c.dataset.mode, bar: +c.dataset.bar || 0, mic: [], sys: [], active: c.dataset.mode !== "dict", busy: false }));
+  const size = w => { const d = devicePixelRatio || 1; w.c.width = Math.max(1, w.c.offsetWidth * d); w.c.height = Math.max(1, w.c.offsetHeight * d); };
+  const curve = l => l <= 0.003 ? 0 : Math.min(1, Math.sqrt(l) * 1.8 + l * 0.5);
+  const speech = (t, s) => { const e = Math.max(0, Math.sin(t * .9 + s) * .6 + Math.sin(t * 2.3 + s * 2) * .4); return .03 + .1 * e * (.6 + .4 * Math.sin(t * 11 + s)); };
+  function layout(W, H, bar, s) {
+    let n = 4, dot, gap;
+    if (bar) { dot = Math.min(bar * s, H); gap = dot * 1.1; n = Math.max(4, Math.floor((W + gap) / (dot + gap))); }
+    else { dot = Math.max(4 * s, Math.min(H * .3, W / 8)); gap = dot * .8; }
+    return { n, dot, gap, x0: (W - n * dot - (n - 1) * gap) / 2 };
+  }
+  const targets = (lvl, ph, n, bar) => { const a = curve(lvl); if (a < .05) return new Array(n).fill(0);
+    return Array.from({ length: n }, (_, i) => Math.min(1, bar ? a * (.55 + .45 * Math.sin(ph * 9 + i * 1.7)) : a * EMPH[i % 4] * (.6 + .4 * Math.sin(ph * 9 + i * 1.3)))); };
+  const smooth = (cur, tg) => { const b = cur.length === tg.length ? cur : new Array(tg.length).fill(0); return tg.map((t, i) => b[i] + (t - b[i]) * (t > b[i] ? .35 : .15)); };
+  function pills(ctx, L, H, hs, color, alpha) {
+    ctx.fillStyle = color; ctx.globalAlpha = alpha;
+    for (let i = 0; i < L.n; i++) { const h = L.dot + Math.max(0, Math.min(1, hs[i] || 0)) * (H - L.dot); ctx.beginPath(); ctx.roundRect(L.x0 + i * (L.dot + L.gap), (H - h) / 2, L.dot, h, L.dot / 2); ctx.fill(); }
+    ctx.globalAlpha = 1;
+  }
+  function draw(ms) {
+    const t = ms / 1000;
+    waves.forEach((w, k) => {
+      if (!w.c.offsetParent) return;
+      const ctx = w.c.getContext("2d"), W = w.c.width, H = w.c.height, L = layout(W, H, w.bar, devicePixelRatio || 1); ctx.clearRect(0, 0, W, H);
+      if (w.busy) { pills(ctx, L, H, Array.from({ length: L.n }, (_, i) => Math.max(0, Math.sin(t * 6 - i * 3.2 / L.n)) * .45), MIC, .85); return; }
+      w.mic = smooth(w.mic, targets(w.active ? speech(t, .3 + k) : 0, t, L.n, w.bar));
+      w.sys = smooth(w.sys, targets(w.mode === "live" ? speech(t * .8, 2.1 + k) : 0, t + .7, L.n, w.bar));
+      const quiet = a => a.every(v => v < .01);
+      if (quiet(w.mic) && quiet(w.sys)) { pills(ctx, L, H, [], MIC, Math.sin(t * 1.5) * .2 + .55); return; }
+      pills(ctx, L, H, w.mic, MIC, 1);
+      if (w.mode === "live") pills(ctx, L, H, w.sys, APP, 1);
+    });
+  }
+  const resizeAll = () => waves.forEach(size);
+  addEventListener("resize", resizeAll);
+  if (reduce) { resizeAll(); for (let i = 0; i < 40; i++) draw(1400 + i * 33); }
+  else { const loop = t => { draw(t); requestAnimationFrame(loop); }; requestAnimationFrame(loop); }
+  const waveOf = mode => waves.find(w => w.mode === mode);
+
+  // ── Строки расшифровки.
+  function addLine(box, who, time, text) {
+    const d = document.createElement("div"); d.className = "ln new";
+    const tm = document.createElement("time"); tm.textContent = time;
+    const body = document.createElement("span");
+    const tx = document.createElement("span"); tx.textContent = nb(text);
+    if (box.dataset.speakers === "plain") body.append(tx);
+    else { const w = document.createElement("span"); w.className = "who " + who; w.textContent = (who === "m" ? T[lang].me : T[lang].them) + ":"; body.append(w, tx); } d.append(tm, body); box.appendChild(d); return tx;
+  }
+  async function typeLine(box, l, id, speed) {
+    const tx = addLine(box, l[0], l[1], ""), text = nb(l[2]);
+    for (let i = 1; i <= text.length && id(); i++) { tx.textContent = text.slice(0, i); await sleep(speed); }
+  }
+
+  // ── Как работает: шаги справа переключают сцену на рабочем столе слева; сцена повторяется, пока шаг активен.
+  const steps = [...document.querySelectorAll(".step")], scenes = [...document.querySelectorAll(".mac .scene")], APPS = ["Slack", "Zoom", "Finder"];
+  const mac = $("mac"), fit = $("macFit");
+  const fitMac = () => { const k = fit.clientWidth / 1100; mac.style.transform = "scale(" + k + ")"; document.documentElement.style.setProperty("--mh", 700 * k + "px"); };
+  let cur = -1, demoRun = 0;
+  const alive = id => () => id === demoRun;
+  async function sceneDict(id) {
+    const ok = alive(id), comp = $("composer"), panel = $("dictPanel"), wv = waveOf("dict");
+    comp.innerHTML = '<span class="ph">' + (lang === "ru" ? "Сообщение в #design" : "Message #design") + "</span>"; panel.classList.remove("up"); wv.busy = false; $("dictTime").textContent = "0:00";
+    await sleep(900); if (!ok()) return;
+    panel.classList.add("up"); wv.active = true;
+    let sec = 0; clearInterval(wv.tm); wv.tm = setInterval(() => { if (ok() && wv.active) $("dictTime").textContent = "0:0" + (++sec); }, 1000);
+    await sleep(3200); clearInterval(wv.tm); if (!ok()) return;
+    wv.active = false; wv.busy = true;
+    await sleep(700); wv.busy = false; if (!ok()) return;
+    comp.innerHTML = ""; const s = document.createElement("span"); s.className = "ins"; s.textContent = nb(D[lang].dict); comp.appendChild(s);
+    await sleep(900); panel.classList.remove("up");
+    await sleep(3400);
+  }
+  async function sceneLive(id) {
+    const ok = alive(id), box = $("liveLines"), wc = $("liveWords"); box.textContent = ""; box.dataset.speakers = "live";
+    let words = 0; wc.textContent = T[lang].words(0);
+    // Кто говорит: «Вы» — микрофон, реплики собеседников по очереди у Марины и Ольги.
+    const tiles = [...$("callTiles").children], talk = t => tiles.forEach((el, i) => el.classList.toggle("talk", i === t));
+    let them = 0;
+    for (const l of D[lang].live) { if (!ok()) break; talk(l[0] === "m" ? 2 : them++ % 2); await sleep(500); await typeLine(box, l, ok, 32); talk(-1); words += l[2].split(" ").length; wc.textContent = T[lang].words(words); await sleep(650); }
+    talk(-1); await sleep(2400);
+  }
+  async function sceneFile(id) {
+    const ok = alive(id), box = $("fileLines"), det = $("hDet"), drag = $("dragF"), dz = $("hDrop");
+    const reset = () => { box.textContent = ""; box.dataset.speakers = "plain"; det.dataset.v = "e"; $("hWork").hidden = true; $("hNew").hidden = true; $("hCount").textContent = "2";
+      drag.style.transition = "none"; drag.classList.remove("go"); drag.style.opacity = 0; void drag.offsetWidth; drag.style.transition = "";
+      ["stPrep", "stTr"].forEach(k => $(k).classList.remove("done")); $("stBar").style.transform = $("hRowBar").style.transform = "scaleX(0)"; $("stPct").textContent = ""; $("hRowPct").textContent = "0%"; };
+    reset();
+    await sleep(700); if (!ok()) return;
+    drag.style.opacity = 1; await sleep(250); drag.classList.add("go");
+    await sleep(850); dz.classList.add("hot"); await sleep(450); if (!ok()) return;
+    drag.style.opacity = 0; dz.classList.remove("hot"); $("hWork").hidden = false; $("hCount").textContent = "3"; det.dataset.v = "q";
+    await sleep(700); if (!ok()) return; $("stPrep").classList.add("done");
+    for (let p = 0; p <= 100 && ok(); p += 5) { const k = "scaleX(" + p / 100 + ")"; $("stBar").style.transform = $("hRowBar").style.transform = k; $("stPct").textContent = $("hRowPct").textContent = p + "%"; await sleep(60); }
+    if (!ok()) return;
+    $("hWork").hidden = true; $("hNew").hidden = false; det.dataset.v = "r";
+    for (const l of D[lang].file) { if (!ok()) break; addLine(box, l[0], l[1], l[2]); await sleep(240); }
+    await sleep(3600);
+  }
+  const RUN = { dict: sceneDict, live: sceneLive, file: sceneFile };
+  async function show(i, force) {
+    if (i === cur && !force) return;
+    cur = i; const id = ++demoRun;
+    steps.forEach((t, k) => t.classList.toggle("on", k === i));
+    scenes.forEach((t, k) => t.classList.toggle("on", k === i));
+    $("mbApp").textContent = APPS[i];
+    resizeAll();
+    if (reduce) { fillStatic(); return; }
+    while (id === demoRun) { await RUN[scenes[i].dataset.scene](id); await sleep(400); }
+  }
+  function fillStatic() {
+    $("composer").textContent = nb(D[lang].dict); $("dictTime").textContent = "0:03";
+    const lb = $("liveLines"); lb.textContent = ""; lb.dataset.speakers = "live"; D[lang].live.forEach(l => addLine(lb, l[0], l[1], l[2]));
+    const fb = $("fileLines"); fb.textContent = ""; fb.dataset.speakers = "plain"; D[lang].file.forEach(l => addLine(fb, l[0], l[1], l[2]));
+    $("hDet").dataset.v = "r"; $("hNew").hidden = false; $("hCount").textContent = "3";
+    $("liveWords").textContent = T[lang].words(D[lang].live.reduce((n, l) => n + l[2].split(" ").length, 0));
+  }
+
+  // ── Появление и запуск сцен при прокрутке.
+  const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; const el = e.target;
+    el.classList.add("in");
+  }), { threshold: .2 }) : null;
+  document.querySelectorAll(".rv, .cell").forEach(el => io ? io.observe(el) : el.classList.add("in"));
+  const stepIo = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) show(steps.indexOf(e.target)); }), { rootMargin: "-45% 0px -45% 0px" }) : null;
+  steps.forEach(st => stepIo && stepIo.observe(st));
+  addEventListener("resize", fitMac); fitMac();
+  if (reduce) { const ns = $("netSvg"); if (ns && ns.pauseAnimations) { ns.setCurrentTime(1.4); ns.pauseAnimations(); } }
+  show(Math.max(0, ["dict", "live", "file"].indexOf(new URLSearchParams(location.search).get("demo"))));
+
+  // ── Оплата: POST /create-order → страница Robokassa.
+  // device_id не передаём: лицензию привяжет первый Mac, который войдёт с этим email.
+  const form = $("payForm"), emailEl = $("payEmail");
+  const period = () => form.querySelector("input[name=period]:checked").value;
+  function renderPrices() {
+    const p = PRICES[lang];
+    const c = p[period()];
+    $("proPrice").textContent = c.label; $("proUnit").textContent = c.unit; $("proSub").textContent = c.sub; $("payTitle").textContent = c.title;
+    $("payLabel").textContent = c.pay;
+    const rub = form.querySelector("[data-rub]"); if (rub && p[period()].rub) rub.textContent = p[period()].rub;
+  }
+  form.addEventListener("change", renderPrices);
+  const dlg = $("payDlg");
+  $("proBtn").addEventListener("click", () => { renderPrices(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
+  $("payClose").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
+  emailEl.addEventListener("input", () => emailEl.removeAttribute("aria-invalid"));
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const msg = $("payMsg"), btn = $("payBtn"), email = emailEl.value.trim();
+    msg.className = "pay-msg";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = T[lang].email; msg.className = "pay-msg err"; emailEl.setAttribute("aria-invalid", "true"); emailEl.focus(); return; }
+    btn.disabled = true; msg.textContent = T[lang].wait;
+    try {
+      const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, price_tier: PRICES[lang][period()].tier, source: "landing" }) });
+      const d = await r.json();
+      if (!r.ok || !d.payment_url) throw new Error(d.error || r.status);
+      location.href = d.payment_url;
+    } catch (err) { msg.textContent = T[lang].fail; msg.className = "pay-msg err"; btn.disabled = false; }
+  });
+
+  function setLang(l) {
+    lang = l; document.documentElement.dataset.lang = l; document.documentElement.lang = l;
+    document.querySelectorAll("[data-set-lang]").forEach(b => b.setAttribute("aria-pressed", b.dataset.setLang === l));
+    try { localStorage.setItem("heardly-lang", l); } catch (e) {}
+    renderPrices();
+    if (cur >= 0) show(cur, true);
+  }
+  document.querySelectorAll("[data-set-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.setLang)));
+  resizeAll();
+  setLang(lang);
 })();
-</script></body></html>
+</script>
+</body>
+</html>

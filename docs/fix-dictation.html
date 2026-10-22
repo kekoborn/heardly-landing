@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Текст не вставляется — Heardly</title>
+<meta name="description" content="Панель появляется, волна двигается, запись идёт — а в поле ничего не приходит. Почти всегда дело в разрешении «Универсальный доступ».">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Решение проблем</span><span lang="en">Troubleshooting</span></div>
+    <h1><span lang="ru">Текст не вставляется</span><span lang="en">Text is not inserted</span></h1>
+    <p class="d-lede"><span lang="ru">Панель появляется, волна двигается, запись идёт — а в поле ничего не приходит. Почти всегда дело в разрешении «Универсальный доступ».</span><span lang="en">The bar appears, the waveform moves, recording runs — and nothing arrives in the field. Almost always this is the Accessibility permission.</span></p>
+
+
+    <h2 id="ax"><span lang="ru">Проверьте универсальный доступ</span><span lang="en">Check Accessibility</span></h2>
+    <div lang="ru">
+      <p>Откройте «Системные настройки» → «Конфиденциальность и безопасность» → «Универсальный доступ» и убедитесь, что Heardly там есть и переключатель включён.</p>
+      <p>Если переключатель уже включён, выключите и включите его снова: macOS иногда держит запись о старой сборке приложения.</p>
+    </div>
+    <div lang="en">
+      <p>Open System Settings → Privacy &amp; Security → Accessibility and make sure Heardly is listed and switched on.</p>
+      <p>If the switch is already on, turn it off and on again: macOS sometimes holds on to a record of an older build.</p>
+    </div>
+
+    <div class="note warn">
+      <b><span lang="ru">После обновления — частый случай</span><span lang="en">Common right after an update</span></b>
+      <p><span lang="ru">macOS привязывает разрешение к конкретной сборке, поэтому новая версия Heardly может оказаться без доступа. Переключение тумблера решает вопрос за секунду.</span><span lang="en">macOS ties the permission to a specific build, so a new version of Heardly can end up without access. Toggling the switch fixes it in a second.</span></p>
+    </div>
+
+    <h2 id="saved"><span lang="ru">Текст при этом не потерян</span><span lang="en">The text is not lost</span></h2>
+    <div lang="ru">
+      <p>Даже когда вставка не сработала, расшифровка сохраняется в <a href="history.html">Историю</a>, в раздел «Диктовки». Откройте её и скопируйте текст оттуда.</p>
+    </div>
+    <div lang="en">
+      <p>Even when the insert fails, the transcript is saved to <a href="history.html">History</a>, in the “Dictations” section. Open it and copy the text from there.</p>
+    </div>
+
+    <h2 id="other"><span lang="ru">Если дело не в разрешении</span><span lang="en">If it is not the permission</span></h2>
+    <table class="ref">
+      <tr>
+        <th><span lang="ru">Что видно</span><span lang="en">What you see</span></th>
+        <th><span lang="ru">Что делать</span><span lang="en">What to do</span></th>
+      </tr>
+      <tr><td><span lang="ru">Панель не появляется совсем</span><span lang="en">The bar never appears</span></td>
+          <td><span lang="ru">Горячую клавишу перехватывает другая программа. Назначьте другое сочетание в <a href="settings.html">Настройках → Основные</a>.</span><span lang="en">Another app is intercepting the shortcut. Assign a different one in <a href="settings.html">Settings → General</a>.</span></td></tr>
+      <tr><td><span lang="ru">Текст уходит не в то поле</span><span lang="en">The text lands in the wrong field</span></td>
+          <td><span lang="ru">Курсор должен стоять в поле до нажатия клавиши. Щёлкните в нужное место и только потом начинайте диктовать.</span><span lang="en">The cursor has to be in the field before you press the key. Click where you want the text, then start dictating.</span></td></tr>
+      <tr><td><span lang="ru">Не работает в одной конкретной программе</span><span lang="en">Broken in one particular app</span></td>
+          <td><span lang="ru">Некоторые приложения запрещают вставку извне. Текст всё равно будет в Истории — заберите его оттуда.</span><span lang="en">Some apps refuse pastes from outside. The text is in History regardless — take it from there.</span></td></tr>
+      <tr><td><span lang="ru">«Недельный лимит слов исчерпан»</span><span lang="en">“Weekly word limit reached”</span></td>
+          <td><span lang="ru">Это бесплатная версия: счётчик обнулится в понедельник, см. <a href="pricing.html">Бесплатно, пробный период и Pro</a>.</span><span lang="en">That is the free version: the counter resets on Monday, see <a href="pricing.html">Free, trial and Pro</a>.</span></td></tr>
+    </table>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

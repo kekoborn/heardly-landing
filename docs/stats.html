@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Статистика — Heardly</title>
+<meta name="description" content="Раздел показывает, сколько вы наговорили и сколько времени это сэкономило по сравнению с печатью. Считается всё по вашим записям и никуда не отправляется.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Настройки</span><span lang="en">Settings</span></div>
+    <h1><span lang="ru">Статистика</span><span lang="en">Statistics</span></h1>
+    <p class="d-lede"><span lang="ru">Раздел показывает, сколько вы наговорили и сколько времени это сэкономило по сравнению с печатью. Считается всё по вашим записям и никуда не отправляется.</span><span lang="en">This section shows how much you have spoken and how much time that saved compared with typing. Everything is counted from your own recordings and goes nowhere.</span></p>
+
+
+    <figure lang="ru">
+      <img src="img/settings-statistics.png" alt="Раздел «Статистика»: скорость речи, сэкономленное время, всего слов, разбивка по видам записей и календарь активности">
+    </figure>
+    <figure lang="en">
+      <img src="img/settings-statistics-en.png" alt="The Statistics section: speaking speed, time saved, total words, a breakdown by recording type and an activity calendar">
+    </figure>
+
+    <h2 id="cards"><span lang="ru">Что в карточках</span><span lang="en">What the cards mean</span></h2>
+    <table class="ref">
+      <tr><td><span lang="ru">Скорость</span><span lang="en">Speed</span></td>
+          <td><span lang="ru">Сколько слов в минуту вы наговариваете. Рядом — во сколько раз это быстрее печати.</span><span lang="en">How many words a minute you speak. Beside it, how many times faster that is than typing.</span></td></tr>
+      <tr><td><span lang="ru">Сэкономлено</span><span lang="en">Saved</span></td>
+          <td><span lang="ru">Разница между временем, которое вы наговорили, и временем, которое ушло бы на набор того же текста.</span><span lang="en">The gap between the time you spent speaking and the time the same text would have taken to type.</span></td></tr>
+      <tr><td><span lang="ru">Всего слов</span><span lang="en">Total words</span></td>
+          <td><span lang="ru">Все слова во всех записях, плюс оценка в страницах и разбивка на микрофон и звук приложений.</span><span lang="en">Every word across every entry, plus a rough page count and the split between microphone and app audio.</span></td></tr>
+      <tr><td><span lang="ru">По видам записей</span><span lang="en">By kind</span></td>
+          <td><span lang="ru">Сколько слов пришло из диктовки, из живых записей и из файлов.</span><span lang="en">How many words came from dictation, from live recordings and from files.</span></td></tr>
+      <tr><td><span lang="ru">Дней подряд</span><span lang="en">Streak</span></td>
+          <td><span lang="ru">Сколько дней подряд вы пользуетесь Heardly, и календарь активности рядом.</span><span lang="en">How many days in a row you have used Heardly, with an activity calendar beside it.</span></td></tr>
+    </table>
+
+    <div class="note">
+      <b><span lang="ru">Это оценка, а не хронометраж</span><span lang="en">An estimate, not a stopwatch</span></b>
+      <p><span lang="ru">«Сэкономлено» считается от средней скорости печати, а не от вашей личной. Цифра показывает порядок величины, а не точное время.</span><span lang="en">“Saved” is calculated from an average typing speed, not from your own. The number shows an order of magnitude, not an exact time.</span></p>
+    </div>
+
+    <div lang="ru"><p>Статистика строится из файлов в <a href="folder.html">папке расшифровок</a>. Удалите запись — она исчезнет и из статистики.</p></div>
+    <div lang="en"><p>The statistics are built from the files in the <a href="folder.html">transcripts folder</a>. Delete an entry and it leaves the statistics too.</p></div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

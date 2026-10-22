@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Словарь замен — Heardly</title>
+<meta name="description" content="Имена коллег, названия продуктов и профессиональные сокращения модель слышит так, как они звучат. Словарь замен приводит их к тому виду, в котором вы их пишете.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Диктовка</span><span lang="en">Dictation</span></div>
+    <h1><span lang="ru">Словарь замен</span><span lang="en">Replacement list</span></h1>
+    <p class="d-lede"><span lang="ru">Имена коллег, названия продуктов и профессиональные сокращения модель слышит так, как они звучат. Словарь замен приводит их к тому виду, в котором вы их пишете.</span><span lang="en">Colleagues’ names, product names and trade abbreviations come out the way they sound. The replacement list turns them into the spelling you actually use.</span></p>
+
+
+    <figure lang="ru">
+      <img src="img/replacements.png" alt="Окно «Словарь замен»: правила вида «как слышится → как должно быть», внизу счётчик правил">
+      <figcaption><span lang="ru">Одно правило на строку. Счётчик внизу показывает, сколько правил сейчас работает.</span><span lang="en">One rule per line. The counter at the bottom shows how many rules are active.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/replacements-en.png" alt="The Replacement list window: rules in the form heard arrow intended, with a rule counter at the bottom">
+      <figcaption><span lang="ru">Одно правило на строку. Счётчик внизу показывает, сколько правил сейчас работает.</span><span lang="en">One rule per line. The counter at the bottom shows how many rules are active.</span></figcaption>
+    </figure>
+
+    <h2 id="rules"><span lang="ru">Как писать правила</span><span lang="en">Writing the rules</span></h2>
+    <div lang="ru">
+      <p>Каждая строка — одно правило: слева то, как слово слышится, справа то, как оно должно выглядеть. Разделитель — стрелка.</p>
+      <pre><code>хартли → Heardly
+пэ энд эл → P&amp;L
+кей пи ай → KPI
+джира → Jira</code></pre>
+      <p>Замена срабатывает только на целые слова, регистр при поиске не важен. Правила применяются и к диктовке, и к расшифровке звонков, и к файлам.</p>
+    </div>
+    <div lang="en">
+      <p>Each line is one rule: on the left what the word sounds like, on the right how it should look. The separator is an arrow.</p>
+      <pre><code>pee and el → P&amp;L
+kay pee eye → KPI
+jeera → Jira
+slack → Slack</code></pre>
+      <p>A replacement matches whole words only, and the search ignores case. The rules apply to dictation, to call transcripts and to files alike.</p>
+    </div>
+
+    <h2 id="open"><span lang="ru">Где открыть</span><span lang="en">Where to open it</span></h2>
+    <div lang="ru"><p><a href="settings.html">Настройки → Диктовка</a>, строка «Словарь замен», кнопка «Изменить». Список сохраняется сам, отдельной кнопки сохранения нет.</p></div>
+    <div lang="en"><p><a href="settings.html">Settings → Dictation</a>, the “Replacement list” row, the Edit button. The list saves itself; there is no save button.</p></div>
+
+    <div class="note tip">
+      <b><span lang="ru">Начните с десяти слов</span><span lang="en">Start with ten words</span></b>
+      <p><span lang="ru">Не пытайтесь описать весь рабочий словарь сразу. Выпишите то, что модель путает чаще всего: фамилии, названия систем, аббревиатуры. Этого обычно хватает.</span><span lang="en">Don’t try to describe your whole working vocabulary at once. Write down what the model gets wrong most often: surnames, system names, abbreviations. That is usually enough.</span></p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Модель и языки — Heardly</title>
+<meta name="description" content="Распознаванием занимается модель Parakeet, которая целиком лежит на вашем компьютере и считается на Neural Engine.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Настройки</span><span lang="en">Settings</span></div>
+    <h1><span lang="ru">Модель и языки</span><span lang="en">Model and languages</span></h1>
+    <p class="d-lede"><span lang="ru">Распознаванием занимается модель Parakeet, которая целиком лежит на вашем компьютере и считается на Neural Engine.</span><span lang="en">Recognition is done by the Parakeet model, which lives entirely on your computer and runs on the Neural Engine.</span></p>
+
+
+    <h2 id="model"><span lang="ru">Модель</span><span lang="en">The model</span></h2>
+    <div lang="ru">
+      <p>Heardly использует Parakeet Ultra. Модель скачивается один раз при первом запуске, занимает около 600 МБ и лежит в <code>~/Library/Application&nbsp;Support/FluidAudio/Models/</code>.</p>
+      <p>Поверх базовой модели Heardly доставляет собственную доработку под русскую речь: она подтягивается отдельным небольшим обновлением и улучшает разбор русского, не трогая остальные языки.</p>
+      <p>Выбора между моделями в приложении нет — она одна. Облачных моделей и ключей к чужим API тоже нет.</p>
+    </div>
+    <div lang="en">
+      <p>Heardly uses Parakeet Ultra. The model is downloaded once on first launch, takes about 600 MB and sits in <code>~/Library/Application&nbsp;Support/FluidAudio/Models/</code>.</p>
+      <p>On top of the base model Heardly ships its own refinement for Russian speech: it arrives as a separate small update and improves Russian without touching the other languages.</p>
+      <p>There is no model picker in the app — there is only one. There are no cloud models and no keys to third-party APIs either.</p>
+    </div>
+
+    <h2 id="languages"><span lang="ru">Языки</span><span lang="en">Languages</span></h2>
+    <div lang="ru">
+      <p>В <a href="settings.html">Настройках → Основные</a>, строка «Язык распознавания», можно оставить автоопределение или выбрать язык из списка:</p>
+      <p>русский, английский, украинский, немецкий, французский, испанский, итальянский, португальский, китайский, японский, корейский, арабский, турецкий, польский, нидерландский, шведский, хинди.</p>
+    </div>
+    <div lang="en">
+      <p>In <a href="settings.html">Settings → General</a>, the “Recognition language” row, you can leave auto-detect on or pick a language from the list:</p>
+      <p>Russian, English, Ukrainian, German, French, Spanish, Italian, Portuguese, Chinese, Japanese, Korean, Arabic, Turkish, Polish, Dutch, Swedish, Hindi.</p>
+    </div>
+
+    <figure lang="ru">
+      <img src="img/language-sheet.png" alt="Список языков распознавания: переключатель автоопределения, поиск по языкам и семнадцать языков карточками">
+      <figcaption><span lang="ru">Список языков: автоопределение переключается справа сверху, выбранный язык обведён.</span><span lang="en">The language list: auto-detect switches at the top right, the chosen language is outlined.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/language-sheet-en.png" alt="The Recognition language sheet: an auto-detect switch, a search field and seventeen languages as cards">
+      <figcaption><span lang="ru">Список языков: автоопределение переключается справа сверху, выбранный язык обведён.</span><span lang="en">The language list: auto-detect switches at the top right, the chosen language is outlined.</span></figcaption>
+    </figure>
+
+    <div class="note tip">
+      <b><span lang="ru">Говорите всегда на одном языке — выберите его явно</span><span lang="en">Always speaking one language? Name it</span></b>
+      <p><span lang="ru">Автоопределение иногда спотыкается на коротких фразах и на русской речи с английскими терминами. Если язык у вас постоянный, явный выбор надёжнее.</span><span lang="en">Auto-detect sometimes stumbles on short phrases, and on speech that mixes a language with English terms. If your language never changes, naming it is more reliable.</span></p>
+    </div>
+
+    <h2 id="offline"><span lang="ru">Работа без интернета</span><span lang="en">Working offline</span></h2>
+    <div lang="ru">
+      <p>После того как модель скачана, интернет для распознавания не нужен совсем: диктовка, звонки и файлы работают в самолёте и в поезде. Что всё-таки обращается в сеть — на странице <a href="privacy.html">Что уходит в интернет</a>.</p>
+    </div>
+    <div lang="en">
+      <p>Once the model is downloaded, recognition needs no internet at all: dictation, calls and files work on a plane or a train. What does still reach the network is on the <a href="privacy.html">What leaves your Mac</a> page.</p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

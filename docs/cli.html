@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Команда heardly — Heardly</title>
+<meta name="description" content="Та же модель, но из терминала: расшифровать файл одной строкой, прогнать папку циклом или встроить расшифровку в свой скрипт.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Терминал</span><span lang="en">Terminal</span></div>
+    <h1><span lang="ru">Команда heardly</span><span lang="en">The heardly command</span></h1>
+    <p class="d-lede"><span lang="ru">Та же модель, но из терминала: расшифровать файл одной строкой, прогнать папку циклом или встроить расшифровку в свой скрипт.</span><span lang="en">The same model, from the terminal: transcribe a file in one line, run a folder through a loop or wire transcription into a script of your own.</span></p>
+
+
+    <div class="note pro">
+      <b><span lang="ru">Функция Pro</span><span lang="en">A Pro feature</span></b>
+      <p><span lang="ru">Команда работает при активной подписке <a href="pricing.html">Pro</a> или в пробный период.</span><span lang="en">The command works with an active <a href="pricing.html">Pro</a> subscription or during the trial.</span></p>
+    </div>
+
+    <h2 id="install"><span lang="ru">Установка</span><span lang="en">Installing</span></h2>
+    <div lang="ru">
+      <p>Откройте <a href="settings.html">Настройки → Система</a> и нажмите «Установить» в строке «Команда в терминале». После этого <code>heardly</code> доступна в любом окне терминала.</p>
+    </div>
+    <div lang="en">
+      <p>Open <a href="settings.html">Settings → System</a> and press Install in the “Terminal command” row. After that, <code>heardly</code> is available in any terminal window.</p>
+    </div>
+
+    <h2 id="usage"><span lang="ru">Как пользоваться</span><span lang="en">Usage</span></h2>
+    <pre lang="ru"><code>heardly &lt;файл&gt; [опции]</code></pre>
+    <pre lang="en"><code>heardly &lt;file&gt; [options]</code></pre>
+    <table class="ref">
+      <tr>
+        <th><span lang="ru">Опция</span><span lang="en">Option</span></th>
+        <th><span lang="ru">Что делает</span><span lang="en">What it does</span></th>
+      </tr>
+      <tr><td><code>-s</code>, <code>--speakers</code></td><td><span lang="ru">Размечает говорящих: кто из них произнёс реплику.</span><span lang="en">Labels the speakers: who said which line.</span></td></tr>
+      <tr><td><code>-t</code>, <code>--timecodes</code></td><td><span lang="ru">Добавляет таймкоды.</span><span lang="en">Adds timecodes.</span></td></tr>
+      <tr><td><code>-f</code>, <code>--format</code></td><td><code>txt</code><span lang="ru"> (по умолчанию), </span><span lang="en"> (default), </span><code>srt</code>, <code>json</code></td></tr>
+      <tr><td><code>-o</code>, <code>--output</code></td><td><span lang="ru">Сохранить в файл вместо вывода на экран.</span><span lang="en">Write to a file instead of printing to the screen.</span></td></tr>
+      <tr><td><code>-h</code>, <code>--help</code></td><td><span lang="ru">Показать справку.</span><span lang="en">Show the help.</span></td></tr>
+    </table>
+
+    <h2 id="examples"><span lang="ru">Примеры</span><span lang="en">Examples</span></h2>
+    <div lang="ru"><p>Расшифровать запись и посмотреть текст прямо в терминале:</p></div>
+    <div lang="en"><p>Transcribe a recording and read the text right in the terminal:</p></div>
+    <pre><code>heardly ~/Downloads/call.m4a</code></pre>
+
+    <div lang="ru"><p>Субтитры к видео с разметкой говорящих:</p></div>
+    <div lang="en"><p>Subtitles for a video, with speakers marked:</p></div>
+    <pre><code>heardly webinar.mp4 -s -f srt -o webinar.srt</code></pre>
+
+    <div lang="ru"><p>Прогнать всю папку с записями:</p></div>
+    <div lang="en"><p>Run a whole folder of recordings:</p></div>
+    <pre><code>for f in ~/Calls/*.m4a; do
+  heardly "$f" -t -o "${f%.m4a}.txt"
+done</code></pre>
+
+    <h2 id="speakers"><span lang="ru">Про разметку говорящих</span><span lang="en">About speaker labels</span></h2>
+    <div lang="ru">
+      <p>Флаг <code>-s</code> разделяет голоса по звучанию, а не по источнику звука. Это работает только в терминале: в самом приложении разметки говорящих сейчас нет, там реплики делятся на «Я» и «Компьютер» по тому, откуда пришёл звук.</p>
+      <p>Модель для разметки скачивается при первом запуске с флагом, дальше работает офлайн. Если разделить голоса не удалось, команда честно скажет об этом и отдаст текст без подписей.</p>
+    </div>
+    <div lang="en">
+      <p>The <code>-s</code> flag separates voices by how they sound, not by where the audio came from. This works in the terminal only: the app itself has no speaker labels at the moment, and splits lines into “Me” and “Computer” by audio source instead.</p>
+      <p>The model for this is downloaded the first time you use the flag and works offline afterwards. If the voices cannot be separated, the command says so plainly and returns the text without labels.</p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

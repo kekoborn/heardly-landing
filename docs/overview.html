@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Что такое Heardly — Heardly</title>
+<meta name="description" content="Heardly живёт в строке меню Mac и превращает речь в текст: диктовку в любое поле ввода, звонки и встречи целиком, аудио- и видеофайлы. Распознавание идёт на самом компьютере.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Начало</span><span lang="en">Get started</span></div>
+    <h1><span lang="ru">Что такое Heardly</span><span lang="en">What Heardly is</span></h1>
+    <p class="d-lede"><span lang="ru">Heardly живёт в строке меню Mac и превращает речь в текст: диктовку в любое поле ввода, звонки и встречи целиком, аудио- и видеофайлы. Распознавание идёт на самом компьютере.</span><span lang="en">Heardly lives in the Mac menu bar and turns speech into text: dictation into any text field, whole calls and meetings, and audio and video files. Recognition runs on your own computer.</span></p>
+
+
+    <figure lang="ru">
+      <img src="img/menubar-popup.png" alt="Попап Heardly в строке меню: кнопка записи, переключатели микрофона и звука приложений, статистика, зона для файлов">
+      <figcaption><span lang="ru">Главное окно Heardly открывается щелчком по значку в строке меню.</span><span lang="en">The Heardly panel opens with a click on the menu bar icon.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/menubar-popup-en.png" alt="The Heardly menu bar panel: record button, microphone and app audio switches, word statistics and a file drop zone">
+      <figcaption><span lang="ru">Главное окно Heardly открывается щелчком по значку в строке меню.</span><span lang="en">The Heardly panel opens with a click on the menu bar icon.</span></figcaption>
+    </figure>
+
+    <h2 id="modes"><span lang="ru">Три способа получить текст</span><span lang="en">Three ways to get text</span></h2>
+    <div lang="ru">
+      <p>Heardly делает одно и то же тремя путями, и каждый из них живёт в своём разделе документации.</p>
+      <ul>
+        <li><b>Диктовка.</b> Нажимаете горячую клавишу в любом приложении, говорите, и текст появляется там, где стоит курсор. Нужна, когда вы пишете письмо, сообщение или комментарий.</li>
+        <li><b>Звонки и встречи.</b> Heardly слышит и ваш микрофон, и звук из приложений — Zoom, Meet, Telegram. Бота в звонок приглашать не нужно, собеседники ничего не видят.</li>
+        <li><b>Файлы.</b> Перетаскиваете аудио или видео, получаете расшифровку с таймкодами.</li>
+      </ul>
+      <p>Всё, что получилось, складывается в Историю и лежит обычными текстовыми файлами в папке на вашем компьютере.</p>
+    </div>
+    <div lang="en">
+      <p>Heardly does the same job in three ways, and each one has its own section in these docs.</p>
+      <ul>
+        <li><b>Dictation.</b> Press a shortcut in any app, speak, and the text appears where your cursor is. This is for writing an email, a message or a comment.</li>
+        <li><b>Calls and meetings.</b> Heardly hears both your microphone and the audio coming out of apps — Zoom, Meet, Telegram. No bot joins the call, and the other side sees nothing.</li>
+        <li><b>Files.</b> Drop in audio or video and get a transcript with timecodes.</li>
+      </ul>
+      <p>Everything you produce lands in History and is kept as ordinary text files in a folder on your computer.</p>
+    </div>
+
+    <h2 id="local"><span lang="ru">Почему «на самом компьютере»</span><span lang="en">Why “on your own computer”</span></h2>
+    <div lang="ru">
+      <p>Распознавание речи выполняет локальная модель Parakeet. Звук не уходит на сервер: ни во время диктовки, ни во время звонка, ни при расшифровке файла. Интернет Heardly нужен только для проверки подписки, обновления приложения и первой загрузки модели.</p>
+      <p>Подробный разбор, что именно и когда уходит в сеть, — на странице <a href="privacy.html">Что уходит в интернет</a>.</p>
+    </div>
+    <div lang="en">
+      <p>Speech recognition runs on a local Parakeet model. Audio never goes to a server — not while you dictate, not during a call, not when you transcribe a file. Heardly needs the internet only to check your subscription, update itself and download the model the first time.</p>
+      <p>A full account of what leaves the Mac and when is on the <a href="privacy.html">What leaves your Mac</a> page.</p>
+    </div>
+
+    <h2 id="requirements"><span lang="ru">Что нужно</span><span lang="en">What you need</span></h2>
+    <table class="ref">
+      <tr><td><span lang="ru">Система</span><span lang="en">System</span></td><td>macOS 14 Sonoma<span lang="ru"> или новее</span><span lang="en"> or newer</span></td></tr>
+      <tr><td><span lang="ru">Процессор</span><span lang="en">Chip</span></td><td><span lang="ru">Apple Silicon. Модель считается на Neural Engine, на Intel-машинах Heardly не рассчитан.</span><span lang="en">Apple Silicon. The model runs on the Neural Engine; Heardly is not built for Intel Macs.</span></td></tr>
+      <tr><td><span lang="ru">Место</span><span lang="en">Disk</span></td><td><span lang="ru">Около 600 МБ под модель, плюс сами расшифровки — это простой текст, он почти ничего не весит.</span><span lang="en">About 600 MB for the model, plus the transcripts themselves — plain text, which weighs next to nothing.</span></td></tr>
+      <tr><td><span lang="ru">Разрешения</span><span lang="en">Permissions</span></td><td><span lang="ru">Микрофон, запись системного звука и универсальный доступ — <a href="permissions.html">разбор каждого</a>.</span><span lang="en">Microphone, system audio recording and accessibility — <a href="permissions.html">each one explained</a>.</span></td></tr>
+    </table>
+
+    <h2 id="next"><span lang="ru">С чего начать</span><span lang="en">Where to start</span></h2>
+    <div class="cards">
+      <a href="install.html"><b><span lang="ru">Установка</span><span lang="en">Install</span></b><span><span lang="ru">Скачать, перенести в Программы, запустить.</span><span lang="en">Download, move to Applications, launch.</span></span></a>
+      <a href="quickstart.html"><b><span lang="ru">Первая диктовка</span><span lang="en">First dictation</span></b><span><span lang="ru">Продиктовать первое сообщение за минуту.</span><span lang="en">Dictate your first message in a minute.</span></span></a>
+      <a href="live.html"><b><span lang="ru">Запись звонка</span><span lang="en">Record a call</span></b><span><span lang="ru">Расшифровать встречу без бота в комнате.</span><span lang="en">Transcribe a meeting with no bot in the room.</span></span></a>
+      <a href="pricing.html"><b><span lang="ru">Пробный период и Pro</span><span lang="en">Trial and Pro</span></b><span><span lang="ru">Что входит в бесплатную версию и сколько стоит Pro.</span><span lang="en">What the free version covers and what Pro costs.</span></span></a>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

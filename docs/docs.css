@@ -1,0 +1,175 @@
+/* Heardly Docs — общая оболочка раздела.
+   Токены и типографика взяты из landing/v6.html, чтобы доки и лендинг читались как одно целое.
+   Двуязычность — та же механика: html[data-lang] скрывает парные [lang="ru"] / [lang="en"]. */
+
+:root {
+  --bg: #F6F4EF; --bg-2: #FCFBF8; --bg-3: #EFECE5;
+  --line: rgba(35,38,51,.09); --line-2: rgba(35,38,51,.16);
+  --t1: #1D1F2A; --t2: #4F515C; --t3: #686A74;
+  --mic: #5E6AD2; --mic-l: #8F98E6; --app: #D9845A; --app-l: #EBB08F;
+  --ok: #3F9A6B; --warn: #D08A2E; --danger: #D5534B;
+  --sans: "Onest", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --sys: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+  --serif: ui-serif, Georgia, serif;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+  --sidebar: 264px;
+  --toc: 212px;
+  color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body { margin: 0; background: var(--bg); color: var(--t1); font: 400 16px/1.65 var(--sans); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+img, svg { display: block; max-width: 100%; }
+button { font: inherit; color: inherit; }
+p { text-wrap: pretty; margin: 0; }
+html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not(html) { display: none !important; }
+:focus-visible { outline: 2px solid var(--mic); outline-offset: 3px; }
+
+/* ── Шапка ──────────────────────────────────────── */
+.d-header { position: sticky; top: 0; z-index: 40; background: var(--bg); box-shadow: 0 1px 0 var(--line); }
+.d-nav { height: 64px; display: flex; align-items: center; gap: 28px; padding: 0 28px; }
+.d-brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; letter-spacing: -0.02em; text-decoration: none; }
+.d-brand img { width: 26px; height: 26px; border-radius: 6px; }
+.d-brand .tag { font-size: 13px; font-weight: 500; color: var(--t3); padding-left: 10px; margin-left: 2px; border-left: 1px solid var(--line-2); }
+.d-nav-r { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.lang { display: inline-flex; gap: 2px; padding: 3px; border-radius: 999px; box-shadow: 0 0 0 1px var(--line-2) inset; }
+.lang button { border: 0; background: transparent; color: var(--t3); font: 500 12px var(--sans); padding: 5px 9px; border-radius: 999px; cursor: pointer; }
+.lang button[aria-pressed="true"] { background: rgba(35,38,51,.1); color: var(--t1); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; height: 38px; padding: 0 16px; border-radius: 999px; border: 0; cursor: pointer;
+  font: 500 14.5px var(--sans); text-decoration: none; white-space: nowrap; transition: background-color .3s, transform .3s var(--ease); }
+.btn-w { background: var(--t1); color: #FBFAF7; } .btn-w:hover { background: #000; transform: translateY(-1px); }
+.d-burger { display: none; width: 38px; height: 38px; border: 0; background: transparent; border-radius: 9px; cursor: pointer; align-items: center; justify-content: center; }
+.d-burger:hover { background: var(--bg-3); }
+.d-burger i { display: block; width: 17px; height: 1.5px; background: var(--t1); position: relative; }
+.d-burger i::before, .d-burger i::after { content: ""; position: absolute; left: 0; width: 17px; height: 1.5px; background: var(--t1); }
+.d-burger i::before { top: -5px; } .d-burger i::after { top: 5px; }
+
+/* ── Раскладка ──────────────────────────────────── */
+.d-shell { display: grid; grid-template-columns: var(--sidebar) minmax(0, 1fr) var(--toc); gap: 0; max-width: 1440px; margin: 0 auto; align-items: start; }
+
+/* ── Боковая навигация ──────────────────────────── */
+.d-side { position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; padding: 28px 16px 60px 28px; }
+.d-side::-webkit-scrollbar { width: 6px; } .d-side::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+.d-group + .d-group { margin-top: 22px; }
+.d-group > h4 { margin: 0 0 6px; padding: 0 10px; font-size: 10.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--t3); }
+.d-side a { display: block; padding: 6px 10px; border-radius: 8px; font-size: 14.5px; color: var(--t2); text-decoration: none; transition: background-color .15s, color .15s; }
+.d-side a:hover { background: var(--bg-3); color: var(--t1); }
+.d-side a[aria-current="page"] { background: rgba(94,106,210,.11); color: var(--mic); font-weight: 500; }
+
+/* ── Содержимое страницы ────────────────────────── */
+.d-main { min-width: 0; padding: 40px 44px 100px; }
+.d-eyebrow { font-size: 13px; font-weight: 500; color: var(--mic); margin-bottom: 10px; }
+.d-main h1 { margin: 0; font: 600 clamp(30px, 3.4vw, 40px)/1.12 var(--sans); letter-spacing: -0.035em; text-wrap: balance; }
+.d-lede { margin-top: 14px; font-size: 18.5px; line-height: 1.55; color: var(--t2); max-width: 680px; }
+.d-main h2 { margin: 52px 0 0; font: 600 25px/1.2 var(--sans); letter-spacing: -0.028em; scroll-margin-top: 84px; }
+.d-main h3 { margin: 32px 0 0; font: 600 18px/1.3 var(--sans); letter-spacing: -0.015em; scroll-margin-top: 84px; }
+.d-main h2 + p, .d-main h3 + p, .d-lede + h2 { margin-top: 14px; }
+.d-main p { margin-top: 16px; max-width: 680px; }
+.d-main ul, .d-main ol { margin: 16px 0 0; padding-left: 22px; max-width: 680px; }
+.d-main li { margin-top: 8px; }
+.d-main li::marker { color: var(--t3); }
+code { font: 500 13.5px var(--mono); background: var(--bg-3); padding: 2px 6px; border-radius: 5px; }
+kbd { font: 500 13px var(--sys); background: var(--bg-2); border: 1px solid var(--line-2); border-bottom-width: 2px; border-radius: 6px; padding: 2px 7px; white-space: nowrap; }
+pre { margin: 18px 0 0; padding: 16px 18px; background: #232633; color: #EFEDE6; border-radius: 12px; overflow-x: auto; max-width: 680px; }
+pre code { background: none; padding: 0; color: inherit; font-size: 13px; line-height: 1.6; }
+
+/* Скриншоты */
+figure { margin: 26px 0 0; max-width: 820px; }
+figure img { width: 100%; border-radius: 12px; box-shadow: 0 0 0 1px var(--line) inset, 0 18px 44px -24px rgba(35,38,51,.3); background: var(--bg-2); }
+/* Снимок, где окно не заполняет кадр целиком: подложка и рамка очертили бы пустой угол. */
+figure img.free { border-radius: 0; box-shadow: none; background: none; }
+figcaption { margin-top: 10px; font-size: 13.5px; color: var(--t3); }
+
+/* Плашки-подсказки */
+.note { margin: 24px 0 0; padding: 14px 18px; border-radius: 12px; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line) inset; max-width: 680px; font-size: 15px; }
+.note > b { display: block; margin-bottom: 4px; font-size: 13px; font-weight: 600; letter-spacing: .02em; }
+.note p { margin-top: 8px; }
+.note.tip { background: rgba(94,106,210,.07); box-shadow: 0 0 0 1px rgba(94,106,210,.2) inset; }
+.note.tip > b { color: var(--mic); }
+.note.warn { background: rgba(208,138,46,.08); box-shadow: 0 0 0 1px rgba(208,138,46,.26) inset; }
+.note.warn > b { color: #9A6414; }
+.note.pro { background: rgba(217,132,90,.08); box-shadow: 0 0 0 1px rgba(217,132,90,.26) inset; }
+.note.pro > b { color: #9E5429; }
+
+/* Незаполненный факт — виден и в вёрстке, и при вычитке */
+.todo { display: inline-block; padding: 1px 7px; border-radius: 6px; background: rgba(213,83,75,.1);
+  box-shadow: 0 0 0 1px rgba(213,83,75,.3) inset; color: #A33833; font-size: 14px; }
+
+/* Шаги */
+.steps { margin: 24px 0 0; padding: 0; list-style: none; counter-reset: step; max-width: 680px; }
+.steps > li { position: relative; padding: 0 0 26px 44px; counter-increment: step; }
+.steps > li::before { content: counter(step); position: absolute; left: 0; top: -1px; width: 28px; height: 28px; border-radius: 50%;
+  background: var(--t1); color: var(--bg-2); font: 600 13.5px var(--sys); display: grid; place-items: center; }
+.steps > li::after { content: ""; position: absolute; left: 13.5px; top: 32px; bottom: 4px; width: 1px; background: var(--line-2); }
+.steps > li:last-child { padding-bottom: 0; } .steps > li:last-child::after { display: none; }
+.steps > li > b { display: block; font-size: 16.5px; font-weight: 600; }
+.steps > li > p:first-of-type { margin-top: 6px; }
+
+/* Таблица-справочник */
+.ref { width: 100%; max-width: 820px; margin: 22px 0 0; border-collapse: collapse; font-size: 15px; }
+.ref th, .ref td { text-align: left; vertical-align: top; padding: 12px 14px; border-bottom: 1px solid var(--line); }
+.ref th { font-size: 12px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; color: var(--t3); }
+.ref td:first-child { font-weight: 500; white-space: nowrap; }
+.ref td p { margin-top: 4px; font-size: 14px; color: var(--t2); max-width: none; }
+
+/* Карточки «дальше» */
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 12px; margin: 22px 0 0; max-width: 820px; }
+.cards a { display: block; padding: 16px 18px; border-radius: 14px; text-decoration: none; background: var(--bg-2);
+  box-shadow: 0 0 0 1px var(--line) inset; transition: box-shadow .25s, transform .25s var(--ease); }
+.cards a:hover { box-shadow: 0 0 0 1px var(--line-2) inset; transform: translateY(-2px); }
+.cards b { display: block; font-size: 15.5px; font-weight: 600; }
+.cards span { display: block; margin-top: 5px; font-size: 14px; color: var(--t2); line-height: 1.45; }
+
+/* Низ страницы: соседние страницы */
+.d-updown { display: flex; gap: 12px; margin-top: 64px; padding-top: 26px; border-top: 1px solid var(--line); max-width: 820px; }
+.d-updown a { flex: 1; padding: 14px 18px; border-radius: 12px; text-decoration: none; box-shadow: 0 0 0 1px var(--line) inset; }
+.d-updown a:hover { background: var(--bg-2); }
+.d-updown .dir { display: block; font-size: 12px; color: var(--t3); }
+.d-updown .ttl { display: block; margin-top: 3px; font-size: 15px; font-weight: 500; }
+.d-updown .next { text-align: right; }
+
+/* ── Оглавление страницы ────────────────────────── */
+.d-toc { position: sticky; top: 64px; max-height: calc(100vh - 64px); overflow-y: auto; padding: 46px 28px 60px 8px; font-size: 13.5px; }
+.d-toc h5 { margin: 0 0 8px; font-size: 10.5px; font-weight: 600; letter-spacing: .09em; text-transform: uppercase; color: var(--t3); }
+.d-toc a { display: block; padding: 4px 0 4px 10px; color: var(--t2); text-decoration: none; border-left: 1.5px solid var(--line); line-height: 1.4; }
+.d-toc a:hover { color: var(--t1); }
+.d-toc a.on { color: var(--mic); border-left-color: var(--mic); }
+.d-toc a.lvl3 { padding-left: 22px; }
+
+/* ── Подвал ─────────────────────────────────────── */
+.d-foot { border-top: 1px solid var(--line); margin-top: 20px; }
+.d-foot .in { max-width: 1440px; margin: 0 auto; padding: 26px 28px 40px; display: flex; flex-wrap: wrap; gap: 18px; font-size: 14px; color: var(--t2); }
+.d-foot a { color: var(--t2); }
+
+/* ── Главная раздела ────────────────────────────── */
+.hub { padding: 56px 44px 100px; max-width: 1060px; }
+.hub h1 { font: 600 clamp(34px, 4vw, 46px)/1.1 var(--sans); letter-spacing: -0.035em; margin: 0; }
+.hub-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 14px; margin-top: 18px; }
+.hub-sec { padding: 20px 22px; border-radius: 16px; background: var(--bg-2); box-shadow: 0 0 0 1px var(--line) inset; }
+.hub-sec h3 { margin: 0 0 10px; font-size: 16px; font-weight: 600; }
+.hub-sec ul { margin: 0; padding: 0; list-style: none; }
+.hub-sec li + li { margin-top: 2px; }
+.hub-sec a { display: block; padding: 5px 0; font-size: 14.5px; color: var(--t2); text-decoration: none; }
+.hub-sec a:hover { color: var(--mic); }
+
+/* ── Адаптив ────────────────────────────────────── */
+@media (max-width: 1180px) {
+  .d-shell { grid-template-columns: var(--sidebar) minmax(0, 1fr); }
+  .d-toc { display: none; }
+}
+@media (max-width: 880px) {
+  .d-shell { grid-template-columns: minmax(0, 1fr); }
+  .d-burger { display: inline-flex; }
+  .d-side { position: fixed; inset: 64px auto 0 0; width: 300px; background: var(--bg); z-index: 39;
+    box-shadow: 1px 0 0 var(--line); transform: translateX(-102%); transition: transform .3s var(--ease); max-height: none; height: calc(100vh - 64px); }
+  body.nav-open .d-side { transform: none; }
+  body.nav-open::after { content: ""; position: fixed; inset: 64px 0 0; background: rgba(29,31,42,.3); z-index: 38; }
+  .d-main { padding: 30px 18px 80px; }
+  .hub { padding: 36px 18px 80px; }
+  .d-nav { padding: 0 14px; gap: 12px; }
+  .d-brand .tag { display: none; }
+  .d-updown { flex-direction: column; }
+}

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Разрешения macOS — Heardly</title>
+<meta name="description" content="Heardly просит три разрешения, и каждое отвечает за свою часть работы. Без микрофона не будет диктовки, без системного звука — записи звонков, без универсального доступа текст не вставится в поле.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Начало</span><span lang="en">Get started</span></div>
+    <h1><span lang="ru">Разрешения macOS</span><span lang="en">macOS permissions</span></h1>
+    <p class="d-lede"><span lang="ru">Heardly просит три разрешения, и каждое отвечает за свою часть работы. Без микрофона не будет диктовки, без системного звука — записи звонков, без универсального доступа текст не вставится в поле.</span><span lang="en">Heardly asks for three permissions, each covering a different part of the job. Without the microphone there is no dictation, without system audio there are no calls, and without accessibility the text cannot be inserted into a field.</span></p>
+
+
+    <h2 id="list"><span lang="ru">Что именно просит Heardly</span><span lang="en">What Heardly asks for</span></h2>
+    <table class="ref">
+      <tr>
+        <th><span lang="ru">Разрешение</span><span lang="en">Permission</span></th>
+        <th><span lang="ru">Для чего</span><span lang="en">What it does</span></th>
+        <th><span lang="ru">Без него</span><span lang="en">Without it</span></th>
+      </tr>
+      <tr>
+        <td><span lang="ru">Микрофон</span><span lang="en">Microphone</span></td>
+        <td><span lang="ru">Слышит ваш голос — и в диктовке, и в звонке.</span><span lang="en">Hears your voice, both in dictation and in a call.</span></td>
+        <td><span lang="ru">Диктовка не стартует, в звонке записана только другая сторона.</span><span lang="en">Dictation won’t start; in a call only the other side is recorded.</span></td>
+      </tr>
+      <tr>
+        <td><span lang="ru">Запись системного звука</span><span lang="en">System audio recording</span></td>
+        <td><span lang="ru">Слышит, что звучит из приложений: собеседников в Zoom, Meet, Telegram.</span><span lang="en">Hears what comes out of apps: the people on the other side of Zoom, Meet or Telegram.</span></td>
+        <td><span lang="ru">В расшифровке звонка будет только ваша речь.</span><span lang="en">A call transcript will contain only your own speech.</span></td>
+      </tr>
+      <tr>
+        <td><span lang="ru">Универсальный доступ</span><span lang="en">Accessibility</span></td>
+        <td><span lang="ru">Вставляет продиктованный текст туда, где стоит курсор.</span><span lang="en">Inserts dictated text where your cursor is.</span></td>
+        <td><span lang="ru">Текст распознается и сохранится в Историю, но в поле не попадёт.</span><span lang="en">The text is still recognised and saved to History, but never reaches the field.</span></td>
+      </tr>
+    </table>
+
+    <figure lang="ru">
+      <img src="img/onboarding-permissions.png" alt="Шаг разрешений в настройке Heardly: микрофон, звук приложений и вставка текста, у каждого своя кнопка «Разрешить»">
+      <figcaption><span lang="ru">При первом запуске Heardly просит все три разрешения подряд — каждое отдельной кнопкой.</span><span lang="en">On the first launch Heardly asks for all three permissions in a row, each with its own button.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/onboarding-permissions-en.png" alt="The permissions step of onboarding: microphone, app audio and text insertion, each with its own Allow button">
+      <figcaption><span lang="ru">При первом запуске Heardly просит все три разрешения подряд — каждое отдельной кнопкой.</span><span lang="en">On the first launch Heardly asks for all three permissions in a row, each with its own button.</span></figcaption>
+    </figure>
+
+    <h2 id="grant"><span lang="ru">Где их выдать</span><span lang="en">Where to grant them</span></h2>
+    <div lang="ru">
+      <p>Heardly спрашивает разрешения сам, когда они впервые нужны. Если вы отказали или случайно закрыли окно, всё включается вручную в «Системных настройках» → «Конфиденциальность и безопасность»:</p>
+      <ul>
+        <li><b>Микрофон</b> — найдите Heardly в списке и включите переключатель.</li>
+        <li><b>Запись экрана и системного звука</b> — здесь же живёт доступ к звуку приложений. macOS объединяет их в один пункт.</li>
+        <li><b>Универсальный доступ</b> — отдельный пункт, в нём тоже нужно включить Heardly.</li>
+      </ul>
+    </div>
+    <div lang="en">
+      <p>Heardly asks for each permission the first time it needs it. If you declined, or closed the dialog by accident, you can switch them on by hand in System Settings → Privacy &amp; Security:</p>
+      <ul>
+        <li><b>Microphone</b> — find Heardly in the list and turn the switch on.</li>
+        <li><b>Screen &amp; System Audio Recording</b> — app audio access lives here; macOS keeps the two together in one entry.</li>
+        <li><b>Accessibility</b> — a separate entry, where Heardly also needs to be enabled.</li>
+      </ul>
+    </div>
+
+    <div class="note warn">
+      <b><span lang="ru">После обновления разрешение может слететь</span><span lang="en">An update can reset a permission</span></b>
+      <p><span lang="ru">macOS привязывает разрешение к конкретной сборке приложения. Если после обновления диктовка перестала вставлять текст, загляните в «Универсальный доступ» и включите Heardly заново — подробности на странице <a href="fix-dictation.html">Текст не вставляется</a>.</span><span lang="en">macOS ties a permission to a specific build. If dictation stops inserting text after an update, open Accessibility and switch Heardly back on — details on the <a href="fix-dictation.html">Text is not inserted</a> page.</span></p>
+    </div>
+
+    <h2 id="why-screen"><span lang="ru">Почему просят «запись экрана»</span><span lang="en">Why it says “screen recording”</span></h2>
+    <div lang="ru">
+      <p>Это формулировка macOS, а не намерение приложения. Доступ к звуку других программ система выдаёт в том же пункте, что и к изображению экрана, отдельного переключателя под звук в ней нет.</p>
+      <p>Heardly записывает только звук. Изображение экрана не читается и никуда не передаётся.</p>
+    </div>
+    <div lang="en">
+      <p>That wording comes from macOS, not from the app. The system grants access to other apps’ audio in the same entry as the screen image; it has no separate switch for audio alone.</p>
+      <p>Heardly records audio only. The screen image is never read and never sent anywhere.</p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

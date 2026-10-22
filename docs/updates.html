@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Обновления — Heardly</title>
+<meta name="description" content="Heardly проверяет новые версии сам и ставит их по вашему согласию. Проверить вручную и посмотреть установленную версию можно в настройках.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Решение проблем</span><span lang="en">Troubleshooting</span></div>
+    <h1><span lang="ru">Обновления</span><span lang="en">Updates</span></h1>
+    <p class="d-lede"><span lang="ru">Heardly проверяет новые версии сам и ставит их по вашему согласию. Проверить вручную и посмотреть установленную версию можно в настройках.</span><span lang="en">Heardly checks for new versions by itself and installs them with your consent. You can check by hand, and see which version you have, in Settings.</span></p>
+
+
+    <h2 id="check"><span lang="ru">Проверить вручную</span><span lang="en">Checking by hand</span></h2>
+    <div lang="ru">
+      <p><a href="settings.html">Настройки → Система</a>, строка «Обновления». Там же написана установленная версия и номер сборки. Та же кнопка есть внизу бокового меню настроек.</p>
+    </div>
+    <div lang="en">
+      <p><a href="settings.html">Settings → System</a>, the “Updates” row. It also states the installed version and build number. The same button sits at the bottom of the settings sidebar.</p>
+    </div>
+
+    <figure lang="ru">
+      <img src="img/settings-system.png" alt="Раздел «Система»: запуск при входе, команда в терминале, язык интерфейса, обновления с номером версии">
+    </figure>
+    <figure lang="en">
+      <img src="img/settings-system-en.png" alt="The System section: launch at login, terminal command, interface language and updates with the version number">
+    </figure>
+
+    <h2 id="after"><span lang="ru">После обновления</span><span lang="en">After an update</span></h2>
+    <div lang="ru">
+      <p>Две вещи, которые могут повести себя неожиданно:</p>
+      <ul>
+        <li><b>Разрешения.</b> macOS привязывает их к сборке, поэтому «Универсальный доступ» иногда приходится включить заново — см. <a href="fix-dictation.html">Текст не вставляется</a>.</li>
+        <li><b>Подготовка модели.</b> После крупного обновления macOS модель один раз пересобирается под Neural Engine: первый запуск займёт до пары минут.</li>
+      </ul>
+      <p>Записи, настройки и словарь замен обновление не трогает.</p>
+    </div>
+    <div lang="en">
+      <p>Two things that can behave unexpectedly:</p>
+      <ul>
+        <li><b>Permissions.</b> macOS ties them to a build, so Accessibility sometimes has to be switched back on — see <a href="fix-dictation.html">Text is not inserted</a>.</li>
+        <li><b>Model preparation.</b> After a major macOS update the model is rebuilt for the Neural Engine once, so the first launch takes up to a couple of minutes.</li>
+      </ul>
+      <p>Your recordings, settings and replacement list are left alone by an update.</p>
+    </div>
+
+    <div class="note warn">
+      <b><span lang="ru">Запускайте из «Программ»</span><span lang="en">Run it from Applications</span></b>
+      <p><span lang="ru">Если Heardly открыт прямо из скачанного образа <code>.dmg</code>, обновиться он не сможет. Перенесите приложение в «Программы».</span><span lang="en">If Heardly is running straight from the downloaded <code>.dmg</code>, it cannot update itself. Move the app into Applications.</span></p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

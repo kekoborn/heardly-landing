@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Справочник настроек — Heardly</title>
+<meta name="description" content="Все настройки Heardly собраны в одном окне из шести разделов. Открыть его можно из попапа в строке меню или сочетанием ⌘ + запятая.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Настройки</span><span lang="en">Settings</span></div>
+    <h1><span lang="ru">Справочник настроек</span><span lang="en">Settings reference</span></h1>
+    <p class="d-lede"><span lang="ru">Все настройки Heardly собраны в одном окне из шести разделов. Открыть его можно из попапа в строке меню или сочетанием ⌘ + запятая.</span><span lang="en">Every Heardly setting lives in one window with six sections. Open it from the menu bar panel or with ⌘ + comma.</span></p>
+
+
+    <h2 id="general"><span lang="ru">Основные</span><span lang="en">General</span></h2>
+    <figure lang="ru">
+      <img src="img/settings-general.png" alt="Раздел «Основные»: горячая клавиша, активация диктовки, микрофон, язык распознавания">
+    </figure>
+    <figure lang="en">
+      <img src="img/settings-general-en.png" alt="The General section of Heardly settings: shortcut, dictation activation, microphone and recognition language">
+    </figure>
+    <table class="ref">
+      <tr><td><span lang="ru">Горячая клавиша</span><span lang="en">Shortcut</span></td>
+          <td><span lang="ru">Сочетание, которым начинается диктовка. По умолчанию правый ⌘.</span><span lang="en">The combination that starts dictation. The right ⌘ by default.</span></td></tr>
+      <tr><td><span lang="ru">Активация диктовки при</span><span lang="en">Activation</span></td>
+          <td><span lang="ru">«Нажатие» — клавиша работает как выключатель, «Удержание» — запись идёт, пока клавиша зажата.</span><span lang="en">“Toggle” makes the key a switch; “Hold” records only while the key is down.</span></td></tr>
+      <tr><td><span lang="ru">Микрофон</span><span lang="en">Microphone</span></td>
+          <td><span lang="ru">«Авто» выбирает устройство сам, можно задать конкретное или системное по умолчанию.</span><span lang="en">“Auto” picks a device for you; you can also name one, or follow the system default.</span></td></tr>
+      <tr><td><span lang="ru">Язык распознавания</span><span lang="en">Recognition language</span></td>
+          <td><span lang="ru">Автоопределение или конкретный язык — <a href="model.html">подробнее</a>.</span><span lang="en">Auto-detect or a specific language — <a href="model.html">more on this</a>.</span></td></tr>
+    </table>
+
+    <h2 id="dictation"><span lang="ru">Диктовка</span><span lang="en">Dictation</span></h2>
+    <figure lang="ru">
+      <img src="img/settings-dictation.png" alt="Раздел «Диктовка»: вид панели, словарь замен, выключение звука других приложений">
+    </figure>
+    <figure lang="en">
+      <img src="img/settings-dictation-en.png" alt="The Dictation section: bar style, replacement list and silencing other apps">
+    </figure>
+    <table class="ref">
+      <tr><td><span lang="ru">Вид диктовки</span><span lang="en">Bar style</span></td>
+          <td><span lang="ru">Большая панель или мини. У мини выбирается положение: внизу экрана или у значка в строке меню. <a href="dictation-bar.html">Как они выглядят</a>.</span><span lang="en">The large bar or the mini one. The mini bar has a position: bottom of the screen or under the menu bar icon. <a href="dictation-bar.html">How they look</a>.</span></td></tr>
+      <tr><td><span lang="ru">Словарь замен</span><span lang="en">Replacement list</span></td>
+          <td><span lang="ru">Правила для имён и терминов — <a href="replacements.html">как их писать</a>.</span><span lang="en">Rules for names and terms — <a href="replacements.html">how to write them</a>.</span></td></tr>
+      <tr><td><span lang="ru">Выключать звук других приложений</span><span lang="en">Silence other apps</span></td>
+          <td><span lang="ru">Приглушает остальные программы на время диктовки — <a href="muffle.html">зачем</a>.</span><span lang="en">Quiets other apps while you dictate — <a href="muffle.html">why</a>.</span></td></tr>
+    </table>
+
+    <h2 id="recordings"><span lang="ru">Записи</span><span lang="en">Recordings</span></h2>
+    <table class="ref">
+      <tr><td><span lang="ru">Папка для расшифровок</span><span lang="en">Transcripts folder</span></td>
+          <td><span lang="ru">Где лежат текстовые файлы и как их перенести — <a href="folder.html">подробнее</a>.</span><span lang="en">Where the text files live and how to move them — <a href="folder.html">more on this</a>.</span></td></tr>
+      <tr><td><span lang="ru">История транскрипций</span><span lang="en">Transcription history</span></td>
+          <td><span lang="ru">Открывает окно <a href="history.html">Истории</a>.</span><span lang="en">Opens the <a href="history.html">History</a> window.</span></td></tr>
+    </table>
+
+    <h2 id="system"><span lang="ru">Система</span><span lang="en">System</span></h2>
+    <figure lang="ru">
+      <img src="img/settings-system.png" alt="Раздел «Система»: запуск при входе, команда в терминале, язык интерфейса, обновления">
+    </figure>
+    <figure lang="en">
+      <img src="img/settings-system-en.png" alt="The System section: launch at login, terminal command, interface language and updates with the version number">
+    </figure>
+    <table class="ref">
+      <tr><td><span lang="ru">Запускать при входе в систему</span><span lang="en">Launch at login</span></td>
+          <td><span lang="ru">Heardly стартует вместе с Mac и ждёт в строке меню.</span><span lang="en">Heardly starts with the Mac and waits in the menu bar.</span></td></tr>
+      <tr><td><span lang="ru">Команда в терминале</span><span lang="en">Terminal command</span></td>
+          <td><span lang="ru">Ставит команду <a href="cli.html"><code>heardly</code></a> (Pro).</span><span lang="en">Installs the <a href="cli.html"><code>heardly</code></a> command (Pro).</span></td></tr>
+      <tr><td><span lang="ru">Интерфейс</span><span lang="en">Interface</span></td>
+          <td><span lang="ru">Язык меню и окон: русский, английский, испанский, французский. На распознавание не влияет.</span><span lang="en">The language of menus and windows: Russian, English, Spanish, French. It does not affect recognition.</span></td></tr>
+      <tr><td><span lang="ru">Обновления</span><span lang="en">Updates</span></td>
+          <td><span lang="ru">Показывает установленную версию и проверяет новую — <a href="updates.html">подробнее</a>.</span><span lang="en">Shows the installed version and checks for a new one — <a href="updates.html">more on this</a>.</span></td></tr>
+    </table>
+
+    <h2 id="account"><span lang="ru">Статистика и Подписка</span><span lang="en">Statistics and Subscription</span></h2>
+    <div lang="ru">
+      <p>«Статистика» — сводка по вашим записям, <a href="stats.html">что в ней считается</a>. «Подписка» — состояние доступа, покупка и восстановление, см. <a href="pricing.html">Бесплатно, пробный период и Pro</a> и <a href="license.html">Лицензия и устройства</a>.</p>
+    </div>
+    <div lang="en">
+      <p>“Statistics” is a summary of your own recordings — <a href="stats.html">what it counts</a>. “Subscription” holds the state of your access, the purchase and the restore flow; see <a href="pricing.html">Free, trial and Pro</a> and <a href="license.html">Licence and devices</a>.</p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

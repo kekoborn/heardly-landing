@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Установка и первый запуск — Heardly</title>
+<meta name="description" content="Heardly ставится как обычное приложение для Mac: скачать образ, перетащить в «Программы», запустить. Первый запуск занимает чуть больше времени — приложение готовит модель распознавания.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Начало</span><span lang="en">Get started</span></div>
+    <h1><span lang="ru">Установка и первый запуск</span><span lang="en">Install and first launch</span></h1>
+    <p class="d-lede"><span lang="ru">Heardly ставится как обычное приложение для Mac: скачать образ, перетащить в «Программы», запустить. Первый запуск занимает чуть больше времени — приложение готовит модель распознавания.</span><span lang="en">Heardly installs like any Mac app: download the disk image, drag it to Applications, launch it. The first launch takes a little longer because the app prepares the recognition model.</span></p>
+
+
+    <h2 id="install"><span lang="ru">Установка</span><span lang="en">Installing</span></h2>
+    <ol class="steps">
+      <li>
+        <b><span lang="ru">Скачайте образ</span><span lang="en">Download the disk image</span></b>
+        <div lang="ru"><p>Кнопка «Скачать» наверху этой страницы ведёт на последнюю версию. Файл называется <code>Heardly.dmg</code>.</p></div>
+        <div lang="en"><p>The Download button at the top of this page points at the latest version. The file is called <code>Heardly.dmg</code>.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Перетащите Heardly в «Программы»</span><span lang="en">Drag Heardly into Applications</span></b>
+        <div lang="ru"><p>Откройте скачанный <code>.dmg</code> и перетащите значок в папку «Программы». Запускать приложение прямо из образа не нужно: оттуда не работает автообновление.</p></div>
+        <div lang="en"><p>Open the downloaded <code>.dmg</code> and drag the icon into the Applications folder. Don’t run the app straight from the disk image — automatic updates don’t work from there.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Запустите приложение</span><span lang="en">Launch the app</span></b>
+        <div lang="ru"><p>Значок Heardly появится в строке меню, справа вверху. Окна в Dock у приложения нет — оно всё время живёт в строке меню.</p></div>
+        <div lang="en"><p>The Heardly icon appears in the menu bar, top right. The app has no Dock window — it lives in the menu bar.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Выдайте разрешения</span><span lang="en">Grant the permissions</span></b>
+        <div lang="ru"><p>При первом запуске Heardly попросит доступ к микрофону, а для записи звонков — к системному звуку. Что именно и зачем — на странице <a href="permissions.html">Разрешения macOS</a>.</p></div>
+        <div lang="en"><p>On first launch Heardly asks for the microphone, and for system audio if you want to record calls. What each one is for is on the <a href="permissions.html">macOS permissions</a> page.</p></div>
+      </li>
+    </ol>
+
+    <figure lang="ru">
+      <img src="img/onboarding-welcome.png" alt="Первый экран настройки Heardly: значок приложения, приветствие и кнопка «Начать настройку»">
+      <figcaption><span lang="ru">После первого запуска Heardly сам открывает настройку: разрешения, проверка микрофона и короткая проба диктовки.</span><span lang="en">On the first launch Heardly opens the setup by itself: permissions, a microphone check and a short dictation try.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/onboarding-welcome-en.png" alt="The first onboarding screen: the Heardly icon, a welcome line and the Start setup button">
+      <figcaption><span lang="ru">После первого запуска Heardly сам открывает настройку: разрешения, проверка микрофона и короткая проба диктовки.</span><span lang="en">On the first launch Heardly opens the setup by itself: permissions, a microphone check and a short dictation try.</span></figcaption>
+    </figure>
+
+    <h2 id="first-run"><span lang="ru">Первый запуск и подготовка модели</span><span lang="en">First launch and model preparation</span></h2>
+    <div lang="ru">
+      <p>В строке меню Heardly показывает состояние: пока модель грузится и готовится, в попапе стоит соответствующая надпись, а как только всё готово — «Модель готова» с зелёной точкой.</p>
+      <p>Подготовка модели под Neural Engine делается один раз после установки и ещё раз после крупного обновления macOS. На M1 это может занять до пары минут, дальше запуск почти мгновенный.</p>
+    </div>
+    <div lang="en">
+      <p>The menu bar panel shows the current state: a line about loading while the model is being downloaded and prepared, and “Model ready” with a green dot once it is done.</p>
+      <p>Preparing the model for the Neural Engine happens once after installation, and again after a major macOS update. On an M1 this can take up to a couple of minutes; after that, startup is close to instant.</p>
+    </div>
+    <div class="note warn">
+      <b><span lang="ru">Не закрывайте приложение в это время</span><span lang="en">Don’t quit during this step</span></b>
+      <p><span lang="ru">Если прервать подготовку модели, при следующем запуске она начнётся заново.</span><span lang="en">If you interrupt the preparation, it starts again from scratch on the next launch.</span></p>
+    </div>
+
+    <h2 id="login"><span lang="ru">Запуск вместе с системой</span><span lang="en">Starting with the Mac</span></h2>
+    <div lang="ru">
+      <p>Чтобы Heardly был под рукой сразу после включения компьютера, включите «Запускать при входе в систему» в разделе <a href="settings.html">Настройки → Система</a>.</p>
+      <p>Если macOS не даёт включить, разрешите Heardly в «Системных настройках» → «Основные» → «Объекты входа».</p>
+    </div>
+    <div lang="en">
+      <p>To have Heardly ready as soon as the Mac starts, turn on “Launch at login” in <a href="settings.html">Settings → System</a>.</p>
+      <p>If macOS refuses, approve Heardly in System Settings → General → Login Items.</p>
+    </div>
+
+    <h2 id="update"><span lang="ru">Обновления</span><span lang="en">Updates</span></h2>
+    <div lang="ru"><p>Heardly обновляется сам и показывает окно с описанием версии. Проверить вручную можно кнопкой «Проверить обновления» в <a href="updates.html">настройках</a>.</p></div>
+    <div lang="en"><p>Heardly updates itself and shows a window describing the new version. You can also check by hand with the “Check for updates” button in <a href="updates.html">Settings</a>.</p></div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

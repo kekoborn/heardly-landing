@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Запись звонка без бота — Heardly</title>
+<meta name="description" content="Heardly слышит и вас, и собеседников: ваш голос берёт с микрофона, их — из звука приложения, в котором идёт разговор. В саму встречу никто не подключается.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Звонки и встречи</span><span lang="en">Calls and meetings</span></div>
+    <h1><span lang="ru">Запись звонка без бота</span><span lang="en">Recording a call, no bot</span></h1>
+    <p class="d-lede"><span lang="ru">Heardly слышит и вас, и собеседников: ваш голос берёт с микрофона, их — из звука приложения, в котором идёт разговор. В саму встречу никто не подключается.</span><span lang="en">Heardly hears both sides: your voice from the microphone, theirs from the audio of whichever app the conversation runs in. Nothing joins the meeting itself.</span></p>
+
+
+    <h2 id="start"><span lang="ru">Как начать</span><span lang="en">Getting started</span></h2>
+    <ol class="steps">
+      <li>
+        <b><span lang="ru">Откройте попап Heardly</span><span lang="en">Open the Heardly panel</span></b>
+        <div lang="ru"><p>Щелчок по значку в строке меню.</p></div>
+        <div lang="en"><p>Click the icon in the menu bar.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Проверьте источники</span><span lang="en">Check the sources</span></b>
+        <div lang="ru"><p>«Микрофон» — ваш голос, «Звук приложений» — всё, что звучит из программ. Для встречи нужны оба.</p></div>
+        <div lang="en"><p>“Microphone” is your voice, “App Audio” is everything coming out of apps. A meeting needs both.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">Нажмите «Режим реального времени»</span><span lang="en">Press “Real-time mode”</span></b>
+        <div lang="ru"><p>Откроется окно живой расшифровки, и текст начнёт появляться по ходу разговора.</p></div>
+        <div lang="en"><p>The live window opens and text starts appearing as the conversation goes on.</p></div>
+      </li>
+      <li>
+        <b><span lang="ru">В конце нажмите «Стоп»</span><span lang="en">Press “Stop” at the end</span></b>
+        <div lang="ru"><p>Запись сохранится в <a href="history.html">Историю</a>, в раздел «Звонки и встречи».</p></div>
+        <div lang="en"><p>The recording is saved to <a href="history.html">History</a>, in the “Calls and meetings” section.</p></div>
+      </li>
+    </ol>
+
+    <figure lang="ru">
+      <img src="img/menubar-popup.png" alt="Попап Heardly с кнопкой «Режим реального времени» и переключателями источников звука">
+      <figcaption><span lang="ru">Оба переключателя включены — значит, в расшифровке будут и ваши реплики, и реплики собеседников.</span><span lang="en">With both switches on, the transcript will carry your lines and the other side’s alike.</span></figcaption>
+    </figure>
+    <figure lang="en">
+      <img src="img/menubar-popup-en.png" alt="The Heardly menu bar panel: record button, microphone and app audio switches, word statistics and a file drop zone">
+      <figcaption><span lang="ru">Оба переключателя включены — значит, в расшифровке будут и ваши реплики, и реплики собеседников.</span><span lang="en">With both switches on, the transcript will carry your lines and the other side’s alike.</span></figcaption>
+    </figure>
+
+    <h2 id="sources"><span lang="ru">Кто есть кто в расшифровке</span><span lang="en">Who is who in the transcript</span></h2>
+    <div lang="ru">
+      <p>Heardly различает два источника и подписывает реплики: «Я» — то, что пришло с микрофона, «Компьютер» — то, что звучало из приложений. Это не распознавание говорящих по голосу: если в переговорной за одним микрофоном сидят трое, все трое будут подписаны как «Я».</p>
+    </div>
+    <div lang="en">
+      <p>Heardly tells the two sources apart and labels the lines: “Me” for what came from the microphone, “Computer” for what played out of apps. This is not speaker recognition by voice: if three people share one microphone in a meeting room, all three are labelled “Me”.</p>
+    </div>
+
+    <h2 id="apps"><span lang="ru">С какими приложениями работает</span><span lang="en">Which apps it works with</span></h2>
+    <div lang="ru">
+      <p>С любыми. Heardly берёт звук на уровне системы, поэтому ему всё равно, идёт звонок в Zoom, Google Meet, Telegram, Discord или в браузере. По той же причине он расшифрует и видео на YouTube, и голосовое сообщение.</p>
+    </div>
+    <div lang="en">
+      <p>All of them. Heardly takes the audio at system level, so it does not care whether the call runs in Zoom, Google Meet, Telegram, Discord or a browser tab. For the same reason it will transcribe a YouTube video or a voice message just as happily.</p>
+    </div>
+
+    <div class="note warn">
+      <b><span lang="ru">Предупредите собеседников</span><span lang="en">Tell the other side</span></b>
+      <p><span lang="ru">Бота в звонке не видно, а значит, никто не узнает о записи сам. Во многих странах и компаниях запись разговора без предупреждения недопустима — скажите об этом вслух в начале встречи.</span><span lang="en">There is no bot to see, so nobody learns about the recording on their own. In many countries and companies recording a conversation without telling people is not acceptable — say it out loud at the start of the meeting.</span></p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

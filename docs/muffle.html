@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Звук других приложений — Heardly</title>
+<meta name="description" content="Музыка, видео или голос из звонка попадают в микрофон вместе с вашей речью и портят распознавание. Heardly умеет приглушать другие программы на время диктовки.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Диктовка</span><span lang="en">Dictation</span></div>
+    <h1><span lang="ru">Звук других приложений</span><span lang="en">Silencing other apps</span></h1>
+    <p class="d-lede"><span lang="ru">Музыка, видео или голос из звонка попадают в микрофон вместе с вашей речью и портят распознавание. Heardly умеет приглушать другие программы на время диктовки.</span><span lang="en">Music, video or a voice from a call reaches the microphone together with your own speech and spoils recognition. Heardly can quiet other apps while you dictate.</span></p>
+
+
+    <h2 id="how"><span lang="ru">Как это работает</span><span lang="en">How it works</span></h2>
+    <div lang="ru">
+      <p>Когда настройка включена, Heardly на время диктовки приглушает звук остальных приложений, а после вставки текста возвращает его обратно. Трогается только громкость: ничего не ставится на паузу и не перематывается.</p>
+    </div>
+    <div lang="en">
+      <p>With the setting on, Heardly quiets the other apps for the duration of the dictation and restores them once the text is inserted. Only the volume is touched — nothing is paused or rewound.</p>
+    </div>
+
+    <h2 id="where"><span lang="ru">Где включить</span><span lang="en">Where to turn it on</span></h2>
+    <div lang="ru"><p><a href="settings.html">Настройки → Диктовка</a>, переключатель «Выключать звук других приложений».</p></div>
+    <div lang="en"><p><a href="settings.html">Settings → Dictation</a>, the “Silence other apps” switch.</p></div>
+
+    <div class="note warn">
+      <b><span lang="ru">Это про диктовку, а не про звонки</span><span lang="en">This is about dictation, not calls</span></b>
+      <p><span lang="ru">Во время <a href="live.html">записи звонка</a> звук других приложений не приглушается — иначе Heardly не услышал бы собеседников, ведь именно оттуда идёт их речь.</span><span lang="en">While <a href="live.html">recording a call</a>, other apps are not quieted — that audio is exactly where the other side’s speech comes from.</span></p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>

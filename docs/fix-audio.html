@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru" data-lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Нет звука приложений — Heardly</title>
+<meta name="description" content="В расшифровке звонка есть только ваши реплики, а собеседников нет. Значит, Heardly не получает звук из программ.">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="docs.css">
+</head>
+<body>
+
+<header class="d-header">
+  <div class="d-nav">
+    <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
+    <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
+    <div class="d-nav-r">
+      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+      <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="d-shell">
+  <nav class="d-side" aria-label="Разделы документации"></nav>
+
+  <main class="d-main">
+    <div class="d-eyebrow"><span lang="ru">Решение проблем</span><span lang="en">Troubleshooting</span></div>
+    <h1><span lang="ru">Нет звука приложений</span><span lang="en">No app audio</span></h1>
+    <p class="d-lede"><span lang="ru">В расшифровке звонка есть только ваши реплики, а собеседников нет. Значит, Heardly не получает звук из программ.</span><span lang="en">A call transcript has your own lines but nothing from the other side. That means Heardly is not getting audio out of the apps.</span></p>
+
+
+    <h2 id="permission"><span lang="ru">Разрешение на системный звук</span><span lang="en">The system audio permission</span></h2>
+    <div lang="ru">
+      <p>Откройте «Системные настройки» → «Конфиденциальность и безопасность» → «Запись экрана и системного звука» и включите Heardly.</p>
+      <p>Это тот самый пункт, который macOS называет записью экрана. Heardly берёт оттуда только звук, картинку он не читает — подробнее на странице <a href="permissions.html">Разрешения macOS</a>.</p>
+    </div>
+    <div lang="en">
+      <p>Open System Settings → Privacy &amp; Security → Screen &amp; System Audio Recording and switch Heardly on.</p>
+      <p>This is the entry macOS calls screen recording. Heardly takes only the audio from it and never reads the picture — more on the <a href="permissions.html">macOS permissions</a> page.</p>
+    </div>
+
+    <h2 id="toggle"><span lang="ru">Проверьте переключатель в попапе</span><span lang="en">Check the switch in the panel</span></h2>
+    <div lang="ru">
+      <p>«Звук приложений» должен быть включён до начала записи. Его же можно включить и выключить прямо в <a href="live-window.html">окне живой расшифровки</a> — проверьте, что он не выключен с прошлого раза.</p>
+    </div>
+    <div lang="en">
+      <p>“App Audio” has to be on before recording starts. The same switch is available in the <a href="live-window.html">live window</a> — make sure it was not left off from last time.</p>
+    </div>
+
+    <h2 id="output"><span lang="ru">Куда идёт звук</span><span lang="en">Where the sound goes</span></h2>
+    <div lang="ru">
+      <p>Heardly слышит то, что воспроизводит система. Если звонок идёт в наушники, подключённые по Bluetooth, и вы переключаете вывод во время разговора, захват может сорваться — остановите запись и начните заново после переключения.</p>
+      <p>Если звука нет вообще ни в наушниках, ни в динамиках, дело не в Heardly: сначала разберитесь с выводом звука в самой системе.</p>
+    </div>
+    <div lang="en">
+      <p>Heardly hears what the system plays. If the call runs into Bluetooth headphones and you switch the output device mid-conversation, the capture can drop — stop the recording and start it again after switching.</p>
+      <p>If there is no sound at all, in headphones or speakers, this is not about Heardly: sort the system output out first.</p>
+    </div>
+
+
+    <nav class="d-updown" aria-label="Соседние страницы"></nav>
+  </main>
+
+  <aside class="d-toc"></aside>
+</div>
+
+<footer class="d-foot">
+  <div class="in">
+    <span>© 2026 Heardly</span>
+    <a href="../"><span lang="ru">Про Heardly</span><span lang="en">About Heardly</span></a>
+    <a href="index.html"><span lang="ru">Все разделы</span><span lang="en">All sections</span></a>
+    <a href="support.html"><span lang="ru">Поддержка</span><span lang="en">Support</span></a>
+  </div>
+</footer>
+
+<script src="docs.js"></script>
+</body>
+</html>
