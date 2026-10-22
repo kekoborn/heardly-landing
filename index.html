@@ -574,10 +574,13 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14p
   .caret::after { animation: none; } .scene, .scene .dpanel, .cap { transition: none; } .composer .ins, .ln.new, .call .tile.talk .ava::before, .call .tile.talk em .eq i { animation: none; }
 }
 
-/* Перебор действий в заголовке первого экрана */
-.hrot { display: grid; }
-.hrot-i { grid-area: 1 / 1; opacity: 0; color: var(--dot); transition: opacity .45s var(--ease); }
-.hrot-i.is-on { opacity: 1; }
+/* Перебор действий в заголовке первого экрана.
+   В потоке живёт только активный вариант: так высота блока равна его собственной,
+   и неподвижный хвост заголовка идёт сразу за строкой, без дыры под короткими. */
+.hrot { display: block; }
+.hrot-i { display: none; opacity: 0; color: var(--dot); transition: opacity .25s var(--ease); }
+.hrot-i.is-on { display: block; }
+.hrot-i.is-vis { opacity: 1; }
 .hrot-tail { display: block; color: var(--t2); }
 @media (prefers-reduced-motion: reduce) { .hrot-i { transition: none; } }
 </style>
@@ -1237,17 +1240,27 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 <script>
 (function () {
-  var items = document.querySelectorAll('.hrot .hrot-i');
+  var box = document.querySelector('.hrot');
+  if (!box) return;
+  var items = [].slice.call(box.querySelectorAll('.hrot-i'));
   if (items.length < 2) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
   var at = 0;
+  items[at].classList.add('is-vis');
   setInterval(function () {
     if (document.hidden) return;
-    items[at].classList.remove('is-on');
-    items[at].setAttribute('aria-hidden', 'true');
-    at = (at + 1) % items.length;
-    items[at].classList.add('is-on');
-    items[at].removeAttribute('aria-hidden');
+    var cur = items[at];
+    cur.classList.remove('is-vis');          // гасим текущий
+    setTimeout(function () {
+      cur.classList.remove('is-on');
+      cur.setAttribute('aria-hidden', 'true');
+      at = (at + 1) % items.length;
+      var nxt = items[at];
+      nxt.classList.add('is-on');            // высота блока меняется, пока текст невиден
+      nxt.removeAttribute('aria-hidden');
+      requestAnimationFrame(function () { nxt.classList.add('is-vis'); });
+    }, 250);
   }, 2200);
 })();
 </script>
