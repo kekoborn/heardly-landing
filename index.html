@@ -987,8 +987,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           <button class="btn btn-w" type="submit" id="payBtn"><span id="payLabel"></span></button>
         </div>
         <div class="pay-msg" id="payMsg" role="status"></div>
-        <p class="pay-note" lang="ru">Разовая оплата картой через Robokassa. Деньги не&nbsp;спишутся без вашего ведома, продлеваете сами. Нажимая «Оплатить», вы&nbsp;принимаете <a href="/legal/" target="_blank" rel="noopener">условия оферты</a>.</p>
-        <p class="pay-note" lang="en">One-time card payment via Robokassa, charged in rubles (<span data-rub></span>); your bank converts the amount. You renew yourself. By pressing Pay you accept the <a href="/legal/" target="_blank" rel="noopener">terms of the offer</a>.</p>
+        <p class="pay-note" lang="ru" data-provider="robokassa">Разовая оплата картой через Robokassa. Деньги не&nbsp;спишутся без вашего ведома, продлеваете сами. Нажимая «Оплатить», вы&nbsp;принимаете <a href="/legal/" target="_blank" rel="noopener">условия оферты</a>.</p>
+        <p class="pay-note" lang="en" data-provider="robokassa">One-time card payment via Robokassa, in rubles. You renew yourself. By pressing Pay you accept the <a href="/legal/" target="_blank" rel="noopener">terms of the offer</a>.</p>
+        <p class="pay-note" lang="ru" data-provider="lava" hidden>Разовая оплата в&nbsp;долларах картой, Apple Pay или PayPal через lava.top. Продлеваете сами. Нажимая «Оплатить», вы&nbsp;принимаете <a href="/legal/" target="_blank" rel="noopener">условия оферты</a>.</p>
+        <p class="pay-note" lang="en" data-provider="lava" hidden>One-time payment in US dollars by card, Apple Pay or PayPal via lava.top. You renew yourself. By pressing Pay you accept the <a href="/legal/" target="_blank" rel="noopener">terms of the offer</a>.</p>
         <p class="after"><span lang="ru"><b>После оплаты:</b> Heardly → Настройки → Подписка → «У&nbsp;меня уже есть лицензия» → этот email.</span><span lang="en"><b>After paying:</b> Heardly → Settings → Subscription → "I already have a license" → this email.</span></p>
       </dialog>
     </form>
@@ -1059,12 +1061,23 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   document.documentElement.classList.add("js");
   const API = "https://heardly-api.cafmanar.workers.dev";
   const CONSENT_VERSION = "consent-2026-10-22"; // редакция /consent/, уходит в заказ вместе с временем согласия
-  // Тиры воркера (PRICE_TIERS в backend/worker.js): RU — рубли, EN — витрина в долларах, списание в рублях.
+  // Цену выбирает воркер по региону (GET /pricing, PRICE_TIERS в backend/worker.js): Россия платит
+  // в рублях через Robokassa, остальные — в долларах через lava.top. Язык сайта меняет только тексты.
+  // Россия — любой российский признак: IP (видит воркер) или часовой пояс системы, который VPN не меняет.
+  const TZ = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone || ""; } catch (e) { return ""; } })();
+  const RU_TZ = /^(Europe\/(Moscow|Kaliningrad|Simferopol|Kirov|Volgograd|Astrakhan|Saratov|Ulyanovsk|Samara)|Asia\/(Yekaterinburg|Omsk|Novosibirsk|Barnaul|Tomsk|Novokuznetsk|Krasnoyarsk|Irkutsk|Chita|Yakutsk|Khandyga|Vladivostok|Ust-Nera|Magadan|Sakhalin|Srednekolymsk|Kamchatka|Anadyr)|W-SU)$/;
+  let region = RU_TZ.test(TZ) ? "ru" : "intl"; // до ответа воркера
   const PRICES = {
-    ru: { month: { tier: "russia", label: "499 ₽", unit: "в месяц", sub: "", title: "Heardly Pro на месяц", pay: "Оплатить 499 ₽" },
-          year:  { tier: "russia_annual", label: "3 990 ₽", unit: "в год", sub: "332 ₽ в месяц", title: "Heardly Pro на год", pay: "Оплатить 3 990 ₽" } },
-    en: { month: { tier: "standard", label: "$9.99", unit: "a month", sub: "", title: "Heardly Pro, one month", pay: "Pay $9.99", rub: "899 ₽" },
-          year:  { tier: "standard_annual", label: "$79.99", unit: "a year", sub: "$6.67 a month", title: "Heardly Pro, one year", pay: "Pay $79.99", rub: "7,190 ₽" } }
+    ru: {
+      ru: { month: { label: "499 ₽", unit: "в месяц", sub: "", title: "Heardly Pro на месяц", pay: "Оплатить 499 ₽" },
+            year:  { label: "3 990 ₽", unit: "в год", sub: "332 ₽ в месяц", title: "Heardly Pro на год", pay: "Оплатить 3 990 ₽" } },
+      en: { month: { label: "499 ₽", unit: "a month", sub: "", title: "Heardly Pro, one month", pay: "Pay 499 ₽" },
+            year:  { label: "3 990 ₽", unit: "a year", sub: "332 ₽ a month", title: "Heardly Pro, one year", pay: "Pay 3 990 ₽" } } },
+    intl: {
+      ru: { month: { label: "$9.99", unit: "в месяц", sub: "", title: "Heardly Pro на месяц", pay: "Оплатить $9.99" },
+            year:  { label: "$79.99", unit: "в год", sub: "$6.67 в месяц", title: "Heardly Pro на год", pay: "Оплатить $79.99" } },
+      en: { month: { label: "$9.99", unit: "a month", sub: "", title: "Heardly Pro, one month", pay: "Pay $9.99" },
+            year:  { label: "$79.99", unit: "a year", sub: "$6.67 a month", title: "Heardly Pro, one year", pay: "Pay $79.99" } } }
   };
   const T = {
     ru: { email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…", agree: "Отметьте согласие на обработку персональных данных",
@@ -1238,17 +1251,20 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   if (reduce) { const ns = $("netSvg"); if (ns && ns.pauseAnimations) { ns.setCurrentTime(1.4); ns.pauseAnimations(); } }
   show(Math.max(0, ["dict", "live", "file"].indexOf(new URLSearchParams(location.search).get("demo"))));
 
-  // ── Оплата: POST /create-order → страница Robokassa.
+  // ── Оплата: POST /create-order → страница Robokassa (Россия) или lava.top (остальные).
   // device_id не передаём: лицензию привяжет первый Mac, который войдёт с этим email.
   const form = $("payForm"), emailEl = $("payEmail");
   const period = () => form.querySelector("input[name=period]:checked").value;
   function renderPrices() {
-    const p = PRICES[lang];
-    const c = p[period()];
+    const c = PRICES[region][lang][period()];
     $("proPrice").textContent = c.label; $("proUnit").textContent = c.unit; $("proSub").textContent = c.sub; $("payTitle").textContent = c.title;
     $("payLabel").textContent = c.pay;
-    const rub = form.querySelector("[data-rub]"); if (rub && p[period()].rub) rub.textContent = p[period()].rub;
+    const provider = region === "ru" ? "robokassa" : "lava";
+    form.querySelectorAll("[data-provider]").forEach(n => { n.hidden = n.dataset.provider !== provider; });
   }
+  fetch(API + "/pricing?tz=" + encodeURIComponent(TZ)).then(r => r.ok ? r.json() : null).then(d => {
+    if (d && PRICES[d.region]) { region = d.region; renderPrices(); }
+  }).catch(() => {});
   form.addEventListener("change", renderPrices);
   const dlg = $("payDlg");
   $("proBtn").addEventListener("click", () => { renderPrices(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
@@ -1262,7 +1278,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     if (!$("payAgree").checked) { msg.textContent = T[lang].agree; msg.className = "pay-msg err"; $("payAgree").focus(); return; }
     btn.disabled = true; msg.textContent = T[lang].wait;
     try {
-      const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, price_tier: PRICES[lang][period()].tier, source: "landing", consent: { version: CONSENT_VERSION, at: new Date().toISOString() } }) });
+      const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, period: period(), tz: TZ, price_tier: (region === "ru" ? "russia" : "standard") + (period() === "year" ? "_annual" : ""), source: "landing", consent: { version: CONSENT_VERSION, at: new Date().toISOString() } }) });
       const d = await r.json();
       if (!r.ok || !d.payment_url) throw new Error(d.error || r.status);
       location.href = d.payment_url;
