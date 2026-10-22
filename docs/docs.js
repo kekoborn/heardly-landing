@@ -143,6 +143,28 @@
   });
   setLang(saved === "ru" ? "ru" : "en");
 
+  /* ── Окно «скачивание началось» ─────────────────
+     Разметку держим здесь, а не в шаблоне страницы: кнопка «Скачать» стоит в шапке
+     всех 27 страниц, и одинаковый блок разъехался бы по ним копиями. Переход по
+     ссылке не отменяем — файл отдаётся как вложение, страница остаётся на месте. */
+  var dlLinks = document.querySelectorAll('a[href$="Heardly.dmg"]');
+  if (dlLinks.length && window.HTMLDialogElement) {
+    var dlg = document.createElement("dialog");
+    dlg.className = "dldlg";
+    dlg.innerHTML =
+      '<button class="x" type="button" aria-label="Закрыть / Close">×</button>' +
+      '<h3><span lang="ru">Скачивание началось</span><span lang="en">The download has started</span></h3>' +
+      '<p><span lang="ru">Heardly.dmg сохраняется в&nbsp;папку «Загрузки». Если скачивание не&nbsp;началось, нажмите на&nbsp;ссылку ниже.</span>' +
+      '<span lang="en">Heardly.dmg is being saved to your Downloads folder. If the download did not start, use the link below.</span></p>' +
+      '<a class="again" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">' +
+      '<span lang="ru">Скачать Heardly.dmg</span><span lang="en">Download Heardly.dmg</span></a>';
+    document.body.appendChild(dlg);
+    dlg.querySelector(".x").addEventListener("click", function () { dlg.close(); });
+    Array.prototype.forEach.call(dlLinks, function (a) {
+      a.addEventListener("click", function () { dlg.showModal(); });
+    });
+  }
+
   /* ── Навигация на узком экране ─────────────────── */
   var burger = document.querySelector(".d-burger");
   if (burger) {

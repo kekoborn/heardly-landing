@@ -538,6 +538,14 @@ dialog.paydlg { width: min(460px, calc(100vw - 32px)); border: 0; border-radius:
 dialog.paydlg::backdrop { background: rgba(35,38,51,.28); }
 .paydlg h3 { font-size: 22px; padding-right: 32px; }
 .paydlg .x { position: absolute; top: 18px; right: 18px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: var(--bg-3); cursor: pointer; font-size: 18px; line-height: 1; color: var(--t2); }
+
+/* Окно «скачивание началось». Карточка та же, что у оплаты, только уже: текста мало. */
+dialog.dldlg { width: min(420px, calc(100vw - 32px)); border: 0; border-radius: 22px; padding: 28px; background: var(--bg-2); color: var(--t1); box-shadow: 0 0 0 1px var(--line) inset, 0 30px 80px -30px rgba(35,38,51,.45); }
+dialog.dldlg::backdrop { background: rgba(35,38,51,.28); }
+.dldlg h3 { font-size: 22px; margin: 0 32px 10px 0; }
+.dldlg p { margin: 0 0 18px; font-size: 15px; line-height: 1.5; color: var(--t2); }
+.dldlg .x { position: absolute; top: 18px; right: 18px; width: 32px; height: 32px; border: 0; border-radius: 50%; background: var(--bg-3); cursor: pointer; font-size: 18px; line-height: 1; color: var(--t2); }
+.dldlg .again { text-decoration: underline; text-underline-offset: 3px; }
 .pay { display: grid; gap: 10px; margin-top: 18px; }
 .pay input { height: 52px; border-radius: 999px; border: 0; padding: 0 20px; background: rgba(35,38,51,.05); box-shadow: 0 0 0 1px var(--line-2) inset; color: var(--t1); font: 16px var(--sans); min-width: 0; }
 .pay input::placeholder { color: var(--t3); }
@@ -1038,6 +1046,13 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   </div>
 </footer>
 
+<dialog class="dldlg noic" id="dlDlg" aria-labelledby="dlTitle">
+  <button class="x" type="button" id="dlClose" aria-label="Закрыть / Close">×</button>
+  <h3 id="dlTitle"><span lang="ru">Скачивание началось</span><span lang="en">The download has started</span></h3>
+  <p><span lang="ru">Heardly.dmg сохраняется в&nbsp;папку «Загрузки». Если скачивание не&nbsp;началось, нажмите на&nbsp;ссылку ниже.</span><span lang="en">Heardly.dmg is being saved to your Downloads folder. If the download did not start, use the link below.</span></p>
+  <a class="again" id="dlAgain" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать Heardly.dmg</span><span lang="en">Download Heardly.dmg</span></a>
+</dialog>
+
 <script>
 (function () {
   "use strict";
@@ -1306,6 +1321,21 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       }, 560);
     }, 270);
   }, 2200);
+})();
+</script>
+
+<script>
+/* Окно после нажатия «Скачать». Переход по ссылке не отменяем: файл отдаётся
+   как вложение, страница остаётся на месте, поэтому окно видно поверх неё. */
+(function () {
+  var dlg = document.getElementById("dlDlg");
+  if (!dlg || !dlg.showModal) return;   // старый браузер — просто качает, без окна
+  function close() { dlg.close(); }
+  document.getElementById("dlClose").addEventListener("click", close);
+  Array.prototype.forEach.call(document.querySelectorAll('a[href$="Heardly.dmg"]'), function (a) {
+    if (a.id === "dlAgain") return;     // ссылка внутри окна не открывает его заново
+    a.addEventListener("click", function () { dlg.showModal(); });
+  });
 })();
 </script>
 </body>
