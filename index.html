@@ -401,6 +401,19 @@ header.on { background: var(--bg); box-shadow: 0 1px 0 var(--line); }
 .i-call path { stroke: rgba(35,38,51,.45); stroke-width: 1; fill: none; } .i-call circle { fill: #232633; }
 .i-call text { font: 500 11px var(--mono); letter-spacing: .06em; fill: #4F515C; }
 .i-call.blk path { stroke: rgba(213,83,75,.6); } .i-call.blk circle { fill: var(--danger); } .i-call.blk text { fill: var(--danger); }
+.net-svg .i-call.m-srv circle { fill: var(--mic); }
+.net-leg { display: none; }
+@media (max-width: 760px) {
+  .net-svg .i-call path, .net-svg .i-call text { display: none; }
+  .net-svg .i-call circle { r: 16; stroke: var(--bg); stroke-width: 4; }
+  .net-svg .i-call.blk circle { cx: 411; cy: 262; }
+  .net-svg .i-call-logo { display: none; }
+  .net-leg { display: grid; gap: 10px; margin: 18px 0 0; padding: 0; list-style: none; }
+  .net-leg li { position: relative; padding-left: 20px; font: 500 14px/1.45 var(--sans); color: var(--t2); }
+  .net-leg li::before { content: ""; position: absolute; left: 0; top: .4em; width: 10px; height: 10px; border-radius: 50%; background: #232633; }
+  .net-leg .m-srv::before { background: var(--mic); }
+  .net-leg .m-stop::before { background: var(--danger); }
+}
 @media (max-width: 960px) { .priv { grid-template-columns: 1fr; gap: 0; } .priv .ft { display: contents; } .priv h2 { order: 1; } .priv .sub { order: 2; } .priv .net { order: 3; margin-top: 28px; } .priv .svc-h { order: 4; } .priv .svc { order: 5; } }
 
 /* Бенто фишек */
@@ -577,7 +590,8 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14p
 /* Перебор действий в заголовке первого экрана.
    В потоке живёт только активный вариант: так высота блока равна его собственной,
    и неподвижный хвост заголовка идёт сразу за строкой, без дыры под короткими. */
-.hrot { display: block; }
+.hrot { display: block; transition: height .42s var(--ease); }
+.hrot.is-grow { overflow: hidden; }
 .hrot-i { display: none; opacity: 0; color: var(--dot); transition: opacity .25s var(--ease); }
 .hrot-i.is-on { display: block; }
 .hrot-i.is-vis { opacity: 1; }
@@ -824,10 +838,15 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <g class="i-puck out"><circle r="13"/><use href="#i-bug" x="-7.5" y="-7.5" width="15" height="15"/><animateMotion dur="3.4s" begin=".6s" repeatCount="indefinite"><mpath href="#l3"/></animateMotion></g>
 <g class="i-puck out"><circle r="13"/><use href="#i-mail" x="-7.5" y="-7.5" width="15" height="15"/><animateMotion dur="3.4s" begin="1.8s" repeatCount="indefinite"><mpath href="#l4"/></animateMotion></g>
 <g class="i-call "><path d="M256.1 -42.5L226.1 -68.5"/><circle cx="256.1" cy="-42.5" r="2"/><text x="220.1" y="-64.5" text-anchor="end"><tspan class="ru">ВАШ КОМПЬЮТЕР</tspan><tspan class="en">YOUR COMPUTER</tspan></text></g>
-<g class="i-call "><path d="M598.1 237.0L598.1 189.0"/><circle cx="598.1" cy="237.0" r="2"/><text x="604.1" y="193.0" text-anchor="start"><tspan class="ru">СЕРВЕРЫ HEARDLY</tspan><tspan class="en">HEARDLY SERVERS</tspan></text></g>
-<image href="assets/logo.png" x="576.1" y="181.0" width="15" height="15"/>
+<g class="i-call m-srv"><path d="M598.1 237.0L598.1 189.0"/><circle cx="598.1" cy="237.0" r="2"/><text x="604.1" y="193.0" text-anchor="start"><tspan class="ru">СЕРВЕРЫ HEARDLY</tspan><tspan class="en">HEARDLY SERVERS</tspan></text></g>
+<image class="i-call-logo" href="assets/logo.png" x="576.1" y="181.0" width="15" height="15"/>
 <g class="i-call blk"><path d="M353.9 322.0L333.9 392.0"/><circle cx="353.9" cy="322.0" r="2"/><text x="327.9" y="396.0" text-anchor="end"><tspan class="ru">ЗВУК И ТЕКСТ НЕ ПОКИДАЮТ КОМПЬЮТЕР</tspan><tspan class="en">AUDIO AND TEXT NEVER LEAVE</tspan></text></g>
       </svg>
+      <ul class="net-leg">
+        <li><span lang="ru">Ваш компьютер</span><span lang="en">Your computer</span></li>
+        <li class="m-srv"><span lang="ru">Серверы Heardly</span><span lang="en">Heardly servers</span></li>
+        <li class="m-stop"><span lang="ru">Звук и&nbsp;текст не&nbsp;покидают компьютер</span><span lang="en">Audio and text never leave</span></li>
+      </ul>
     </div>
   </div>
 </section>
@@ -1246,19 +1265,27 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   if (items.length < 2) return;
   if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  var at = 0;
+  var at = 0, grow;
   items[at].classList.add('is-vis');
   setInterval(function () {
     if (document.hidden) return;
     var cur = items[at];
     cur.classList.remove('is-vis');          // гасим текущий
     setTimeout(function () {
+      box.classList.add('is-grow');
+      box.style.height = box.offsetHeight + 'px';   // старт фиксируем, пока текст ещё старый
       cur.classList.remove('is-on');
       cur.setAttribute('aria-hidden', 'true');
       at = (at + 1) % items.length;
       var nxt = items[at];
-      nxt.classList.add('is-on');            // высота блока меняется, пока текст невиден
+      nxt.classList.add('is-on');            // текст меняется, пока он невиден
       nxt.removeAttribute('aria-hidden');
+      box.style.height = nxt.offsetHeight + 'px';   // варианты разной высоты — тянем, а не прыгаем
+      clearTimeout(grow);
+      grow = setTimeout(function () {
+        box.classList.remove('is-grow');
+        box.style.height = '';
+      }, 520);
       requestAnimationFrame(function () { nxt.classList.add('is-vis'); });
     }, 250);
   }, 2200);
