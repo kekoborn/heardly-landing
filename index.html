@@ -589,14 +589,21 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14p
 
 /* Перебор действий в заголовке первого экрана.
    В потоке живёт только активный вариант: так высота блока равна его собственной,
-   и неподвижный хвост заголовка идёт сразу за строкой, без дыры под короткими. */
-.hrot { display: block; transition: height .42s var(--ease); }
+   и неподвижный хвост заголовка идёт сразу за строкой, без дыры под короткими.
+   Смена вертикальная: текущий вариант уезжает вверх за край, следующий въезжает снизу. */
+.hrot { display: block; transition: height .42s var(--ease); --rot-shift: .7em; }
 .hrot.is-grow { overflow: hidden; }
-.hrot-i { display: none; opacity: 0; color: var(--dot); transition: opacity .25s var(--ease); }
+.hrot-i { display: none; opacity: 0; color: var(--dot); transform: translateY(var(--rot-shift));
+          transition: opacity .3s var(--ease), transform .3s var(--ease); }
 .hrot-i.is-on { display: block; }
-.hrot-i.is-vis { opacity: 1; }
+.hrot-i.is-vis { opacity: 1; transform: none; }
+.hrot-i.is-out { opacity: 0; transform: translateY(calc(var(--rot-shift) * -1)); transition-duration: .27s; }
 .hrot-tail { display: block; color: var(--t2); }
-@media (prefers-reduced-motion: reduce) { .hrot-i { transition: none; } }
+/* Перебора нет — вариант просто стоит на месте, иначе заголовок остался бы прозрачным. */
+@media (prefers-reduced-motion: reduce) {
+  .hrot-i { transition: none; }
+  .hrot-i.is-on { opacity: 1; transform: none; }
+}
 </style>
 </head>
 <body>
@@ -1270,24 +1277,30 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   setInterval(function () {
     if (document.hidden) return;
     var cur = items[at];
-    cur.classList.remove('is-vis');          // гасим текущий
+    box.classList.add('is-grow');            // уход и въезд режутся краем блока
+    cur.classList.remove('is-vis');
+    cur.classList.add('is-out');             // текущий уезжает вверх
     setTimeout(function () {
-      box.classList.add('is-grow');
       box.style.height = box.offsetHeight + 'px';   // старт фиксируем, пока текст ещё старый
       cur.classList.remove('is-on');
+      cur.classList.remove('is-out');
       cur.setAttribute('aria-hidden', 'true');
       at = (at + 1) % items.length;
       var nxt = items[at];
-      nxt.classList.add('is-on');            // текст меняется, пока он невиден
+      nxt.classList.add('is-on');            // следующий ждёт внизу, за краем
       nxt.removeAttribute('aria-hidden');
+      // Чтение высоты заставляет браузер пересчитать стиль: стартовое положение
+      // следующего варианта зафиксировано, и дальше оба перехода стартуют.
+      // requestAnimationFrame тут не годится — он замирает, когда окно не на переднем
+      // плане, и вариант остаётся прозрачным до возврата фокуса.
       box.style.height = nxt.offsetHeight + 'px';   // варианты разной высоты — тянем, а не прыгаем
+      nxt.classList.add('is-vis');
       clearTimeout(grow);
       grow = setTimeout(function () {
         box.classList.remove('is-grow');
         box.style.height = '';
-      }, 520);
-      requestAnimationFrame(function () { nxt.classList.add('is-vis'); });
-    }, 250);
+      }, 560);
+    }, 270);
   }, 2200);
 })();
 </script>
