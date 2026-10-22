@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heardly — cookie и аналитика</title>
+<meta name="description" content="Какие cookie и данные браузера использует сайт Heardly, зачем, на какой срок и как от них отказаться.">
+
+<link rel="stylesheet" href="/assets/fonts/fonts.css">
+<style>
+:root{--bg:#FAFAFC;--ink:#1D1D1F;--graphite:#6E6E73;--indigo:#4F46E5;--tint:#EEF0FE;--hair:#E5E5EA}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:400 1.0625rem/1.65 Onest,-apple-system,sans-serif}
+header{position:sticky;top:0;background:rgba(255,255,255,.7);backdrop-filter:blur(20px);border-bottom:1px solid var(--hair);padding:.9rem 1.5rem}
+header a{color:var(--ink);text-decoration:none;font-weight:700;font-size:1.15rem}
+main{max-width:760px;margin:0 auto;padding:3rem 1.5rem 5rem}
+h1{font-size:2rem;font-weight:700;letter-spacing:-.02em;margin-bottom:.5rem}
+.updated{color:var(--graphite);font-size:.875rem;margin-bottom:2.5rem}
+h2{font-size:1.35rem;font-weight:600;margin:2.5rem 0 .75rem}
+p,li{color:var(--graphite)}
+p{margin-bottom:.75rem}
+ul{padding-left:1.4rem;margin-bottom:.75rem}
+li{margin-bottom:.4rem}
+strong{color:var(--ink);font-weight:600}
+a{color:var(--indigo)}
+.note{background:var(--tint);border-radius:12px;padding:1rem 1.25rem;color:var(--ink);font-size:.95rem}
+footer{border-top:1px solid var(--hair);padding:2rem 1.5rem;text-align:center;color:var(--graphite);font-size:.875rem}
+footer a{color:var(--graphite)}
+table{width:100%;table-layout:fixed;border-collapse:collapse;margin:.5rem 0 1rem;font-size:.92rem}
+th,td{text-align:left;vertical-align:top;padding:.55rem .5rem;overflow-wrap:break-word;hyphens:auto;border-bottom:1px solid var(--hair);color:var(--graphite)}
+th{color:var(--ink);font-weight:600}
+.tw{overflow-x:auto}
+@media (max-width:520px){table{font-size:.85rem}}
+button.cs{font:inherit;color:var(--indigo);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
+</style>
+</head>
+<body>
+<header><a href="/">‹ Heardly</a></header>
+<main>
+<h1>Cookie и аналитика</h1>
+<p class="updated">Редакция от 22 октября 2026 года</p>
+
+<p>Сайт heardly.kekoborn.ru хранит в браузере немного данных. Без вашего разрешения работают только необходимые записи, аналитика включается, только если вы нажали «Принять» в баннере.</p>
+
+<h2>1. Необходимые</h2>
+<p>Без них сайт не запомнит ваш выбор. Хранятся только в вашем браузере (localStorage), нам не передаются.</p>
+<div class="tw"><table>
+<tr><th>Название</th><th>Зачем</th><th>Срок</th></tr>
+<tr><td>heardly-lang</td><td>выбранный язык сайта</td><td>пока вы не очистите данные браузера</td></tr>
+<tr><td>heardly-cookie-consent</td><td>ваш выбор в баннере cookie и дата выбора</td><td>12 месяцев, потом баннер спросит снова</td></tr>
+</table></div>
+
+<h2>2. Аналитика: Яндекс Метрика</h2>
+<p>Только после «Принять». Метрика (ООО «Яндекс», Россия) считает посещения, показывает, какие разделы читают и где посетители уходят, и записывает действия на странице (Вебвизор). Поле e-mail в форме оплаты от записи скрыто. Яндекс получает IP-адрес, сведения о браузере и устройстве, адрес страницы и источник перехода. Cookie Метрики:</p>
+<div class="tw"><table>
+<tr><th>Название</th><th>Зачем</th><th>Срок</th></tr>
+<tr><td>_ym_uid, _ym_fa, i, yandexuid, yuidss</td><td>отличить одного посетителя от другого</td><td>1 год</td></tr>
+<tr><td>_ym_d</td><td>дата первого посещения</td><td>1 год</td></tr>
+<tr><td>ymex, usst, _ym_ucs</td><td>служебные данные идентификаторов</td><td>1 год</td></tr>
+<tr><td>_ym_isad</td><td>есть ли блокировщик рекламы</td><td>20 часов</td></tr>
+<tr><td>_ym_hostIndex</td><td>ограничение числа запросов</td><td>1 день</td></tr>
+<tr><td>_ym_metrika_enabled</td><td>проверка, что cookie записались</td><td>60 минут</td></tr>
+<tr><td>_ym_visorc</td><td>работа Вебвизора</td><td>30 минут</td></tr>
+<tr><td>yabs-sid</td><td>идентификатор визита</td><td>до закрытия браузера</td></tr>
+</table></div>
+<p>Метрика может ставить и другие служебные cookie (например, mdd). Полный перечень — в <a href="https://yandex.ru/support/metrica/general/cookie-usage.html" rel="noopener">справке Яндекса</a>.</p>
+
+<h2>3. Как отказаться</h2>
+<p>Нажмите «Отклонить» в баннере или поменяйте решение здесь: <button type="button" class="cs" data-cookie-settings>настройки cookie</button>. После отказа Метрика не загружается. Уже записанные cookie Метрики можно удалить в настройках браузера.</p>
+
+<h2>4. Другие внешние ресурсы</h2>
+<p>Шрифты, картинки и скрипты сайта загружаются с самого сайта. Сторонних счётчиков, кроме Метрики, рекламных пикселей и кнопок соцсетей нет. Сайт размещён на GitHub Pages (США): как любой хостинг, он получает IP-адрес посетителя, чтобы отдать страницу.</p>
+<p>Подробнее об обработке данных — в <a href="/privacy/">Политике обработки персональных данных</a>.</p>
+</main>
+<footer>© 2026 Heardly · <a href="/">На главную</a> · <a href="/legal/">Оферта</a> · <a href="/privacy/">Политика</a> · <a href="/consent/">Согласие</a> · <a href="/cookies/">Cookie</a></footer>
+<script src="/assets/consent.js" defer></script>
+</body>
+</html>

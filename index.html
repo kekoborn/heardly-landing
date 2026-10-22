@@ -6,9 +6,7 @@
 <title>Heardly — диктовка, звонки и файлы в текст на Mac</title>
 <meta name="description" content="Диктовка, звонки и файлы в текст прямо на Mac. Звук не уходит в интернет, бота в звонке нет.">
 <meta name="theme-color" content="#F6F4EF">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="assets/fonts/fonts.css">
 <style>
 :root {
   /* Страница */
@@ -559,8 +557,14 @@ details p { padding: 0 0 26px; color: var(--t2); max-width: 66ch; }
 .btn.soon { color: var(--t3); box-shadow: 0 0 0 1px var(--line) inset; cursor: default; }
 .btn.soon em { font: 500 12px var(--sans); font-style: normal; padding: 3px 8px; border-radius: 999px; background: var(--bg-3); color: var(--t2); }
 footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14px; color: var(--t3); }
-.foot { display: flex; flex-wrap: wrap; gap: 12px 28px; align-items: center; }
-.foot a { text-decoration: none; } .foot a:hover { color: var(--t1); }
+.foot { display: flex; flex-direction: column; align-items: flex-start; gap: 14px; }
+.foot-links { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.foot a, .foot .linkish { text-decoration: none; color: inherit; } .foot a:hover, .foot .linkish:hover { color: var(--t1); }
+.linkish { border: 0; background: none; padding: 0; font: inherit; cursor: pointer; }
+.req { margin: 0; }
+.agree { display: flex; gap: 10px; align-items: flex-start; margin: 4px 4px 0; font-size: 14px; line-height: 1.45; color: var(--t2); text-align: left; cursor: pointer; }
+.agree input { width: 18px; height: 18px; flex: none; margin: 1px 0 0; accent-color: var(--mic); }
+.agree a, .pay-note a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
 
 /* Появление */
 .js .rv { opacity: 0; transform: translateY(16px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
@@ -628,7 +632,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <a href="#privacy"><span lang="ru">Приватность</span><span lang="en">Privacy</span></a>
       <a href="#features"><span lang="ru">Возможности</span><span lang="en">Features</span></a>
       <a href="#pricing"><span lang="ru">Цены</span><span lang="en">Pricing</span></a>
-      <a href="#faq">FAQ</a>
+      <a href="#faq"><span lang="ru">Вопросы</span><span lang="en">FAQ</span></a>
       <a href="docs/index.html"><span lang="ru">Документация</span><span lang="en">Docs</span></a>
     </nav>
     <div class="nav-r">
@@ -930,12 +934,13 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <button class="x" type="button" id="payClose" aria-label="Закрыть / Close">×</button>
         <h3 id="payTitle"></h3>
         <div class="pay">
-          <input type="email" name="email" id="payEmail" autocomplete="email" required placeholder="you@mail.ru" aria-label="Email" aria-describedby="payMsg">
+          <input class="ym-disable-keys ym-hide-content" type="email" name="email" id="payEmail" autocomplete="email" required placeholder="you@mail.ru" aria-label="Email" aria-describedby="payMsg">
+          <label class="agree"><input type="checkbox" id="payAgree" required><span><span lang="ru">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span><span lang="en">I consent to the <a href="/consent/" target="_blank" rel="noopener">processing of my personal data</a></span></span></label>
           <button class="btn btn-w" type="submit" id="payBtn"><span id="payLabel"></span></button>
         </div>
         <div class="pay-msg" id="payMsg" role="status"></div>
-        <p class="pay-note" lang="ru">Разовая оплата картой через Robokassa. Деньги не&nbsp;спишутся без вашего ведома, продлеваете сами.</p>
-        <p class="pay-note" lang="en">One-time card payment via Robokassa, charged in rubles (<span data-rub></span>); your bank converts the amount. You renew yourself.</p>
+        <p class="pay-note" lang="ru">Разовая оплата картой через Robokassa. Деньги не&nbsp;спишутся без вашего ведома, продлеваете сами. Нажимая «Оплатить», вы&nbsp;принимаете <a href="/legal/" target="_blank" rel="noopener">условия оферты</a>.</p>
+        <p class="pay-note" lang="en">One-time card payment via Robokassa, charged in rubles (<span data-rub></span>); your bank converts the amount. You renew yourself. By pressing Pay you accept the <a href="/legal/" target="_blank" rel="noopener">terms of the offer</a>.</p>
         <p class="after"><span lang="ru"><b>После оплаты:</b> Heardly → Настройки → Подписка → «У&nbsp;меня уже есть лицензия» → этот email.</span><span lang="en"><b>After paying:</b> Heardly → Settings → Subscription → "I already have a license" → this email.</span></p>
       </dialog>
     </form>
@@ -958,7 +963,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
       <details><summary><span lang="ru">На&nbsp;скольких компьютерах работает Pro?</span><span lang="en">How many computers can use Pro?</span></summary><p lang="ru">На&nbsp;любом числе. Первый подключается сам, каждый следующий — кодом из&nbsp;письма на&nbsp;вашу почту.</p><p lang="en">As many as you like. The first one connects on its own, each next one with a code sent to your email.</p></details>
       <details><summary><span lang="ru">Что будет после 14 дней?</span><span lang="en">What happens after 14 days?</span></summary><p lang="ru">Останется бесплатная версия: 2&nbsp;000 слов живого режима и&nbsp;диктовки в&nbsp;неделю, счётчик обнуляется по&nbsp;понедельникам. Файлы, экспорт и&nbsp;безлимит остаются в&nbsp;Pro.</p><p lang="en">You keep the free version: 2,000 words of live mode and dictation a week, reset at the start of each week. Files, export and unlimited use are Pro.</p></details>
       <details><summary><span lang="ru">Деньги спишутся автоматически?</span><span lang="en">Will I be charged automatically?</span></summary><p lang="ru">Нет. Вы платите российской картой один раз за&nbsp;месяц или год. Когда срок подойдёт к&nbsp;концу, Heardly напомнит, а&nbsp;продлите вы сами.</p><p lang="en">No. You pay once for a month or a year, by Russian bank card. Heardly reminds you near the end, and you renew yourself.</p></details>
-      <details><summary><span lang="ru">Можно вернуть деньги?</span><span lang="en">Refunds?</span></summary><p><span class="todo">[нужен факт: политика возврата]</span></p></details>
+      <details><summary><span lang="ru">Можно вернуть деньги?</span><span lang="en">Refunds?</span></summary><p lang="ru">Да. Напишите на&nbsp;<a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a> с&nbsp;темой «Возврат». Ответим в&nbsp;течение 10 дней и&nbsp;вернём всю сумму тем&nbsp;же способом, без удержаний. Подробнее в&nbsp;<a href="/legal/#refund">оферте</a>.</p><p lang="en">Yes. Email <a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a> with the subject “Refund”. We reply within 10 days and return the full amount the same way you paid, with no deductions. Details are in the <a href="/legal/#refund">offer</a>.</p></details>
     </div>
   </div>
 </section>
@@ -980,10 +985,16 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 <footer>
   <div class="wrap foot">
+    <nav class="foot-links" aria-label="Документы / Documents">
+      <a href="/legal/"><span lang="ru">Публичная оферта</span><span lang="en">Public offer</span></a>
+      <a href="/legal/#refund"><span lang="ru">Возврат</span><span lang="en">Refunds</span></a>
+      <a href="/privacy/"><span lang="ru">Политика обработки персональных данных</span><span lang="en">Privacy policy</span></a>
+      <a href="/consent/"><span lang="ru">Согласие на&nbsp;обработку данных</span><span lang="en">Data processing consent</span></a>
+      <a href="/cookies/"><span lang="ru">Cookie и&nbsp;аналитика</span><span lang="en">Cookies and analytics</span></a>
+      <button type="button" class="linkish" data-cookie-settings><span lang="ru">Настройки cookie</span><span lang="en">Cookie settings</span></button>
+    </nav>
+    <p class="req"><span lang="ru">Алыев Руслан Мусаевич, самозанятый (НПД), ИНН 762706328316</span><span lang="en">Ruslan Alyev, self-employed (Russia), TIN 762706328316</span> · <a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a></p>
     <span>© 2026 Heardly</span>
-    <a href="#"><span lang="ru">Публичная оферта</span><span lang="en">Terms</span></a>
-    <a href="#"><span lang="ru">Политика конфиденциальности</span><span lang="en">Privacy policy</span></a>
-    <span class="todo">[нужен факт: реквизиты продавца, ссылки на&nbsp;оферту и&nbsp;политику, адрес поддержки]</span>
   </div>
 </footer>
 
@@ -992,6 +1003,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   "use strict";
   document.documentElement.classList.add("js");
   const API = "https://heardly-api.cafmanar.workers.dev";
+  const CONSENT_VERSION = "consent-2026-10-22"; // редакция /consent/, уходит в заказ вместе с временем согласия
   // Тиры воркера (PRICE_TIERS в backend/worker.js): RU — рубли, EN — витрина в долларах, списание в рублях.
   const PRICES = {
     ru: { month: { tier: "russia", label: "499 ₽", unit: "в месяц", sub: "", title: "Heardly Pro на месяц", pay: "Оплатить 499 ₽" },
@@ -1000,10 +1012,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           year:  { tier: "standard_annual", label: "$79.99", unit: "a year", sub: "$6.67 a month", title: "Heardly Pro, one year", pay: "Pay $79.99", rub: "7,190 ₽" } }
   };
   const T = {
-    ru: { email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…",
+    ru: { email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…", agree: "Отметьте согласие на обработку персональных данных",
           me: "Я", them: "Компьютер", s1: "Спикер 1", s2: "Спикер 2", words: n => n + " слов", on: "Wi‑Fi включён", off: "Wi‑Fi выключен", going: "● расшифровка идёт",
           proc: "Транскрибирую..." },
-    en: { email: "Enter your email: the subscription is tied to it", fail: "Couldn't start the payment. Try again or contact support.", wait: "Creating payment…",
+    en: { email: "Enter your email: the subscription is tied to it", fail: "Couldn't start the payment. Try again or contact support.", wait: "Creating payment…", agree: "Please tick the consent to personal data processing",
           me: "Me", them: "Computer", s1: "Speaker 1", s2: "Speaker 2", words: n => n + " words", on: "Wi‑Fi on", off: "Wi‑Fi off", going: "● transcribing",
           proc: "Transcribing..." }
   };
@@ -1192,9 +1204,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     const msg = $("payMsg"), btn = $("payBtn"), email = emailEl.value.trim();
     msg.className = "pay-msg";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = T[lang].email; msg.className = "pay-msg err"; emailEl.setAttribute("aria-invalid", "true"); emailEl.focus(); return; }
+    if (!$("payAgree").checked) { msg.textContent = T[lang].agree; msg.className = "pay-msg err"; $("payAgree").focus(); return; }
     btn.disabled = true; msg.textContent = T[lang].wait;
     try {
-      const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, price_tier: PRICES[lang][period()].tier, source: "landing" }) });
+      const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, price_tier: PRICES[lang][period()].tier, source: "landing", consent: { version: CONSENT_VERSION, at: new Date().toISOString() } }) });
       const d = await r.json();
       if (!r.ok || !d.payment_url) throw new Error(d.error || r.status);
       location.href = d.payment_url;
@@ -1213,5 +1226,6 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   setLang(lang);
 })();
 </script>
+<script src="assets/consent.js" defer></script>
 </body>
 </html>
