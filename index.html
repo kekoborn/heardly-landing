@@ -1280,7 +1280,12 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   }).catch(() => {});
   form.addEventListener("change", renderPrices);
   const dlg = $("payDlg");
-  $("proBtn").addEventListener("click", () => { renderPrices(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
+  // Перед уходом на шлюз кнопка блокируется. Safari при возврате «Назад» восстанавливает страницу
+  // из памяти вместе с заблокированной кнопкой и «Создаём оплату…», поэтому форму сбрасываем
+  // при каждом открытии окна и при возврате на страницу.
+  function resetPay() { $("payBtn").disabled = false; $("payMsg").textContent = ""; $("payMsg").className = "pay-msg"; }
+  window.addEventListener("pageshow", e => { if (e.persisted) { resetPay(); checkPaid(0); } });
+  $("proBtn").addEventListener("click", () => { resetPay(); renderPrices(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
   $("payClose").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
   emailEl.addEventListener("input", () => emailEl.removeAttribute("aria-invalid"));
   form.addEventListener("submit", async e => {
