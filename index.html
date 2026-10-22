@@ -403,7 +403,7 @@ header.on { background: var(--bg); box-shadow: 0 1px 0 var(--line); }
 .i-call path { stroke: rgba(35,38,51,.45); stroke-width: 1; fill: none; } .i-call circle { fill: #232633; }
 .i-call text { font: 500 11px var(--mono); letter-spacing: .06em; fill: #4F515C; }
 .i-call.blk path { stroke: rgba(213,83,75,.6); } .i-call.blk circle { fill: var(--danger); } .i-call.blk text { fill: var(--danger); }
-@media (max-width: 960px) { .priv { grid-template-columns: 1fr; gap: 0; } .priv .ft { display: contents; } .priv h2 { order: 1; } .priv .sub { order: 2; } .priv .net { order: 3; margin-top: 28px; } .priv .svc { order: 4; } }
+@media (max-width: 960px) { .priv { grid-template-columns: 1fr; gap: 0; } .priv .ft { display: contents; } .priv h2 { order: 1; } .priv .sub { order: 2; } .priv .net { order: 3; margin-top: 28px; } .priv .svc-h { order: 4; } .priv .svc { order: 5; } }
 
 /* Бенто фишек */
 .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
@@ -569,6 +569,13 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14p
   html { scroll-behavior: auto; } .js .rv { opacity: 1; transform: none; transition: none; }
   .caret::after { animation: none; } .scene, .scene .dpanel, .cap { transition: none; } .composer .ins, .ln.new, .call .tile.talk .ava::before, .call .tile.talk em .eq i { animation: none; }
 }
+
+/* Перебор действий в заголовке первого экрана */
+.hrot { display: grid; }
+.hrot-i { grid-area: 1 / 1; opacity: 0; color: var(--dot); transition: opacity .45s var(--ease); }
+.hrot-i.is-on { opacity: 1; }
+.hrot-tail { display: block; color: var(--t2); }
+@media (prefers-reduced-motion: reduce) { .hrot-i { transition: none; } }
 </style>
 </head>
 <body>
@@ -643,13 +650,13 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <!-- 1. Первый экран -->
 <section class="hero center">
   <div class="wrap">
-    <h1 class="rv"><span lang="ru">Говорите. Heardly превратит это<br class="br"> в&nbsp;текст прямо на&nbsp;компьютере</span><span lang="en">Speak. Heardly turns it into text right on&nbsp;your&nbsp;computer</span></h1>
-    <p class="sub rv"><span lang="ru">Диктовка текста голосом, живая расшифровка звонков и&nbsp;звука с&nbsp;компьютера, расшифровка аудио и&nbsp;видео. Всё работает на&nbsp;вашем&nbsp;компьютере, без интернета.</span><span lang="en">Voice dictation, live transcription of calls and computer audio, and audio and video file transcription. All of it runs on your computer, offline.</span></p>
+    <h1 class="rv"><span class="hrot"><span class="hrot-i is-on"><span lang="ru">Говорите вместо печати в&nbsp;любое приложение</span><span lang="en">Speak instead of typing, into any app</span></span><span class="hrot-i" aria-hidden="true"><span lang="ru">Расшифровывайте аудио и&nbsp;видео</span><span lang="en">Transcribe audio and video</span></span><span class="hrot-i" aria-hidden="true"><span lang="ru">Читайте расшифровку прямо на&nbsp;созвоне</span><span lang="en">Read the transcript right on the call</span></span></span><span class="hrot-tail"><span lang="ru">Heardly превратит это в&nbsp;текст</span><span lang="en">Heardly turns it into text</span></span></h1>
+    <p class="sub rv"><span lang="ru">Час записи расшифруется за две с&nbsp;половиной минуты. Звук и&nbsp;текст остаются на&nbsp;вашем компьютере.</span><span lang="en">An hour of audio is transcribed in two and a half minutes. Audio and text stay on&nbsp;your&nbsp;computer.</span></p>
     <div class="cta rv">
       <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><svg aria-hidden="true"><use href="#i-apple"/></svg><span lang="ru">Скачать для Mac</span><span lang="en">Download for Mac</span></a>
       <a class="btn btn-g" href="#how"><span lang="ru">Посмотреть, как работает</span><span lang="en">See it work</span></a>
     </div>
-    <p class="note rv"><span lang="ru">14 дней всех функций бесплатно, без карты</span><span lang="en">14 days of everything free, no card</span></p>
+    <p class="note rv"><span lang="ru">Пользуйтесь всеми функциями бесплатно 14&nbsp;дней</span><span lang="en">Use every feature free for 14&nbsp;days</span></p>
   </div>
 
 </section>
@@ -836,8 +843,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
           <div class="sh"><i></i><i></i><i></i><span lang="ru">Словарь замен</span><span lang="en">Replacement list</span></div>
           <div class="rules">
             <div><span class="h" lang="ru">кубернетис</span><span class="h" lang="en">cooper netties</span><svg><use href="#i-arrow"/></svg><span class="w">Kubernetes</span></div>
-            <div><span class="h" lang="ru">хердли</span><span class="h" lang="en">heard lee</span><svg><use href="#i-arrow"/></svg><span class="w">Heardly</span></div>
-            <div><span class="h" lang="ru">ксюша бэ</span><span class="h" lang="en">ksenia bee</span><svg><use href="#i-arrow"/></svg><span class="w" lang="ru">Ксения Б.</span><span class="w" lang="en">Ksenia B.</span></div>
+            <div><span class="h" lang="ru">паша воронов</span><span class="h" lang="en">mike o brian</span><svg><use href="#i-arrow"/></svg><span class="w" lang="ru">Павел Воронов</span><span class="w" lang="en">Mike O’Brien</span></div>
+            <div><span class="h" lang="ru">сиэрэм</span><span class="h" lang="en">see are em</span><svg><use href="#i-arrow"/></svg><span class="w">CRM</span></div>
           </div>
         </div></div></div>
       <div class="cell c4 rv"><h3 lang="ru">Удобный поиск по&nbsp;слову</h3><h3 lang="en">Search by any word</h3><p lang="ru">Все звонки, диктовки и&nbsp;файлы хранятся у&nbsp;вас. Введите слово и&nbsp;найдите нужный разговор.</p><p lang="en">Every call, dictation and file stays on your computer. Type a word and find the conversation.</p>
@@ -1211,6 +1218,23 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   document.querySelectorAll("[data-set-lang]").forEach(b => b.addEventListener("click", () => setLang(b.dataset.setLang)));
   resizeAll();
   setLang(lang);
+})();
+</script>
+
+<script>
+(function () {
+  var items = document.querySelectorAll('.hrot .hrot-i');
+  if (items.length < 2) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var at = 0;
+  setInterval(function () {
+    if (document.hidden) return;
+    items[at].classList.remove('is-on');
+    items[at].setAttribute('aria-hidden', 'true');
+    at = (at + 1) % items.length;
+    items[at].classList.add('is-on');
+    items[at].removeAttribute('aria-hidden');
+  }, 2200);
 })();
 </script>
 </body>
