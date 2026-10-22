@@ -591,7 +591,11 @@ footer { border-top: 1px solid var(--line); padding: 32px 0 48px; font-size: 14p
    В потоке живёт только активный вариант: так высота блока равна его собственной,
    и неподвижный хвост заголовка идёт сразу за строкой, без дыры под короткими.
    Смена вертикальная: текущий вариант уезжает вверх за край, следующий въезжает снизу. */
-.hrot { display: block; transition: height .42s var(--ease); --rot-shift: .7em; }
+/* Запас по бокам шире отступа колонки (18px): на узких экранах «Расшифровывайте»
+   не влезает в колонку, и обрезка на время смены срезала бы последнюю букву.
+   Отрицательное поле гасит запас, так что текст остаётся на месте. */
+.hrot { display: block; transition: height .42s var(--ease); --rot-shift: .7em;
+        margin-inline: -24px; padding-inline: 24px; }
 .hrot.is-grow { overflow: hidden; }
 .hrot-i { display: none; opacity: 0; color: var(--dot); transform: translateY(var(--rot-shift));
           transition: opacity .3s var(--ease), transform .3s var(--ease); }
