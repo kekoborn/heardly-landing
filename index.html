@@ -531,6 +531,9 @@ header.on { background: var(--bg); box-shadow: 0 1px 0 var(--line); }
 .plan .btn { width: 100%; margin-top: 24px; }
 .plan .reassure { margin-top: 10px; font-size: 13.5px; color: var(--t3); text-align: center; }
 .plan .inc { margin-top: 28px; font-size: 14px; font-weight: 500; color: var(--t2); }
+/* В карточке Pro под кнопкой нет строки-пояснения, как «Без регистрации и карты» у бесплатной:
+   отступ над списком включает её высоту (10px + строка 13.5px × 1.6), чтобы списки начинались вровень. */
+@media (min-width: 761px) { .plan .btn + .inc, .plan .btn + .inc + .inc { margin-top: calc(28px + 10px + 13.5px * 1.6); } }
 .plan ul { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 10px; color: var(--t2); font-size: 15px; }
 .plan li { display: flex; gap: 10px; } .plan li svg { width: 17px; height: 17px; color: var(--mic); flex: none; margin-top: 3px; }
 @media (max-width: 520px) { .plan { padding: 26px 22px; } }
