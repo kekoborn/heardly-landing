@@ -116,6 +116,7 @@
             sessionStorage.setItem("heardly_gift_expires", j.expires_at || "");
             sessionStorage.setItem("heardly_gift_dl", "1");
             sessionStorage.setItem("heardly_gift_existing", j.existing ? "1" : "");
+            sessionStorage.setItem("heardly_gift_mailed", j.mailed ? "1" : "");
           } catch (e) {}
           location.href = "start/";
           return;

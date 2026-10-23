@@ -52,6 +52,7 @@
     <button class="btn btn-g btn-sm" id="copy" type="button" hidden><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Скопировать</span></button>
   </div>
 
+  <p class="fine gift-only" id="mailedNote" hidden>Копию инструкции мы отправили на этот email. Если письма нет, загляните в «Спам».</p>
   <p class="fine gift-only" id="existingNote" hidden>На этот email уже есть подарок или подписка, поэтому срок не продлевается. Активируйте как обычно: шаги ниже те же.</p>
 
   <ol class="steps">
@@ -164,6 +165,7 @@
   }, 700);
 
   try { if (sessionStorage.getItem("heardly_gift_existing") === "1" && !plain) document.getElementById("existingNote").hidden = false; } catch (e) {}
+  try { if (sessionStorage.getItem("heardly_gift_mailed") === "1" && !plain) document.getElementById("mailedNote").hidden = false; } catch (e) {}
   var mailText = document.getElementById("mailText"), copy = document.getElementById("copy");
   if (email) {
     mailText.textContent = email;
