@@ -158,15 +158,29 @@ kbd { display: inline-block; min-width: 24px; padding: 0 6px; border-radius: 5px
 .perm svg { width: 15px; height: 15px; flex: none; color: var(--a-ink2); }
 .perm span { flex: 1; }
 .perm em { font: 500 11px var(--sys); font-style: normal; padding: 3px 9px; border-radius: 999px; background: var(--rec); color: var(--a-surface); }
-.menubar { display: flex; align-items: center; gap: 16px; height: 30px; padding: 0 14px; font: 400 13px var(--sys); color: var(--a-ink); background: var(--a-fill); border-radius: 16px 16px 0 0; }
-.menubar b { font-weight: 700; padding: 3px 9px; margin: 0 -6px; border-radius: 5px; background: var(--rec); color: var(--a-surface); }
-.menubar svg { width: 13px; height: 13px; }
-.menu { width: 230px; margin: 4px 0 18px 36px; padding: 5px; border-radius: 10px; background: var(--a-surface); box-shadow: 0 0 0 1px var(--a-border) inset, 0 14px 30px -14px rgba(35,38,51,.3); font: 400 13px var(--sys); }
-.menu div { display: flex; justify-content: space-between; padding: 5px 10px; border-radius: 6px; color: var(--a-ink); }
-.menu hr { border: 0; height: 1px; margin: 4px 6px; background: var(--a-border); }
-.menu .hit { background: var(--mic); color: #fff; animation: hit 3.2s ease-in-out infinite; }
-.menu .dim { color: var(--a-ink3); }
-@keyframes hit { 0%, 30% { background: transparent; color: var(--a-ink); } 45%, 100% { background: var(--mic); color: #fff; } }
+.mb { overflow: hidden; }
+.mbar { display: flex; align-items: center; gap: 12px; height: 30px; padding: 0 12px; font: 400 12.5px var(--sys); color: var(--a-ink); background: var(--a-fill); }
+.mbar svg { width: 14px; height: 14px; flex: none; } .mbar .ap { width: 13px; height: 13px; }
+.mbar span { white-space: nowrap; }
+.mbar .sp { flex: 1; }
+@media (max-width: 520px) { .mbar span:nth-child(3), .mbar span:nth-child(4) { display: none; } }
+.mbar .ico { display: grid; place-items: center; width: 26px; height: 22px; margin: 0 -2px; border-radius: 6px; background: var(--rec); color: var(--a-surface); animation: icoon 3.6s ease-in-out infinite; }
+.mbar .ico svg { width: 15px; height: 15px; }
+@keyframes icoon { 0%, 12% { background: transparent; color: var(--a-ink); } 22%, 100% { background: var(--rec); color: var(--a-surface); } }
+.pop { width: 236px; margin: 6px 10px 14px auto; padding: 8px; display: grid; gap: 2px; border-radius: 14px; background: var(--a-surface); box-shadow: 0 0 0 1px var(--a-border) inset, 0 16px 34px -16px rgba(35,38,51,.34); font: 400 12.5px var(--sys); animation: popin 3.6s var(--ease) infinite; transform-origin: 90% 0; }
+@keyframes popin { 0%, 12% { opacity: 0; transform: scale(.96) translateY(-4px); } 24%, 100% { opacity: 1; transform: none; } }
+.pop .rec { margin-bottom: 6px; padding: 9px 12px; border-radius: 10px; background: var(--rec); color: var(--a-surface); font-weight: 500; }
+.pop hr { border: 0; height: 1px; margin: 3px 4px; background: var(--a-border); }
+.tg { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 8px; color: var(--a-ink); }
+.tg .ic { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 6px; background: var(--a-fill); color: var(--a-ink2); }
+.tg .ic svg { width: 12px; height: 12px; }
+.tg .t { flex: 1; }
+.tg .ch { width: 10px; height: 10px; color: var(--a-ink3); }
+.sw { position: relative; width: 28px; height: 16px; border-radius: 999px; background: rgba(35,38,51,.14); }
+.sw.on { background: var(--mic); } .sw::after { content: ""; position: absolute; top: 2px; left: 2px; width: 12px; height: 12px; border-radius: 50%; background: #fff; } .sw.on::after { left: 14px; }
+.tg.hit { animation: hit 3.6s ease-in-out infinite; }
+@keyframes hit { 0%, 40% { background: transparent; } 52%, 100% { background: rgba(94,106,210,.16); } }
+.tg.hit .ic { background: var(--mic); color: #fff; } .tg.hit .t { font-weight: 600; }
 .set { display: grid; grid-template-columns: 100px minmax(0, 1fr); min-height: 300px; overflow: hidden; }
 .side { padding: 12px 8px; background: var(--a-fill); border-right: 1px solid var(--a-border); display: grid; align-content: start; gap: 2px; font-size: 12px; }
 .side div { padding: 6px 9px; border-radius: 7px; color: var(--a-ink2); }
