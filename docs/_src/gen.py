@@ -25,6 +25,9 @@ SHELL = """<!doctype html>
 <title>{title_ru} — Heardly</title>
 <meta name="description" content="{desc_ru}">
 <meta name="theme-color" content="#F6F4EF">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <link rel="stylesheet" href="../assets/fonts/fonts.css">
 <link rel="stylesheet" href="docs.css">
 </head>
