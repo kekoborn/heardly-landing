@@ -115,12 +115,14 @@
             sessionStorage.setItem("heardly_gift_email", j.email || v.toLowerCase());
             sessionStorage.setItem("heardly_gift_expires", j.expires_at || "");
             sessionStorage.setItem("heardly_gift_dl", "1");
+            sessionStorage.setItem("heardly_gift_existing", j.existing ? "1" : "");
           } catch (e) {}
           location.href = "start/";
           return;
         }
         btn.disabled = false; label.textContent = old;
         if (j.closed) fallback("Акция закончилась.");
+        else if (j.error === "already_claimed") fallback("На этот почтовый ящик подарок уже выдан. В приложении введите адрес, с которого получили его впервые.");
         else if (res.s === 429) say("Слишком много попыток с этого адреса. Попробуйте через час.");
         else if (j.error === "invalid_email") { email.classList.add("bad"); say("Проверьте email: на этот адрес мы включим подарок."); }
         else fallback("Не получилось включить подарок.");
