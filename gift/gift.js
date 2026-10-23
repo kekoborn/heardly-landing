@@ -8,6 +8,15 @@
   var COL = { m: css.getPropertyValue("--mic").trim() || "#5E6AD2", a: css.getPropertyValue("--app").trim() || "#D9845A" };
   var S = { speaking: false, who: "m" };
 
+  // Цели Метрики: gift_click (нажали «Скачать на Mac») и gift_claimed (подарок выдан). Счётчик тот же, что в
+  // assets/consent.js, и грузится только после «Принять» в баннере cookie. Цели надо завести в интерфейсе Метрики.
+  var YM_ID = 113735110;
+  function goal(name, done) {
+    var called = false, finish = function () { if (!called) { called = true; if (done) done(); } };
+    try { if (window.ym) { ym(YM_ID, "reachGoal", name, undefined, finish); setTimeout(finish, 600); return; } } catch (e) {}
+    finish();
+  }
+
   // ── Волна: пилюли без градиента, как DotsWaveform в приложении ──
   var waves = [].slice.call(document.querySelectorAll("canvas.wave")).map(function (c) {
     var o = { c: c, ctx: c.getContext("2d"), bar: +c.dataset.bar || 0, live: c.dataset.mode === "live", w: 0, h: 0, lvl: 0 };
@@ -92,6 +101,7 @@
   function fallback(text) {
     say(text + ' <a href="start/?plain=1">Скачать без подарка</a>');
   }
+  btn.addEventListener("click", function () { goal("gift_click"); });
   email.addEventListener("input", function () { email.classList.remove("bad"); if (msg.textContent) say(""); });
   form.addEventListener("submit", function (ev) {
     ev.preventDefault();
@@ -118,7 +128,7 @@
             sessionStorage.setItem("heardly_gift_existing", j.existing ? "1" : "");
             sessionStorage.setItem("heardly_gift_mailed", j.mailed ? "1" : "");
           } catch (e) {}
-          location.href = "start/";
+          goal("gift_claimed", function () { location.href = "start/"; });
           return;
         }
         btn.disabled = false; label.textContent = old;
