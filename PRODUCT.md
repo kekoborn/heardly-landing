@@ -44,7 +44,7 @@ Visitors read on a Mac (the only platform the app supports), often in a browser 
 
 ## Brand Commitments
 
-- Name "Heardly", app icon `docs/logo.png`. The app's own palette («Лён и барвинок», `docs/design-system.md`) binds the app, not the site: the owner allowed a new visual world for the landing (2026-10-21).
+- Name "Heardly", logo and app icon per `docs/brand/GUIDELINE.md` in the app repo (mark: letter H of five coral bars; app icon: coral mark on a white tile; accepted 2026-10-23). The app's own palette («Лён и барвинок», `docs/design-system.md`) binds the app, not the site: the owner allowed a new visual world for the landing (2026-10-21).
 - The app's waveform (`WaveformView`, mirrored smoothed 48-point shape) is a recognisable product element.
 - Owner's tastes from the app work: soft and human, no glass, no shadows; numbers set without serifs.
 - Quality bar named by the owner: Wispr Flow, Granola, Apple product pages, betterstack.com, lovable.dev, gradientshub.com, decimals.co, linearity.io, raycast.com/keyboard, router.com. Do not copy.
