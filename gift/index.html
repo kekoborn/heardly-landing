@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heardly — два месяца в подарок</title>
+<meta name="description" content="Скачайте Heardly для Mac и получите 60 дней всех функций Pro в подарок. Диктовка, звонки и файлы в текст прямо на вашем компьютере.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="icon" href="../assets/logo.png">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="gift.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.5-1-2.5-3.9ZM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4Z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-spk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="5" y="4" width="5" height="16" rx="1.5"/><rect x="14" y="4" width="5" height="16" rx="1.5"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="../assets/logo.png" alt="" width="28" height="28">Heardly</a>
+  </header>
+
+  <main class="hero">
+    <div>
+      <h1>Heardly на&nbsp;два месяца в&nbsp;подарок</h1>
+      <p class="lead">Диктовка, звонки и&nbsp;файлы в&nbsp;текст прямо на&nbsp;Mac. Звук и&nbsp;текст остаются на&nbsp;вашем компьютере.</p>
+
+      <form class="claim" id="claim" novalidate>
+        <div class="row">
+          <input type="email" id="email" name="email" placeholder="Ваш email" autocomplete="email" inputmode="email" required aria-label="Ваш email">
+          <button class="btn btn-w" id="go" type="submit"><svg aria-hidden="true"><use href="#i-apple"/></svg><span>Скачать на&nbsp;Mac</span></button>
+        </div>
+        <label class="agree"><input type="checkbox" id="agree" required><span>Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span></label>
+        <p class="msg" id="msg" role="alert" aria-live="polite"></p>
+        <p class="fine">Подарок включим на&nbsp;этот email: 60&nbsp;дней всех функций Pro. Нужен Mac с&nbsp;чипом Apple и&nbsp;macOS&nbsp;14 или новее.</p>
+      </form>
+    </div>
+
+    <div class="stage" aria-hidden="true">
+      <i class="glow g1"></i><i class="glow g2"></i>
+      <div class="badge"><i><svg><use href="#i-check"/></svg></i>Pro на&nbsp;60&nbsp;дней</div>
+      <div class="win live">
+        <div class="tb"><i></i><i></i><i></i><b>Heardly</b></div>
+        <div class="lw-head">
+          <canvas class="wave" data-mode="live"></canvas>
+          <span class="chip m"><svg><use href="#i-mic"/></svg>Микрофон</span><span class="chip a"><svg><use href="#i-spk"/></svg>Приложения</span>
+          <span class="wsp"></span><span class="wbtn stop"><i></i>Стоп</span>
+        </div>
+        <div class="lines" id="lines">
+          <div class="ln" data-w="m" data-t="Коллеги, давайте начнём со&nbsp;статуса по&nbsp;запуску."><span class="who m">Вы</span><span><span class="tx"></span></span></div>
+          <div class="ln" data-w="a" data-t="Лендинг готов, остались тексты для&nbsp;рассылки."><span class="who a">Анна</span><span><span class="tx"></span></span></div>
+          <div class="ln" data-w="m" data-t="Тогда договариваемся: тексты до&nbsp;пятницы."><span class="who m">Вы</span><span><span class="tx"></span></span></div>
+        </div>
+        <div class="wfoot"><span class="wbtn"><svg><use href="#i-copy"/></svg>Копировать</span></div>
+      </div>
+      <div class="win dict">
+        <div class="dtop"><canvas class="wave" data-mode="dict" data-bar="6"></canvas><span class="dtime">0:04</span></div>
+        <p>Диктуйте в&nbsp;любое приложение: текст появится там, где стоит курсор.</p>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <a href="/privacy/">Политика обработки персональных данных</a>
+    <a href="/consent/">Согласие на&nbsp;обработку данных</a>
+    <a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a>
+    <span class="sp"></span>
+    <span>© 2026 Heardly</span>
+  </div>
+</footer>
+
+<script src="gift.js"></script>
+<script src="../assets/consent.js" defer></script>
+</body>
+</html>

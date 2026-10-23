@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heardly — как включить подарок</title>
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="icon" href="../../assets/logo.png">
+<link rel="stylesheet" href="../../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../gift.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-apple" viewBox="0 0 24 24" fill="currentColor"><path d="M16.4 12.6c0-2.4 2-3.6 2.1-3.7-1.1-1.7-2.9-1.9-3.5-1.9-1.5-.2-2.9.9-3.7.9-.8 0-1.9-.9-3.2-.8-1.6 0-3.1 1-4 2.4-1.7 3-.4 7.4 1.2 9.8.8 1.2 1.8 2.5 3 2.4 1.2 0 1.7-.8 3.1-.8 1.5 0 1.9.8 3.2.8 1.3 0 2.2-1.2 3-2.4.9-1.4 1.3-2.7 1.3-2.8-.1 0-2.5-1-2.5-3.9ZM14 5.4c.7-.8 1.1-1.9 1-3-1 0-2.1.7-2.8 1.5-.6.7-1.2 1.8-1 2.9 1.1.1 2.1-.6 2.8-1.4Z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></symbol>
+  <symbol id="i-spk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2.5"/><path d="M6.5 10h.01M10 10h.01M13.5 10h.01M17 10h.01M7 14h10"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-folder" viewBox="0 0 24 24" fill="currentColor"><path d="M3 7a2 2 0 0 1 2-2h4.2a2 2 0 0 1 1.5.7L12 7h7a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></symbol>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="../../assets/logo.png" alt="" width="28" height="28">Heardly</a>
+  </header>
+</div>
+
+<main class="guide">
+  <span class="status"><svg aria-hidden="true"><use href="#i-check"/></svg>Скачивание началось</span>
+  <h1 class="gift-only">Осталось включить подарок</h1>
+  <h1 class="plain-only" hidden>Heardly скачивается</h1>
+  <p class="lead gift-only">Heardly.dmg сохраняется в&nbsp;«Загрузки». Пока он грузится, пройдите три шага: это займёт пару минут. <span style="white-space:nowrap">Не&nbsp;началось? <a id="again" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">Скачать ещё раз</a>.</span></p>
+  <p class="lead plain-only" hidden>Heardly.dmg сохраняется в&nbsp;«Загрузки». Подарок для вас не&nbsp;включён: напишите на&nbsp;<a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a>, мы&nbsp;разберёмся. <span style="white-space:nowrap">Не&nbsp;началось? <a id="again2" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">Скачать ещё раз</a>.</span></p>
+
+  <div class="mail gift-only">
+    <div>
+      <small>Ваш email для активации</small>
+      <b id="mailText">тот, что вы указали на&nbsp;предыдущей странице</b>
+    </div>
+    <span class="sp"></span>
+    <button class="btn btn-g btn-sm" id="copy" type="button" hidden><svg aria-hidden="true"><use href="#i-copy"/></svg><span>Скопировать</span></button>
+  </div>
+
+  <ol class="steps">
+    <li class="step">
+      <div>
+        <span class="n">1</span>
+        <h2>Установите Heardly и&nbsp;дайте разрешения</h2>
+        <p>Откройте <b>Heardly.dmg</b>, перетащите Heardly в&nbsp;«Программы» и&nbsp;запустите. Приложение попросит три доступа: к&nbsp;микрофону, к&nbsp;звуку приложений и&nbsp;для&nbsp;вставки текста. Разрешите все.</p>
+      </div>
+      <div class="vis" aria-hidden="true">
+        <div class="win dmg">
+          <figure><img src="../../assets/logo.png" alt="">Heardly</figure>
+          <svg class="arr"><use href="#i-arrow"/></svg>
+          <figure><span class="fold"><svg><use href="#i-folder"/></svg></span>Программы</figure>
+        </div>
+        <div class="win perms">
+          <div class="perm"><svg><use href="#i-mic"/></svg><span>Доступ к&nbsp;микрофону</span><em>Разрешить</em></div>
+          <div class="perm"><svg><use href="#i-spk"/></svg><span>Доступ к&nbsp;звуку приложений</span><em>Разрешить</em></div>
+          <div class="perm"><svg><use href="#i-key"/></svg><span>Доступ для вставки текста</span><em>Разрешить</em></div>
+        </div>
+      </div>
+    </li>
+
+    <li class="step gift-only">
+      <div>
+        <span class="n">2</span>
+        <h2>Откройте настройки</h2>
+        <p>В&nbsp;Heardly нажмите <kbd>⌘</kbd> <kbd>,</kbd> или выберите в&nbsp;верхнем меню <b>Heardly → Настройки…</b></p>
+      </div>
+      <div class="vis" aria-hidden="true">
+        <div class="win">
+          <div class="menubar"><svg><use href="#i-apple"/></svg><b>Heardly</b><span>Файл</span><span>Правка</span><span>Вид</span></div>
+          <div class="menu">
+            <div class="dim">О&nbsp;программе Heardly</div>
+            <hr>
+            <div class="hit"><span>Настройки…</span><span>⌘,</span></div>
+            <div class="dim"><span>Скрыть Heardly</span><span>⌘H</span></div>
+          </div>
+        </div>
+      </div>
+    </li>
+
+    <li class="step gift-only">
+      <div>
+        <span class="n">3</span>
+        <h2>Откройте «Подписка» и&nbsp;введите email</h2>
+        <p>В&nbsp;списке слева выберите <b>Подписка</b>. Внизу, в&nbsp;блоке «У&nbsp;меня уже есть лицензия», впишите email из&nbsp;карточки выше и&nbsp;нажмите <b>Активировать</b>. Появится «✓&nbsp;Подписка активирована».</p>
+      </div>
+      <div class="vis" aria-hidden="true">
+        <div class="win set">
+          <div class="side"><div>Статистика</div><div>Основные</div><div>Диктовка</div><div>Записи</div><div>Система</div><div class="on">Подписка</div></div>
+          <div class="pane">
+            <div class="sk"></div><div class="sk s"></div>
+            <div class="lab">У&nbsp;меня уже есть лицензия</div>
+            <div class="lic">
+              <b>Email от&nbsp;подписки</b>
+              <div class="f"><div class="in hl"><span id="typed"></span></div><span class="go" id="goBtn">Активировать</span></div>
+              <span class="ok" id="okMsg">✓ Подписка активирована</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ol>
+
+  <div class="done gift-only">
+    <i><svg aria-hidden="true"><use href="#i-check"/></svg></i>
+    <div><b>Готово: Pro включён</b><span id="until">Все функции работают 60&nbsp;дней.</span></div>
+  </div>
+
+  <p class="help">Не&nbsp;получилось? Напишите на&nbsp;<a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a>, поможем.</p>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a href="/privacy/">Политика обработки персональных данных</a>
+    <a href="/consent/">Согласие на&nbsp;обработку данных</a>
+    <span class="sp"></span>
+    <span>© 2026 Heardly</span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+  var DMG = "https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg";
+  var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var qs = new URLSearchParams(location.search), plain = qs.get("plain") === "1";
+  var email = "", expires = "", autostart = false;
+  try {
+    email = sessionStorage.getItem("heardly_gift_email") || "";
+    expires = sessionStorage.getItem("heardly_gift_expires") || "";
+    autostart = sessionStorage.getItem("heardly_gift_dl") === "1" || plain;
+    sessionStorage.removeItem("heardly_gift_dl"); // перезагрузка страницы не качает второй раз
+  } catch (e) {}
+
+  if (plain) {
+    [].forEach.call(document.querySelectorAll(".gift-only"), function (n) { n.hidden = true; });
+    [].forEach.call(document.querySelectorAll(".plain-only"), function (n) { n.hidden = false; });
+  }
+
+  // Скачивание начинаем здесь, а не на предыдущей странице: переход не обрывает загрузку.
+  if (autostart) setTimeout(function () {
+    var a = document.createElement("a");
+    a.href = DMG; a.download = ""; a.style.display = "none";
+    document.body.appendChild(a); a.click(); a.remove();
+  }, 700);
+
+  var mailText = document.getElementById("mailText"), copy = document.getElementById("copy");
+  if (email) {
+    mailText.textContent = email;
+    copy.hidden = false;
+    copy.addEventListener("click", function () {
+      var done = function () {
+        var s = copy.querySelector("span"); s.textContent = "Скопировано";
+        setTimeout(function () { s.textContent = "Скопировать"; }, 1800);
+      };
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(email).then(done, function () {});
+      else {
+        var t = document.createElement("textarea"); t.value = email; document.body.appendChild(t); t.select();
+        try { document.execCommand("copy"); done(); } catch (e) {} t.remove();
+      }
+    });
+  }
+  if (expires) {
+    var d = new Date(expires);
+    if (!isNaN(d)) document.getElementById("until").textContent =
+      "Все функции работают до " + d.toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" }).replace(/\s*г\.$/, "") + " года.";
+  }
+
+  // Макет шага 3: email вписывается, кнопка нажимается, появляется «Подписка активирована».
+  var typed = document.getElementById("typed"), goBtn = document.getElementById("goBtn"), okMsg = document.getElementById("okMsg");
+  var shown = email || "name@example.com", timers = [];
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function show() { typed.textContent = shown; goBtn.classList.remove("press"); okMsg.classList.add("on"); }
+  function loop() {
+    typed.textContent = ""; goBtn.classList.remove("press"); okMsg.classList.remove("on");
+    var at = 900;
+    for (var i = 1; i <= shown.length; i++) (function (n) { later(function () { typed.textContent = shown.slice(0, n); }, at + n * 70); })(i);
+    at += shown.length * 70 + 700;
+    later(function () { goBtn.classList.add("press"); }, at);
+    later(function () { goBtn.classList.remove("press"); okMsg.classList.add("on"); }, at + 350);
+    later(loop, at + 4200);
+  }
+  if (reduce || !("IntersectionObserver" in window)) show();
+  else new IntersectionObserver(function (es, io) {
+    if (es[0].isIntersecting) { io.disconnect(); loop(); }
+  }, { threshold: 0.4 }).observe(document.querySelector(".set"));
+})();
+</script>
+<script src="../../assets/consent.js" defer></script>
+</body>
+</html>
