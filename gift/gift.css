@@ -165,7 +165,7 @@ kbd { display: inline-block; min-width: 24px; padding: 0 6px; border-radius: 5px
 .mbar .sp { flex: 1; }
 @media (max-width: 520px) { .mbar span:nth-child(3), .mbar span:nth-child(4) { display: none; } }
 .mbar .ico { display: grid; place-items: center; width: 26px; height: 22px; margin: 0 -2px; border-radius: 6px; background: var(--rec); color: var(--a-surface); animation: icoon 3.6s ease-in-out infinite; }
-.mbar .ico svg { width: 15px; height: 15px; }
+.mbar .ico svg { width: 12px; height: 13px; }
 @keyframes icoon { 0%, 12% { background: transparent; color: var(--a-ink); } 22%, 100% { background: var(--rec); color: var(--a-surface); } }
 .pop { width: 236px; margin: 6px 10px 14px auto; padding: 8px; display: grid; gap: 2px; border-radius: 14px; background: var(--a-surface); box-shadow: 0 0 0 1px var(--a-border) inset, 0 16px 34px -16px rgba(35,38,51,.34); font: 400 12.5px var(--sys); animation: popin 3.6s var(--ease) infinite; transform-origin: 90% 0; }
 @keyframes popin { 0%, 12% { opacity: 0; transform: scale(.96) translateY(-4px); } 24%, 100% { opacity: 1; transform: none; } }
