@@ -561,6 +561,7 @@ dialog.dldlg::backdrop { background: rgba(35,38,51,.28); }
 .pay input::placeholder { color: var(--t3); }
 .pay input:focus-visible { outline: 2px solid var(--mic); outline-offset: 0; }
 .pay input[aria-invalid="true"] { box-shadow: 0 0 0 2px var(--danger) inset; }
+.pay-ref { font-size: 13px; color: var(--t2); margin-top: -4px; } .pay-ref:empty { display: none; } .pay-ref.ok { color: var(--mic); } .pay-ref a { color: inherit; }
 .pay-msg { min-height: 22px; margin-top: 10px; font-size: 14px; color: var(--t2); } .pay-msg.err { color: var(--danger); }
 .pay-note { font-size: 14px; color: var(--t3); margin-top: 2px; }
 .after { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 14px; color: var(--t3); }
@@ -995,6 +996,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <h3 id="payTitle"></h3>
         <div class="pay">
           <input class="ym-disable-keys ym-hide-content" type="email" name="email" id="payEmail" autocomplete="email" required placeholder="you@mail.ru" aria-label="Email" aria-describedby="payMsg">
+          <input class="ym-disable-keys" type="text" name="ref" id="payRef" autocomplete="off" spellcheck="false" placeholder="Код или email пригласившего, если есть" aria-label="Код приглашения" aria-describedby="payRefMsg">
+          <div class="pay-ref" id="payRefMsg" role="status"></div>
           <label class="agree"><input type="checkbox" id="payAgree" required><span><span lang="ru">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span><span lang="en">I consent to the <a href="/consent/" target="_blank" rel="noopener">processing of my personal data</a></span></span></label>
           <button class="btn btn-w" type="submit" id="payBtn"><span id="payLabel"></span></button>
         </div>
@@ -1101,10 +1104,16 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
             year:  { label: "$79.99", unit: "a year", sub: "$6.67 a month", title: "Heardly Pro, one year", pay: "Pay $79.99" } } }
   };
   const T = {
-    ru: { email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…", agree: "Отметьте согласие на обработку персональных данных",
+    ru: { refOk: (p, o) => "По приглашению: " + p + " вместо " + o + " за первую оплату.", refPay: p => "Оплатить " + p,
+          refNo: { self: "Пригласить самого себя нельзя.", same_device: "Пригласить самого себя нельзя.", already_used: "Скидка по приглашению — только на первую оплату.", not_first_payment: "Скидка по приглашению — только на первую оплату.", closed: "Программа приглашений закончилась.", unknown_code: "Код приглашения не найден." },
+          refRejected: "Скидка не применилась. Нажмите ещё раз, чтобы оплатить по обычной цене.",
+          email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…", agree: "Отметьте согласие на обработку персональных данных",
           me: "Я", them: "Компьютер", s1: "Спикер 1", s2: "Спикер 2", words: n => n + " слов", on: "Wi‑Fi включён", off: "Wi‑Fi выключен", going: "● расшифровка идёт",
           proc: "Транскрибирую..." },
-    en: { email: "Enter your email: the subscription is tied to it", fail: "Couldn't start the payment. Try again or contact support.", wait: "Creating payment…", agree: "Please tick the consent to personal data processing",
+    en: { refOk: (p, o) => "Referral price: " + p + " instead of " + o + " for your first payment.", refPay: p => "Pay " + p,
+          refNo: { self: "You can't invite yourself.", same_device: "You can't invite yourself.", already_used: "The referral discount is for the first payment only.", not_first_payment: "The referral discount is for the first payment only.", closed: "The referral program has ended.", unknown_code: "Referral code not found." },
+          refRejected: "The discount didn't apply. Press again to pay the regular price.",
+          email: "Enter your email: the subscription is tied to it", fail: "Couldn't start the payment. Try again or contact support.", wait: "Creating payment…", agree: "Please tick the consent to personal data processing",
           me: "Me", them: "Computer", s1: "Speaker 1", s2: "Speaker 2", words: n => n + " words", on: "Wi‑Fi on", off: "Wi‑Fi off", going: "● transcribing",
           proc: "Transcribing..." }
   };
@@ -1289,12 +1298,51 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   }).catch(() => {});
   form.addEventListener("change", renderPrices);
   const dlg = $("payDlg");
+  // ── «Пригласи друга»: ?ref=КОД помним 30 дней, код уходит в /create-order, цену решает сервер.
+  // Цены те же, что в REF_PRICES воркера и в разделе 2 оферты.
+  const REF_KEY = "heardly-ref", REF_PRICES = { ru: { month: "425 ₽", year: "3 390 ₽" }, intl: { month: "$8.49", year: "$67.99" } };
+  const refEl = $("payRef"), refMsg = $("payRefMsg");
+  let refOk = false, refTimer = null, refPendingUrl = null;
+  (function () {
+    const fromUrl = new URLSearchParams(location.search).get("ref");
+    try {
+      if (fromUrl) localStorage.setItem(REF_KEY, JSON.stringify({ code: fromUrl.slice(0, 64), at: Date.now() }));
+      const s = JSON.parse(localStorage.getItem(REF_KEY) || "null");
+      if (s && Date.now() - s.at < 30 * 86400000) refEl.value = s.code; else localStorage.removeItem(REF_KEY);
+    } catch (e) { if (fromUrl) refEl.value = fromUrl.slice(0, 64); }
+    if (fromUrl && window.ym) { try { ym(113735110, "reachGoal", "ref_landing"); } catch (e) {} }
+  })();
+  function renderRef() {
+    const c = PRICES[region][lang][period()];
+    refMsg.className = "pay-ref" + (refOk ? " ok" : "");
+    if (refOk) {
+      const p = REF_PRICES[region][period()];
+      refMsg.innerHTML = T[lang].refOk(p, c.label) + ' <a href="/legal/#referral" target="_blank" rel="noopener">' + (lang === "ru" ? "Условия" : "Terms") + "</a>";
+      $("payLabel").textContent = T[lang].refPay(p);
+    }
+  }
+  function checkRef() {
+    refOk = false; refPendingUrl = null; refMsg.textContent = ""; renderPrices();
+    const ref = refEl.value.trim();
+    if (ref.length < 6) return;
+    const email = emailEl.value.trim();
+    fetch(API + "/ref/check", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ref, email: /@.+\./.test(email) ? email : "" }) })
+      .then(r => r.json()).then(d => {
+        if (refEl.value.trim() !== ref) return;
+        if (d.ok) { refOk = true; renderRef(); }
+        else if (T[lang].refNo[d.reason]) { refMsg.className = "pay-ref"; refMsg.textContent = T[lang].refNo[d.reason]; }
+      }).catch(() => {});
+  }
+  const checkRefSoon = () => { clearTimeout(refTimer); refTimer = setTimeout(checkRef, 500); };
+  refEl.addEventListener("input", checkRefSoon);
+  emailEl.addEventListener("change", checkRefSoon);
+  form.addEventListener("change", () => { if (refOk) renderRef(); });
   // Перед уходом на шлюз кнопка блокируется. Safari при возврате «Назад» восстанавливает страницу
   // из памяти вместе с заблокированной кнопкой и «Создаём оплату…», поэтому форму сбрасываем
   // при каждом открытии окна и при возврате на страницу.
   function resetPay() { $("payBtn").disabled = false; $("payMsg").textContent = ""; $("payMsg").className = "pay-msg"; }
   window.addEventListener("pageshow", e => { if (e.persisted) { resetPay(); checkPaid(0); } });
-  $("proBtn").addEventListener("click", () => { resetPay(); renderPrices(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
+  $("proBtn").addEventListener("click", () => { resetPay(); renderPrices(); checkRef(); if (dlg.showModal) dlg.showModal(); else dlg.setAttribute("open", ""); emailEl.focus(); });
   $("payClose").addEventListener("click", () => dlg.close ? dlg.close() : dlg.removeAttribute("open"));
   emailEl.addEventListener("input", () => emailEl.removeAttribute("aria-invalid"));
   form.addEventListener("submit", async e => {
@@ -1303,13 +1351,23 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     msg.className = "pay-msg";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = T[lang].email; msg.className = "pay-msg err"; emailEl.setAttribute("aria-invalid", "true"); emailEl.focus(); return; }
     if (!$("payAgree").checked) { msg.textContent = T[lang].agree; msg.className = "pay-msg err"; $("payAgree").focus(); return; }
+    // Скидка не применилась, человек увидел почему и нажал ещё раз — уходим на уже созданный заказ.
+    if (refPendingUrl) { location.href = refPendingUrl; return; }
     btn.disabled = true; msg.textContent = T[lang].wait;
     try {
-      const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, period: period(), tz: TZ, price_tier: (region === "ru" ? "russia" : "standard") + (period() === "year" ? "_annual" : ""), source: "landing", consent: { version: CONSENT_VERSION, at: new Date().toISOString() } }) });
+      const ref = refEl.value.trim();
+      const r = await fetch(API + "/create-order", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, period: period(), tz: TZ, price_tier: (region === "ru" ? "russia" : "standard") + (period() === "year" ? "_annual" : ""), source: "landing", ...(ref ? { ref } : {}), consent: { version: CONSENT_VERSION, at: new Date().toISOString() } }) });
       const d = await r.json();
       if (!r.ok || !d.payment_url) throw new Error(d.error || r.status);
+      if (ref && d.ref_applied) { try { localStorage.removeItem(REF_KEY); } catch (e) {} if (window.ym) { try { ym(113735110, "reachGoal", "ref_order"); } catch (e) {} } }
       // После оплаты шлюз вернёт сюда же: по этому заказу покажем «Оплата прошла» с кнопкой активации.
       try { localStorage.setItem(PAID_KEY, JSON.stringify({ id: d.order_id, t: d.activation_token, email, at: Date.now() })); } catch (e) {}
+      if (ref && d.ref_rejected) {
+        refOk = false; renderPrices();
+        refMsg.className = "pay-ref"; refMsg.textContent = T[lang].refNo[d.ref_rejected] || "";
+        msg.textContent = T[lang].refRejected; btn.disabled = false; refPendingUrl = d.payment_url;
+        return;
+      }
       location.href = d.payment_url;
     } catch (err) { msg.textContent = T[lang].fail; msg.className = "pay-msg err"; btn.disabled = false; }
   });

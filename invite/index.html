@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Heardly — пригласить друга</title>
+<meta name="description" content="Пригласите друга в Heardly: он заплатит за первый месяц меньше, а вы получите 30 дней Pro.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F6F4EF">
+<link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="../assets/favicon.ico" sizes="any">
+<link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
+<link rel="stylesheet" href="../assets/fonts/fonts.css">
+<link rel="stylesheet" href="../gift/gift.css?v=3">
+<style>
+.hero.solo{grid-template-columns:minmax(0,640px)}
+.link-box{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
+.link-box input{flex:1 1 260px;min-width:0}
+.terms{margin-top:18px}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <a class="brand" href="/"><img src="../assets/logo.png" alt="" width="28" height="28">Heardly</a>
+  </header>
+
+  <main class="hero solo">
+    <div>
+      <h1>Пригласите друга в&nbsp;Heardly</h1>
+      <p class="lead">Друг платит за&nbsp;первый месяц 425&nbsp;₽ вместо 499&nbsp;₽, а&nbsp;вы получаете 30&nbsp;дней Pro. Если друг оплатит год, вы получите 60&nbsp;дней.</p>
+
+      <form class="claim" id="invite" novalidate>
+        <div class="row">
+          <input type="email" id="email" name="email" placeholder="Ваш email" autocomplete="email" inputmode="email" required aria-label="Ваш email">
+          <button class="btn btn-w" id="go" type="submit"><span>Получить ссылку</span></button>
+        </div>
+        <label class="agree"><input type="checkbox" id="agree" required><span>Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span></label>
+        <p class="msg" id="msg" role="alert" aria-live="polite"></p>
+        <p class="fine">На&nbsp;этот email начислим бонусные дни. Если подписки ещё нет, она появится сама: введите этот email в&nbsp;Heardly → Настройки → Подписка.</p>
+      </form>
+
+      <div id="result" hidden>
+        <p class="lead">Ваша ссылка. Отправьте её другу сами: мы приглашений не&nbsp;рассылаем.</p>
+        <div class="link-box">
+          <input type="text" id="link" readonly aria-label="Ссылка-приглашение">
+          <button class="btn btn-w" id="copy" type="button"><span>Скопировать</span></button>
+          <a class="btn" id="tg" target="_blank" rel="noopener"><span>Отправить в&nbsp;Telegram</span></a>
+        </div>
+        <p class="fine">Код приглашения: <b id="code"></b>. Друг может ввести его или ваш email при&nbsp;оплате в&nbsp;приложении.</p>
+      </div>
+
+      <p class="fine terms">Программа действует до&nbsp;[ДАТА ОКОНЧАНИЯ]. Организатор и&nbsp;правила — в&nbsp;<a href="/legal/#referral">разделе 7 оферты</a>.</p>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <div class="wrap foot">
+    <a href="/privacy/">Политика обработки персональных данных</a>
+    <a href="/consent/">Согласие на&nbsp;обработку данных</a>
+    <a href="/legal/">Оферта</a>
+    <a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a>
+    <span class="sp"></span>
+    <span>© 2026 Heardly</span>
+  </div>
+</footer>
+
+<script src="invite.js?v=1"></script>
+<script src="../assets/consent.js" defer></script>
+</body>
+</html>
