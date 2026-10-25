@@ -36,8 +36,8 @@ Visitors read on a Mac (the only platform the app supports), often in a browser 
 ## Capabilities and Constraints
 
 - macOS 14+, Apple Silicon only. No Windows, iOS, web app, team workspace, calendar bot, CRM sync.
-- Free: 14 days of full Pro after install, no card; then 2,000 words a week of live + dictation, reset Monday.
-- Pro: unlimited live + dictation, files with speaker separation, export (TXT, SRT, VTT, DOCX, PDF, Markdown, CSV, HTML), local AI summary (~2.5 GB model), `heardly` CLI / MCP connection to Claude and Codex, one subscription on all the user's Macs.
+- Free: 14 days of full Pro after install, no card; then unlimited dictation, 40 minutes a month of live call transcription and a separate 40 minutes a month of file transcription, export to TXT and SRT. Limits renew monthly. If the call limit runs out mid-call, recording continues for up to 20 more minutes and the overrun is taken from next month; a file longer than the remaining minutes is not transcribed for free.
+- Pro: no limits on calls and files, files with speaker separation, export (TXT, SRT, VTT, DOCX, PDF, Markdown, CSV, HTML), AI panel with a summary in the call window (local model, ~2.5 GB), `heardly` CLI / MCP connection to Claude and Codex, one subscription on all the user's Macs.
 - Prices: RU 499 ₽/month, 3,990 ₽/year; EN $9.99/month, $79.99/year (charged 899 / 7,190 ₽). One-time payment, no auto-renewal.
 - What goes online: one-time model download, subscription check, updates, anonymous crash reports; never audio or text.
 - Undecided: recognition language list for Parakeet Ultra; refund policy; seller details, offer and privacy policy; support address; domain.
