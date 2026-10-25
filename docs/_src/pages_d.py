@@ -161,10 +161,10 @@ PAGES["stats"] = {
 PAGES["pricing"] = {
     "group_ru": "Аккаунт", "group_en": "Account",
     "title_ru": "Бесплатно, пробный период и Pro", "title_en": "Free, trial and Pro",
-    "lede_ru": "После установки две недели работают все функции. Дальше остаётся бесплатная версия "
-               "с недельным лимитом слов — или подписка Pro без ограничений.",
-    "lede_en": "For the first two weeks everything is unlocked. After that you keep a free version "
-               "with a weekly word limit — or take a Pro subscription with no limits.",
+    "lede_ru": "После установки две недели работают все функции. Дальше остаётся бесплатная версия: "
+               "диктовка без лимита и по 40 минут в месяц на звонки и на файлы. Pro снимает лимиты.",
+    "lede_en": "For the first two weeks everything is unlocked. After that you keep a free version: "
+               "unlimited dictation and 40 minutes a month each for calls and for files. Pro removes the limits.",
     "body": """
     <h2 id="states"><span lang="ru">Три состояния</span><span lang="en">Three states</span></h2>
     <table class="ref">
@@ -175,9 +175,9 @@ PAGES["pricing"] = {
       <tr><td><span lang="ru">Пробный период</span><span lang="en">Trial</span></td>
           <td><span lang="ru">14 дней с момента первого запуска. Работает всё, карту вводить не нужно.</span><span lang="en">14 days from first launch. Everything works, and no card is needed.</span></td></tr>
       <tr><td><span lang="ru">Бесплатная версия</span><span lang="en">Free</span></td>
-          <td><span lang="ru">Диктовка и живая расшифровка в пределах 2000 слов в неделю. Счётчик обнуляется в понедельник. Экспорт — только в TXT.</span><span lang="en">Dictation and live transcription within 2,000 words a week. The counter resets on Monday. Export is TXT only.</span></td></tr>
+          <td><span lang="ru">Диктовка без лимита. Живая расшифровка звонков — 40 минут в месяц, расшифровка файлов — ещё 40 минут в месяц, это два отдельных счётчика. Экспорт в TXT и SRT.</span><span lang="en">Unlimited dictation. Live call transcription gets 40 minutes a month and file transcription another 40 minutes a month, counted separately. Export to TXT and SRT.</span></td></tr>
       <tr><td>Pro</td>
-          <td><span lang="ru">Без лимита слов, расшифровка файлов, все восемь форматов экспорта и команда в терминале.</span><span lang="en">No word limit, file transcription, all eight export formats and the terminal command.</span></td></tr>
+          <td><span lang="ru">Звонки и файлы без лимита, ИИ-панель с саммари в окне звонка, все восемь форматов экспорта и <a href="cli.html">команда <code>heardly</code></a> для подключения к ИИ.</span><span lang="en">Unlimited calls and files, the AI panel with a summary in the call window, all eight export formats and <a href="cli.html">the <code>heardly</code> command</a> for connecting to AI tools.</span></td></tr>
     </table>
 
     <h2 id="price"><span lang="ru">Сколько стоит</span><span lang="en">What it costs</span></h2>
@@ -200,10 +200,14 @@ PAGES["pricing"] = {
 
     <h2 id="limit"><span lang="ru">Что происходит на лимите</span><span lang="en">What happens at the limit</span></h2>
     <div lang="ru">
-      <p>Когда 2000 слов за неделю исчерпаны, в попапе появляется «Недельный лимит слов исчерпан» и подпись «сброс в понедельник». Новые записи до понедельника не начинаются, но всё, что уже расшифровано, остаётся на месте: История, папка и экспорт в TXT работают как обычно.</p>
+      <p>Минуты обновляются раз в месяц. Диктовки лимит не касается.</p>
+      <p>Если минуты на звонки кончились посреди разговора, запись не оборвётся. Heardly допишет ещё до 20 минут, а то, что вышло сверх лимита, вычтет из следующего месяца. Новый звонок до обновления лимита уже не начнётся.</p>
+      <p>С файлами запаса нет: если файл длиннее, чем осталось минут, бесплатно его не расшифровать. Всё, что уже расшифровано, остаётся на месте: История, папка и экспорт в TXT и SRT работают как обычно.</p>
     </div>
     <div lang="en">
-      <p>Once the 2,000 words for the week are used up, the panel shows “Weekly word limit reached” and “resets Monday”. New recordings won’t start until Monday, but everything already transcribed stays put: History, the folder and TXT export keep working as usual.</p>
+      <p>The minutes renew once a month. The limit doesn’t apply to dictation.</p>
+      <p>If your call minutes run out mid-conversation, the recording won’t stop. Heardly keeps going for up to 20 more minutes and takes whatever went over the limit from next month. A new call won’t start until the limit renews.</p>
+      <p>Files get no such allowance: a file longer than the minutes you have left can’t be transcribed on the free plan. Everything already transcribed stays put: History, the folder and TXT and SRT export keep working as usual.</p>
     </div>
 
     <h2 id="buy"><span lang="ru">Как оформить</span><span lang="en">How to subscribe</span></h2>
@@ -251,11 +255,11 @@ PAGES["license"] = {
 
     <h2 id="expired"><span lang="ru">Когда подписка кончилась</span><span lang="en">When the subscription ends</span></h2>
     <div lang="ru">
-      <p>Приложение переходит в бесплатную версию: лимит 2000 слов в неделю, экспорт только в TXT, файлы и команда в терминале отключаются. Ничего из уже расшифрованного не пропадает — записи лежат текстовыми файлами в <a href="folder.html">вашей папке</a> и остаются доступны всегда.</p>
+      <p>Приложение переходит в <a href="pricing.html">бесплатную версию</a>: диктовка без лимита, по 40 минут в месяц на звонки и на файлы, экспорт в TXT и SRT. ИИ-панель и команда в терминале отключаются. Ничего из уже расшифрованного не пропадает — записи лежат текстовыми файлами в <a href="folder.html">вашей папке</a> и остаются доступны всегда.</p>
       <p>Продлить можно там же, в «Настройках → Подписка».</p>
     </div>
     <div lang="en">
-      <p>The app falls back to the free version: 2,000 words a week, TXT-only export, no file transcription and no terminal command. Nothing you have already transcribed disappears — the entries are text files in <a href="folder.html">your folder</a> and stay available for good.</p>
+      <p>The app falls back to the <a href="pricing.html">free version</a>: unlimited dictation, 40 minutes a month each for calls and for files, export to TXT and SRT. The AI panel and the terminal command switch off. Nothing you have already transcribed disappears — the entries are text files in <a href="folder.html">your folder</a> and stay available for good.</p>
       <p>You can renew in the same place, Settings → Subscription.</p>
     </div>
 

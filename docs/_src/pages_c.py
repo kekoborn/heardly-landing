@@ -12,8 +12,8 @@ PAGES["files"] = {
                "The transcript shows up in History, in the “Files” section.",
     "body": """
     <div class="note pro">
-      <b><span lang="ru">Функция Pro</span><span lang="en">A Pro feature</span></b>
-      <p><span lang="ru">Расшифровка файлов входит в <a href="pricing.html">Pro</a> и в 14-дневный пробный период.</span><span lang="en">File transcription is part of <a href="pricing.html">Pro</a> and of the 14-day trial.</span></p>
+      <b><span lang="ru">Лимит бесплатной версии</span><span lang="en">The free version’s limit</span></b>
+      <p><span lang="ru">Бесплатно можно расшифровать 40 минут файлов в месяц. В <a href="pricing.html">Pro</a> и в 14-дневный пробный период лимита нет.</span><span lang="en">The free version transcribes 40 minutes of files a month. <a href="pricing.html">Pro</a> and the 14-day trial have no limit.</span></p>
     </div>
 
     <h2 id="how"><span lang="ru">Два способа отдать файл</span><span lang="en">Two ways to hand over a file</span></h2>
@@ -139,7 +139,7 @@ PAGES["export"] = {
         <th><span lang="ru">Доступ</span><span lang="en">Access</span></th>
       </tr>
       <tr><td>TXT</td><td><span lang="ru">Просто текст — вставить в заметку, письмо, задачу.</span><span lang="en">Plain text — paste into a note, an email, a task.</span></td><td><span lang="ru">Бесплатно</span><span lang="en">Free</span></td></tr>
-      <tr><td>SRT</td><td><span lang="ru">Субтитры для видео. Самый распространённый формат.</span><span lang="en">Video subtitles. The most common format.</span></td><td>Pro</td></tr>
+      <tr><td>SRT</td><td><span lang="ru">Субтитры для видео. Самый распространённый формат.</span><span lang="en">Video subtitles. The most common format.</span></td><td><span lang="ru">Бесплатно</span><span lang="en">Free</span></td></tr>
       <tr><td>VTT</td><td><span lang="ru">Субтитры для веба, формат HTML5-плееров.</span><span lang="en">Web subtitles, the HTML5 player format.</span></td><td>Pro</td></tr>
       <tr><td>CSV</td><td><span lang="ru">Таблица: реплики строками, чтобы разобрать в Excel или Google Sheets.</span><span lang="en">A table: one line per entry, to work through in Excel or Google Sheets.</span></td><td>Pro</td></tr>
       <tr><td>Markdown</td><td><span lang="ru">Для Obsidian, Notion и всего, что понимает разметку.</span><span lang="en">For Obsidian, Notion and anything that speaks markup.</span></td><td>Pro</td></tr>
