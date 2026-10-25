@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var API = "https://heardly-api.cafmanar.workers.dev";
-  var CONSENT_VERSION = "consent-2026-10-23"; // редакция /consent/; поднимать вместе с главной
+  var CONSENT_VERSION = "consent-2026-10-25"; // редакция /consent/; поднимать вместе с главной
   // Цели Метрики: ref_invite_open, ref_code_created, ref_link_copied. Счётчик грузится только после согласия на cookie.
   var YM_ID = 113735110;
   function goal(name) { try { if (window.ym) ym(YM_ID, "reachGoal", name); } catch (e) {} }

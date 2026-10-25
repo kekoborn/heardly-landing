@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var API = "https://heardly-api.cafmanar.workers.dev";
-  var CONSENT_VERSION = "consent-2026-10-23"; // редакция /consent/; поднимать вместе с главной
+  var CONSENT_VERSION = "consent-2026-10-25"; // редакция /consent/; поднимать вместе с главной
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var css = getComputedStyle(document.documentElement);
   var COL = { m: css.getPropertyValue("--mic").trim() || "#5E6AD2", a: css.getPropertyValue("--app").trim() || "#D9845A" };
