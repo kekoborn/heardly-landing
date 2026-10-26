@@ -1103,12 +1103,14 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     ru: { refOk: (p, o) => "По приглашению: " + p + " вместо " + o + " за первую оплату.", refPay: p => "Оплатить " + p,
           refNo: { self: "Пригласить самого себя нельзя.", same_device: "Пригласить самого себя нельзя.", already_used: "Скидка по приглашению — только на первую оплату.", not_first_payment: "Скидка по приглашению — только на первую оплату.", closed: "Программа приглашений закончилась.", unknown_code: "Код приглашения не найден." },
           refRejected: "Скидка не применилась. Нажмите ещё раз, чтобы оплатить по обычной цене.",
+          refPh: "Код или email пригласившего, если есть", refAria: "Код приглашения",
           email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…", agree: "Отметьте согласие на обработку персональных данных",
           me: "Я", them: "Компьютер", s1: "Спикер 1", s2: "Спикер 2", words: n => n + " слов", on: "Wi‑Fi включён", off: "Wi‑Fi выключен", going: "● расшифровка идёт",
           proc: "Транскрибирую..." },
     en: { refOk: (p, o) => "Referral price: " + p + " instead of " + o + " for your first payment.", refPay: p => "Pay " + p,
           refNo: { self: "You can't invite yourself.", same_device: "You can't invite yourself.", already_used: "The referral discount is for the first payment only.", not_first_payment: "The referral discount is for the first payment only.", closed: "The referral program has ended.", unknown_code: "Referral code not found." },
           refRejected: "The discount didn't apply. Press again to pay the regular price.",
+          refPh: "Referrer's code or email", refAria: "Referral code",
           email: "Enter your email: the subscription is tied to it", fail: "Couldn't start the payment. Try again or contact support.", wait: "Creating payment…", agree: "Please tick the consent to personal data processing",
           me: "Me", them: "Computer", s1: "Speaker 1", s2: "Speaker 2", words: n => n + " words", on: "Wi‑Fi on", off: "Wi‑Fi off", going: "● transcribing",
           proc: "Transcribing..." }
@@ -1391,6 +1393,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
   function setLang(l) {
     lang = l; document.documentElement.dataset.lang = l; document.documentElement.lang = l;
+    $("payRef").placeholder = T[l].refPh; $("payRef").setAttribute("aria-label", T[l].refAria);
     renderPrices();
     if (cur >= 0) show(cur, true);
   }
