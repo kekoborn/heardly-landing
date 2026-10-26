@@ -993,7 +993,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <h3 id="payTitle"></h3>
         <div class="pay">
           <input class="ym-disable-keys ym-hide-content" type="email" name="email" id="payEmail" autocomplete="email" required placeholder="you@mail.ru" aria-label="Email" aria-describedby="payMsg">
-          <input class="ym-disable-keys" type="text" name="ref" id="payRef" autocomplete="off" spellcheck="false" placeholder="Код или email пригласившего, если есть" aria-label="Код приглашения" aria-describedby="payRefMsg">
+          <input class="ym-disable-keys" type="text" name="ref" id="payRef" autocomplete="off" spellcheck="false" placeholder="Код или email пригласившего" aria-label="Код приглашения" aria-describedby="payRefMsg">
           <div class="pay-ref" id="payRefMsg" role="status"></div>
           <label class="agree"><input type="checkbox" id="payAgree" required><span><span lang="ru">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span><span lang="en">I consent to the <a href="/consent/" target="_blank" rel="noopener">processing of my personal data</a></span></span></label>
           <button class="btn btn-w" type="submit" id="payBtn"><span id="payLabel"></span></button>
@@ -1103,7 +1103,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     ru: { refOk: (p, o) => "По приглашению: " + p + " вместо " + o + " за первую оплату.", refPay: p => "Оплатить " + p,
           refNo: { self: "Пригласить самого себя нельзя.", same_device: "Пригласить самого себя нельзя.", already_used: "Скидка по приглашению — только на первую оплату.", not_first_payment: "Скидка по приглашению — только на первую оплату.", closed: "Программа приглашений закончилась.", unknown_code: "Код приглашения не найден." },
           refRejected: "Скидка не применилась. Нажмите ещё раз, чтобы оплатить по обычной цене.",
-          refPh: "Код или email пригласившего, если есть", refAria: "Код приглашения",
+          refPh: "Код или email пригласившего", refAria: "Код приглашения",
           email: "Введите email: на него оформится подписка", fail: "Не получилось создать оплату. Попробуйте ещё раз или напишите в поддержку.", wait: "Создаём оплату…", agree: "Отметьте согласие на обработку персональных данных",
           me: "Я", them: "Компьютер", s1: "Спикер 1", s2: "Спикер 2", words: n => n + " слов", on: "Wi‑Fi включён", off: "Wi‑Fi выключен", going: "● расшифровка идёт",
           proc: "Транскрибирую..." },
