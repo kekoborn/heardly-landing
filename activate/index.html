@@ -44,7 +44,7 @@ html[data-lang="en"] .btn[lang="en"]{display:inline-block}
 
   <h2><span lang="ru">Если Heardly не&nbsp;открылся</span><span lang="en">If Heardly did not open</span></h2>
   <ol>
-    <li><span lang="ru">Heardly ещё не&nbsp;установлен: <a href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">скачайте его</a>, установите и&nbsp;нажмите кнопку снова.</span><span lang="en">Heardly is not installed yet: <a href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">download it</a>, install and press the button again.</span></li>
+    <li><span lang="ru">Heardly ещё не&nbsp;установлен: <a data-place="activate" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">скачайте его</a>, установите и&nbsp;нажмите кнопку снова.</span><span lang="en">Heardly is not installed yet: <a data-place="activate" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg">download it</a>, install and press the button again.</span></li>
     <li><span lang="ru">Старая версия Heardly не&nbsp;умеет открываться по&nbsp;ссылке. Обновите её: меню <strong>Heardly → Проверить обновления</strong>.</span><span lang="en">Older versions of Heardly cannot open from a link. Update: menu <strong>Heardly → Check for Updates</strong>.</span></li>
     <li><span lang="ru">Или вручную: <strong>Настройки → Подписка → «У&nbsp;меня уже есть лицензия»</strong>, введите email, на&nbsp;который оформлена покупка.</span><span lang="en">Or manually: <strong>Settings → Subscription → "I already have a license"</strong>, and enter the email you paid with.</span></li>
   </ol>
@@ -65,5 +65,6 @@ html[data-lang="en"] .btn[lang="en"]{display:inline-block}
   location.href = link;   // сразу пробуем открыть приложение; кнопка — на случай, если браузер не дал
 })();
 </script>
+<script src="/assets/consent.js" defer></script>
 </body>
 </html>

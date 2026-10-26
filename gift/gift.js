@@ -8,13 +8,11 @@
   var COL = { m: css.getPropertyValue("--mic").trim() || "#5E6AD2", a: css.getPropertyValue("--app").trim() || "#D9845A" };
   var S = { speaking: false, who: "m" };
 
-  // Цели Метрики: gift_click (нажали «Скачать на Mac») и gift_claimed (подарок выдан). Счётчик тот же, что в
-  // assets/consent.js, и грузится только после «Принять» в баннере cookie. Цели надо завести в интерфейсе Метрики.
-  var YM_ID = 113735110;
+  // Цели Метрики: gift_click (нажали «Скачать на Mac») и gift_claimed (подарок выдан). Отправляет их
+  // assets/consent.js, и только после «Принять» в баннере cookie; done вызывается не позже чем через 600 мс.
   function goal(name, done) {
-    var called = false, finish = function () { if (!called) { called = true; if (done) done(); } };
-    try { if (window.ym) { ym(YM_ID, "reachGoal", name, undefined, finish); setTimeout(finish, 600); return; } } catch (e) {}
-    finish();
+    if (window.heardlyGoal) heardlyGoal(name, undefined, done);
+    else { (window.heardlyGoals = window.heardlyGoals || []).push([name]); if (done) done(); }
   }
 
   // ── Волна: пилюли без градиента, как DotsWaveform в приложении ──

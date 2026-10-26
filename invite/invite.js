@@ -3,9 +3,11 @@
   "use strict";
   var API = "https://heardly-api.cafmanar.workers.dev";
   var CONSENT_VERSION = "consent-2026-10-25"; // редакция /consent/; поднимать вместе с главной
-  // Цели Метрики: ref_invite_open, ref_code_created, ref_link_copied. Счётчик грузится только после согласия на cookie.
-  var YM_ID = 113735110;
-  function goal(name) { try { if (window.ym) ym(YM_ID, "reachGoal", name); } catch (e) {} }
+  // Цели Метрики: ref_invite_open, ref_code_created, ref_link_copied, ref_tg_share. Отправляет их assets/consent.js
+  // после согласия на cookie; до загрузки этого файла (он defer) цели ждут в очереди.
+  function goal(name) {
+    if (window.heardlyGoal) heardlyGoal(name); else (window.heardlyGoals = window.heardlyGoals || []).push([name]);
+  }
 
   // Язык — тот же механизм, что на главной: ?lang=, иначе выбор из localStorage, иначе язык браузера.
   var T = {
@@ -86,6 +88,8 @@
     form.hidden = true;
     document.getElementById("result").hidden = false;
   }
+
+  document.getElementById("tg").addEventListener("click", function () { goal("ref_tg_share"); });
 
   var copyBtn = document.getElementById("copy");
   copyBtn.addEventListener("click", function () {

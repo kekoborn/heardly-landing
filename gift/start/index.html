@@ -162,7 +162,7 @@
   // Скачивание начинаем здесь, а не на предыдущей странице: переход не обрывает загрузку.
   if (autostart) setTimeout(function () {
     var a = document.createElement("a");
-    a.href = DMG; a.download = ""; a.style.display = "none";
+    a.href = DMG; a.download = ""; a.setAttribute("data-place", "gift_auto"); // цель download ставит assets/consent.js a.style.display = "none";
     document.body.appendChild(a); a.click(); a.remove();
   }, 700);
 

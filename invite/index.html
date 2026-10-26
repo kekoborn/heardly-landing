@@ -49,7 +49,7 @@ html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not
 
       <form class="claim" id="invite" novalidate>
         <div class="row">
-          <input type="email" id="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" autocomplete="email" inputmode="email" required aria-label="Email">
+          <input class="ym-disable-keys ym-hide-content" type="email" id="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" autocomplete="email" inputmode="email" required aria-label="Email">
           <button class="btn btn-w" id="go" type="submit"><span lang="ru">Получить ссылку</span><span lang="en">Get my link</span></button>
         </div>
         <label class="agree"><input type="checkbox" id="agree" required><span><span lang="ru">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span><span lang="en">I consent to the <a href="/consent/en/" target="_blank" rel="noopener">processing of my personal data</a></span></span></label>
@@ -91,7 +91,7 @@ html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not
   </div>
 </footer>
 
-<script src="invite.js?v=3"></script>
+<script src="invite.js?v=4"></script>
 <script src="../assets/consent.js" defer></script>
 </body>
 </html>

@@ -24,6 +24,22 @@
     ym(YM_ID, "init", { ssr: true, webvisor: true, clickmap: true, ecommerce: "dataLayer", referrer: document.referrer, url: location.href, accurateTrackBounce: true, trackLinks: true });
   }
 
+  // Цели Метрики. Страницы шлют их через window.heardlyGoal(name, params, done), а пока этот файл
+  // не выполнился (он подключён с defer) — кладут в очередь window.heardlyGoals.push([name, params]).
+  // До ответа в баннере цели копятся и уходят после «Принять»; после «Отклонить» не уходят никуда.
+  var queue = [].concat(window.heardlyGoals || []);
+  function goal(name, params, done) {
+    var called = false, finish = function () { if (!called) { called = true; if (done) done(); } };
+    var c = read();
+    if (c === "accepted" && window.ym) {
+      try { ym(YM_ID, "reachGoal", name, params, finish); setTimeout(finish, 600); return; } catch (e) {}
+    } else if (!c) queue.push([name, params]);
+    finish();
+  }
+  function flush() { var q = queue; queue = []; q.forEach(function (g) { goal(g[0], g[1]); }); }
+  window.heardlyGoal = goal;
+  window.heardlyGoals = { push: function (g) { goal(g[0], g[1]); } };
+
   // После отказа стираем уже записанные cookie Метрики на нашем домене.
   function dropMetrikaCookies() {
     document.cookie.split("; ").forEach(function (c) {
@@ -60,19 +76,22 @@
     el.addEventListener("click", function (e) {
       var v = e.target.getAttribute && e.target.getAttribute("data-v"); if (!v) return;
       var was = read(); save(v); close();
-      if (v === "accepted") loadMetrika();
-      else { dropMetrikaCookies(); if (was === "accepted" || window.ym) location.reload(); }
+      if (v === "accepted") { loadMetrika(); flush(); }
+      else { queue = []; dropMetrikaCookies(); if (was === "accepted" || window.ym) location.reload(); }
     });
     document.body.appendChild(el);
   }
 
   function init() {
     var c = read();
-    if (c === "accepted") loadMetrika(); else if (!c) show();
+    if (c === "accepted") { loadMetrika(); flush(); } else if (!c) show(); else queue = [];
     // Лендинг может сменить lang у <html> после ответа воркера о регионе — переводим открытый баннер вслед.
     new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
     document.addEventListener("click", function (e) {
       if (e.target.closest && e.target.closest("[data-cookie-settings]")) { e.preventDefault(); show(); }
+      // Скачивание установщика: ссылка ведёт на GitHub, поэтому цель ставим сами. data-place — где кнопка.
+      var dl = e.target.closest && e.target.closest('a[href$="Heardly.dmg"]');
+      if (dl) goal("download", { page: location.pathname, place: dl.getAttribute("data-place") || "" });
     });
   }
   if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init); else init();
