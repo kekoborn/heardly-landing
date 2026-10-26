@@ -2,6 +2,7 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<script src="/assets/lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
 <title>Heardly — включить Pro</title>
@@ -52,9 +53,6 @@ html[data-lang="en"] .btn[lang="en"]{display:inline-block}
 <script>
 (function () {
   "use strict";
-  var lang = /^(ru|uk|be|kk)/i.test(navigator.language || "") ? "ru" : "en";
-  document.documentElement.dataset.lang = lang;
-  document.documentElement.lang = lang;
   var t = (new URLSearchParams(location.search).get("t") || "").toLowerCase();
   if (!/^[0-9a-f]{32}$/.test(t)) {
     document.getElementById("ok").hidden = true;

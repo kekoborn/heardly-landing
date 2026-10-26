@@ -126,23 +126,6 @@
     toc.remove();
   }
 
-  /* ── Язык ──────────────────────────────────────── */
-  function setLang(l) {
-    document.documentElement.setAttribute("data-lang", l);
-    document.documentElement.setAttribute("lang", l);
-    document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-      b.setAttribute("aria-pressed", String(b.dataset.setLang === l));
-    });
-    try { localStorage.setItem("heardly-lang", l); } catch (e) {}
-  }
-  var saved;
-  try { saved = localStorage.getItem("heardly-lang"); } catch (e) {}
-  if (!saved) saved = (navigator.language || "en").slice(0, 2) === "ru" ? "ru" : "en";
-  document.querySelectorAll("[data-set-lang]").forEach(function (b) {
-    b.addEventListener("click", function () { setLang(b.dataset.setLang); });
-  });
-  setLang(saved === "ru" ? "ru" : "en");
-
   /* ── Окно «скачивание началось» ─────────────────
      Разметку держим здесь, а не в шаблоне страницы: кнопка «Скачать» стоит в шапке
      всех 27 страниц, и одинаковый блок разъехался бы по ним копиями. Переход по

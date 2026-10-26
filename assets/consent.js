@@ -69,7 +69,7 @@
   function init() {
     var c = read();
     if (c === "accepted") loadMetrika(); else if (!c) show();
-    // Переключатель RU/EN на странице меняет lang у <html> — переводим открытый баннер вслед за ним.
+    // Лендинг может сменить lang у <html> после ответа воркера о регионе — переводим открытый баннер вслед.
     new MutationObserver(render).observe(document.documentElement, { attributes: true, attributeFilter: ["lang"] });
     document.addEventListener("click", function (e) {
       if (e.target.closest && e.target.closest("[data-cookie-settings]")) { e.preventDefault(); show(); }

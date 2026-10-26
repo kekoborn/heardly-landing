@@ -32,21 +32,20 @@
       share: "Heardly turns calls and dictation into text on your Mac. Your first month is cheaper with this link:"
     }
   };
-  var lang = "ru";
-  try { var s = localStorage.getItem("heardly-lang"); if (s === "ru" || s === "en") lang = s; else if (!/^(ru|uk|be|kk)/i.test(navigator.language || "ru")) lang = "en"; } catch (e) {}
-  var q = new URLSearchParams(location.search).get("lang"); if (q === "ru" || q === "en") lang = q;
+  var lang = HeardlyLang.lang;
   function setLang(l) {
     lang = l;
     document.documentElement.dataset.lang = l; document.documentElement.lang = l;
     document.title = T[l].title;
-    document.querySelectorAll("[data-set-lang]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.setLang === l); });
     document.querySelectorAll("[data-ph-" + l + "]").forEach(function (n) { n.placeholder = n.getAttribute("data-ph-" + l); });
+<<<<<<< Updated upstream
     document.querySelectorAll("[data-aria-" + l + "]").forEach(function (n) { n.setAttribute("aria-label", n.getAttribute("data-aria-" + l)); });
     var desc = document.querySelector('meta[name="description"]');
     if (desc) { if (!desc.dataset.ru) desc.dataset.ru = desc.content; desc.content = l === "en" ? desc.dataset.en : desc.dataset.ru; }
     try { localStorage.setItem("heardly-lang", l); } catch (e) {}
+=======
+>>>>>>> Stashed changes
   }
-  document.querySelectorAll("[data-set-lang]").forEach(function (b) { b.addEventListener("click", function () { setLang(b.dataset.setLang); }); });
   setLang(lang);
 
   // device_id приходит из приложения во фрагменте (#d=…): фрагмент не уходит ни на сервер сайта, ни в аналитику.

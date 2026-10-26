@@ -21,6 +21,7 @@ SHELL = """<!doctype html>
 <html lang="ru" data-lang="ru">
 <head>
 <meta charset="utf-8">
+<script src="../assets/lang.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title_ru} — Heardly</title>
 <meta name="description" content="{desc_ru}">
@@ -38,7 +39,6 @@ SHELL = """<!doctype html>
     <button class="d-burger" type="button" aria-label="Разделы / Sections"><i></i></button>
     <a class="d-brand" href="../"><img src="img/logo.png" alt="" width="26" height="26">Heardly<span class="tag"><span lang="ru">Документация</span><span lang="en">Docs</span></span></a>
     <div class="d-nav-r">
-      <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
       <a class="btn btn-w" href="https://github.com/kekoborn/heardly-releases/releases/latest/download/Heardly.dmg"><span lang="ru">Скачать</span><span lang="en">Download</span></a>
     </div>
   </div>
