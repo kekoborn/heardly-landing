@@ -2,7 +2,7 @@
 (function () {
   "use strict";
   var API = "https://heardly-api.cafmanar.workers.dev";
-  var CONSENT_VERSION = "consent-2026-10-25"; // редакция /consent/; поднимать вместе с главной
+  var CONSENT_VERSION = "consent-2026-10-26"; // редакция /consent/; поднимать вместе с главной
   // Цели Метрики: ref_invite_open, ref_code_created, ref_link_copied, ref_tg_share. Отправляет их assets/consent.js
   // после согласия на cookie; до загрузки этого файла (он defer) цели ждут в очереди.
   function goal(name) {

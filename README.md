@@ -6,7 +6,7 @@
 `landing-archive-2026-10-21`.
 
 Публикуется GitHub Pages из ветки `main`, из корня, без шага сборки. Живой адрес —
-<https://heardly.kekoborn.ru> (`CNAME`).
+<https://heardly.pro> (`CNAME`).
 
 В репозиторий пушит не только один человек. **Перед любым пушем — `git pull`.**
 Форсить нельзя.
