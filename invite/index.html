@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="ru">
+<html lang="ru" data-lang="ru">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Heardly — пригласить друга</title>
+<title>Бесплатный Heardly на месяц за приглашение</title>
 <meta name="description" content="Пригласите друга в Heardly: за каждого, кто оформит Pro, вы получите месяц бесплатно, а друг — скидку 15% на первый месяц.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F6F4EF">
@@ -13,18 +13,27 @@
 <link rel="stylesheet" href="../assets/fonts/fonts.css">
 <link rel="stylesheet" href="../gift/gift.css?v=3">
 <style>
+html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not(html) { display: none !important; }
+.lang{margin-left:auto;display:inline-flex;gap:2px;padding:3px;border-radius:999px;box-shadow:0 0 0 1px var(--line-2) inset}
+.lang button{border:0;background:transparent;color:var(--t3);font:500 12px var(--sans);padding:5px 9px;border-radius:999px;cursor:pointer}
+.lang button[aria-pressed="true"]{background:rgba(35,38,51,.1);color:var(--t1)}
+.hero{align-items:start;min-height:0;padding-top:48px;grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr);gap:48px}
+.hero h1{font-size:clamp(34px,3.7vw,52px)}
+.year{margin-top:10px}
 .link-box{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
 .link-box input{flex:1 1 260px;min-width:0;height:52px;padding:0 20px;border:0;border-radius:999px;background:rgba(35,38,51,.05);box-shadow:0 0 0 1px var(--line-2) inset;color:var(--t1);font:15px var(--sans,inherit);text-overflow:ellipsis}
 .link-box input:focus{outline:0;background:#fff;box-shadow:0 0 0 2px var(--mic) inset}
-@media (max-width:560px){.link-box .btn{width:100%}}
-.year{margin-top:10px}
-.terms{margin-top:18px}
-.terms a{color:var(--t3)}
 .btn-tg{background:#229ED9;color:#fff}.btn-tg:hover{background:#1B8DC4;transform:translateY(-1px)}
 .btn-tg svg{width:18px;height:18px}
-.shot{overflow:hidden;max-width:540px;justify-self:center;width:100%}
-.shot img{display:block;width:100%;height:auto}
-@media (max-width:560px){.shot{display:none}}
+/* Настоящие кадры Heardly из документации (docs/img): история с файлом, окно живой расшифровки, плашка диктовки. */
+.reel{position:relative;margin:0;width:calc(100% + 72px);aspect-ratio:1/.9;margin-top:6px}
+.reel img{position:absolute;display:block;height:auto;border-radius:12px;filter:drop-shadow(0 22px 40px rgba(35,38,51,.2)) drop-shadow(0 2px 6px rgba(35,38,51,.08))}
+.reel .f-hist{top:0;right:0;width:84%}
+.reel .f-live{left:0;top:27%;width:80%}
+.reel .f-dict{right:2%;top:80%;width:36%}
+@media (max-width:1180px){.reel{width:100%}}
+@media (max-width:960px){.hero{padding-top:24px;grid-template-columns:1fr}.reel{max-width:680px;justify-self:center}}
+@media (max-width:560px){.reel{display:none}.link-box .btn{width:100%}}
 </style>
 </head>
 <body>
@@ -32,56 +41,60 @@
 <div class="wrap">
   <header class="top">
     <a class="brand" href="/"><img src="../assets/logo.png" alt="" width="28" height="28">Heardly</a>
+    <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
   </header>
 
   <main class="hero">
     <div>
-      <h1>Получите месяц бесплатно за&nbsp;вашего друга с&nbsp;подпиской Pro</h1>
-      <p class="lead">За&nbsp;каждого приглашённого и&nbsp;оформившего Heardly Pro подарим вам месяц бесплатного использования, а&nbsp;вашему другу скидку 15% на&nbsp;первый месяц.</p>
-      <p class="lead year">Если друг оплатит год, вы получите два месяца.</p>
+      <h1><span lang="ru">Получите месяц бесплатно за&nbsp;вашего друга с&nbsp;подпиской Pro</span><span lang="en">Get a free month of Pro for every friend who subscribes</span></h1>
+      <p class="lead"><span lang="ru">За&nbsp;каждого приглашённого и&nbsp;оформившего Heardly Pro подарим вам месяц бесплатного использования, а&nbsp;вашему другу скидку 15% на&nbsp;первый месяц.</span><span lang="en">When a friend you invite signs up for Heardly Pro, you get a month free and they get 15% off their first month.</span></p>
+      <p class="lead year"><span lang="ru">Если друг оплатит год, вы получите два месяца.</span><span lang="en">If they pay for a year, you get two months.</span></p>
 
       <form class="claim" id="invite" novalidate>
         <div class="row">
-          <input type="email" id="email" name="email" placeholder="Ваш email" autocomplete="email" inputmode="email" required aria-label="Ваш email">
-          <button class="btn btn-w" id="go" type="submit"><span>Получить ссылку</span></button>
+          <input type="email" id="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" autocomplete="email" inputmode="email" required aria-label="Email">
+          <button class="btn btn-w" id="go" type="submit"><span lang="ru">Получить ссылку</span><span lang="en">Get my link</span></button>
         </div>
-        <label class="agree"><input type="checkbox" id="agree" required><span>Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span></label>
+        <label class="agree"><input type="checkbox" id="agree" required><span><span lang="ru">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span><span lang="en">I consent to the <a href="/consent/" target="_blank" rel="noopener">processing of my personal data</a></span></span></label>
         <p class="msg" id="msg" role="alert" aria-live="polite"></p>
-        <p class="fine">На&nbsp;этот email начислим бонусные дни. Если подписки ещё нет, она появится сама: введите ваш email в&nbsp;настройках Heardly в&nbsp;разделе «Подписка».</p>
+        <p class="fine"><span lang="ru">На&nbsp;этот email начислим бонусные дни. Если подписки ещё нет, она появится сама: введите ваш email в&nbsp;настройках Heardly в&nbsp;разделе «Подписка».</span><span lang="en">Your bonus days go to this email. If you don't have a subscription yet, we'll create one, so just enter this email in Heardly's settings under Subscription.</span></p>
       </form>
 
       <div id="result" hidden>
-        <p class="lead">Ваша ссылка. Отправьте её другу сами: мы приглашений не&nbsp;рассылаем.</p>
+        <p class="lead"><span lang="ru">Ваша ссылка. Отправьте её другу сами: мы приглашений не&nbsp;рассылаем.</span><span lang="en">Here's your link. Send it to your friends yourself: we never email anyone on your behalf.</span></p>
         <div class="link-box">
-          <input type="text" id="link" readonly aria-label="Ссылка-приглашение">
-          <button class="btn btn-w" id="copy" type="button"><span>Скопировать</span></button>
-          <a class="btn btn-tg" id="tg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.4 18.6 19.9c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.5 1 12c-1.1-.3-1.1-1.1.2-1.6L20.6 2.9c.9-.3 1.7.2 1.3 1.5Z"/></svg><span>Отправить в&nbsp;Telegram</span></a>
+          <input type="text" id="link" readonly aria-label="Ссылка-приглашение / Invite link">
+          <button class="btn btn-w" id="copy" type="button"><span lang="ru">Скопировать</span><span lang="en">Copy</span></button>
+          <a class="btn btn-tg" id="tg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.4 18.6 19.9c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.5 1 12c-1.1-.3-1.1-1.1.2-1.6L20.6 2.9c.9-.3 1.7.2 1.3 1.5Z"/></svg><span lang="ru">Отправить в&nbsp;Telegram</span><span lang="en">Share on Telegram</span></a>
         </div>
-        <p class="fine">Код приглашения: <b id="code"></b>. Друг может ввести его или ваш email при&nbsp;оплате в&nbsp;приложении.</p>
+        <p class="fine"><span lang="ru">Код приглашения: <b class="code"></b>. Друг может ввести его или ваш email при&nbsp;оплате в&nbsp;приложении.</span><span lang="en">Your invite code: <b class="code"></b>. Your friend can enter it, or your email, when paying in the app.</span></p>
       </div>
-
-      <p class="fine terms"><a href="/legal/#referral">Условия программы</a></p>
     </div>
 
-    <figure class="win shot" aria-label="Блок «Пригласить друга» в настройках Heardly">
-      <div class="tb"><i></i><i></i><i></i><b>Подписка</b></div>
-      <img src="invite-settings.png" width="960" height="334" alt="Настройки Heardly, раздел «Подписка»: блок «Пригласить друга» с кнопкой «Получить ссылку»">
+    <figure class="reel">
+      <img class="f-hist" lang="ru" src="../docs/img/history-files.png" width="2364" height="1486" alt="Heardly: история транскрипций, расшифрованный файл с таймкодами">
+      <img class="f-hist" lang="en" src="../docs/img/history-files-en.png" width="2364" height="1486" alt="Heardly: transcription history with a transcribed file and timestamps">
+      <img class="f-live" lang="ru" src="../docs/img/live-window.png" width="1442" height="970" alt="Heardly: живая расшифровка звонка">
+      <img class="f-live" lang="en" src="../docs/img/live-window-en.png" width="1442" height="970" alt="Heardly: live call transcription">
+      <img class="f-dict" lang="ru" src="../docs/img/dictation-bar-large.png" width="560" height="160" alt="Heardly: плашка диктовки">
+      <img class="f-dict" lang="en" src="../docs/img/dictation-bar-large-en.png" width="560" height="160" alt="Heardly: dictation bar">
     </figure>
   </main>
 </div>
 
 <footer>
   <div class="wrap foot">
-    <a href="/privacy/">Политика обработки персональных данных</a>
-    <a href="/consent/">Согласие на&nbsp;обработку данных</a>
-    <a href="/legal/">Оферта</a>
+    <a href="/privacy/" hreflang="ru"><span lang="ru">Политика обработки персональных данных</span><span lang="en">Privacy policy (RU)</span></a>
+    <a href="/consent/" hreflang="ru"><span lang="ru">Согласие на&nbsp;обработку данных</span><span lang="en">Data processing consent (RU)</span></a>
+    <a href="/legal/" hreflang="ru"><span lang="ru">Оферта</span><span lang="en">Terms of sale (RU)</span></a>
+    <a href="/legal/#referral" hreflang="ru"><span lang="ru">Условия программы</span><span lang="en">Program terms (RU)</span></a>
     <a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a>
     <span class="sp"></span>
     <span>© 2026 Heardly</span>
   </div>
 </footer>
 
-<script src="invite.js?v=1"></script>
+<script src="invite.js?v=2"></script>
 <script src="../assets/consent.js" defer></script>
 </body>
 </html>
