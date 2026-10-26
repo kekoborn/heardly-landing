@@ -38,13 +38,9 @@
     document.documentElement.dataset.lang = l; document.documentElement.lang = l;
     document.title = T[l].title;
     document.querySelectorAll("[data-ph-" + l + "]").forEach(function (n) { n.placeholder = n.getAttribute("data-ph-" + l); });
-<<<<<<< Updated upstream
     document.querySelectorAll("[data-aria-" + l + "]").forEach(function (n) { n.setAttribute("aria-label", n.getAttribute("data-aria-" + l)); });
     var desc = document.querySelector('meta[name="description"]');
     if (desc) { if (!desc.dataset.ru) desc.dataset.ru = desc.content; desc.content = l === "en" ? desc.dataset.en : desc.dataset.ru; }
-    try { localStorage.setItem("heardly-lang", l); } catch (e) {}
-=======
->>>>>>> Stashed changes
   }
   setLang(lang);
 
