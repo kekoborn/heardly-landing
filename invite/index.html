@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Heardly — пригласить друга</title>
-<meta name="description" content="Пригласите друга в Heardly: он заплатит за первый месяц меньше, а вы получите 30 дней Pro.">
+<meta name="description" content="Пригласите друга в Heardly: за каждого, кто оформит Pro, вы получите месяц бесплатно, а друг — скидку 15% на первый месяц.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F6F4EF">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -13,10 +13,18 @@
 <link rel="stylesheet" href="../assets/fonts/fonts.css">
 <link rel="stylesheet" href="../gift/gift.css?v=3">
 <style>
-.hero.solo{grid-template-columns:minmax(0,640px)}
 .link-box{display:flex;gap:10px;flex-wrap:wrap;margin-top:8px}
-.link-box input{flex:1 1 260px;min-width:0}
+.link-box input{flex:1 1 260px;min-width:0;height:52px;padding:0 20px;border:0;border-radius:999px;background:rgba(35,38,51,.05);box-shadow:0 0 0 1px var(--line-2) inset;color:var(--t1);font:15px var(--sans,inherit);text-overflow:ellipsis}
+.link-box input:focus{outline:0;background:#fff;box-shadow:0 0 0 2px var(--mic) inset}
+@media (max-width:560px){.link-box .btn{width:100%}}
+.year{margin-top:10px}
 .terms{margin-top:18px}
+.terms a{color:var(--t3)}
+.btn-tg{background:#229ED9;color:#fff}.btn-tg:hover{background:#1B8DC4;transform:translateY(-1px)}
+.btn-tg svg{width:18px;height:18px}
+.shot{overflow:hidden;max-width:540px;justify-self:center;width:100%}
+.shot img{display:block;width:100%;height:auto}
+@media (max-width:560px){.shot{display:none}}
 </style>
 </head>
 <body>
@@ -26,10 +34,11 @@
     <a class="brand" href="/"><img src="../assets/logo.png" alt="" width="28" height="28">Heardly</a>
   </header>
 
-  <main class="hero solo">
+  <main class="hero">
     <div>
-      <h1>Пригласите друга в&nbsp;Heardly</h1>
-      <p class="lead">Друг платит за&nbsp;первый месяц 425&nbsp;₽ вместо 499&nbsp;₽, а&nbsp;вы получаете 30&nbsp;дней Pro. Если друг оплатит год, вы получите 60&nbsp;дней.</p>
+      <h1>Получите месяц бесплатно за&nbsp;вашего друга с&nbsp;подпиской Pro</h1>
+      <p class="lead">За&nbsp;каждого приглашённого и&nbsp;оформившего Heardly Pro подарим вам месяц бесплатного использования, а&nbsp;вашему другу скидку 15% на&nbsp;первый месяц.</p>
+      <p class="lead year">Если друг оплатит год, вы получите два месяца.</p>
 
       <form class="claim" id="invite" novalidate>
         <div class="row">
@@ -38,7 +47,7 @@
         </div>
         <label class="agree"><input type="checkbox" id="agree" required><span>Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span></label>
         <p class="msg" id="msg" role="alert" aria-live="polite"></p>
-        <p class="fine">На&nbsp;этот email начислим бонусные дни. Если подписки ещё нет, она появится сама: введите этот email в&nbsp;Heardly → Настройки → Подписка.</p>
+        <p class="fine">На&nbsp;этот email начислим бонусные дни. Если подписки ещё нет, она появится сама: введите ваш email в&nbsp;настройках Heardly в&nbsp;разделе «Подписка».</p>
       </form>
 
       <div id="result" hidden>
@@ -46,13 +55,18 @@
         <div class="link-box">
           <input type="text" id="link" readonly aria-label="Ссылка-приглашение">
           <button class="btn btn-w" id="copy" type="button"><span>Скопировать</span></button>
-          <a class="btn" id="tg" target="_blank" rel="noopener"><span>Отправить в&nbsp;Telegram</span></a>
+          <a class="btn btn-tg" id="tg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.4 18.6 19.9c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.5 1 12c-1.1-.3-1.1-1.1.2-1.6L20.6 2.9c.9-.3 1.7.2 1.3 1.5Z"/></svg><span>Отправить в&nbsp;Telegram</span></a>
         </div>
         <p class="fine">Код приглашения: <b id="code"></b>. Друг может ввести его или ваш email при&nbsp;оплате в&nbsp;приложении.</p>
       </div>
 
-      <p class="fine terms">Программа действует до&nbsp;25&nbsp;октября 2027 года. Организатор и&nbsp;правила — в&nbsp;<a href="/legal/#referral">разделе 7 оферты</a>.</p>
+      <p class="fine terms"><a href="/legal/#referral">Условия программы</a></p>
     </div>
+
+    <figure class="win shot" aria-label="Блок «Пригласить друга» в настройках Heardly">
+      <div class="tb"><i></i><i></i><i></i><b>Подписка</b></div>
+      <img src="invite-settings.png" width="960" height="334" alt="Настройки Heardly, раздел «Подписка»: блок «Пригласить друга» с кнопкой «Получить ссылку»">
+    </figure>
   </main>
 </div>
 
