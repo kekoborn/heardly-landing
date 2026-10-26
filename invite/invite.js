@@ -41,6 +41,9 @@
     document.title = T[l].title;
     document.querySelectorAll("[data-set-lang]").forEach(function (b) { b.setAttribute("aria-pressed", b.dataset.setLang === l); });
     document.querySelectorAll("[data-ph-" + l + "]").forEach(function (n) { n.placeholder = n.getAttribute("data-ph-" + l); });
+    document.querySelectorAll("[data-aria-" + l + "]").forEach(function (n) { n.setAttribute("aria-label", n.getAttribute("data-aria-" + l)); });
+    var desc = document.querySelector('meta[name="description"]');
+    if (desc) { if (!desc.dataset.ru) desc.dataset.ru = desc.content; desc.content = l === "en" ? desc.dataset.en : desc.dataset.ru; }
     try { localStorage.setItem("heardly-lang", l); } catch (e) {}
   }
   document.querySelectorAll("[data-set-lang]").forEach(function (b) { b.addEventListener("click", function () { setLang(b.dataset.setLang); }); });

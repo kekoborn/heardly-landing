@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Бесплатный Heardly на месяц за приглашение</title>
-<meta name="description" content="Пригласите друга в Heardly: за каждого, кто оформит Pro, вы получите месяц бесплатно, а друг — скидку 15% на первый месяц.">
+<meta name="description" data-en="Invite friends to Heardly: for every friend who subscribes to Pro you get a free month, and they get 15% off their first month." content="Пригласите друга в Heardly: за каждого, кто оформит Pro, вы получите месяц бесплатно, а друг — скидку 15% на первый месяц.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F6F4EF">
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
@@ -41,7 +41,7 @@ html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not
 <div class="wrap">
   <header class="top">
     <a class="brand" href="/"><img src="../assets/logo.png" alt="" width="28" height="28">Heardly</a>
-    <div class="lang" role="group" aria-label="Язык / Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
+    <div class="lang" role="group" aria-label="Язык" data-aria-ru="Язык" data-aria-en="Language"><button type="button" data-set-lang="ru">RU</button><button type="button" data-set-lang="en">EN</button></div>
   </header>
 
   <main class="hero">
@@ -55,7 +55,7 @@ html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not
           <input type="email" id="email" name="email" placeholder="Ваш email" data-ph-ru="Ваш email" data-ph-en="Your email" autocomplete="email" inputmode="email" required aria-label="Email">
           <button class="btn btn-w" id="go" type="submit"><span lang="ru">Получить ссылку</span><span lang="en">Get my link</span></button>
         </div>
-        <label class="agree"><input type="checkbox" id="agree" required><span><span lang="ru">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span><span lang="en">I consent to the <a href="/consent/" target="_blank" rel="noopener">processing of my personal data</a></span></span></label>
+        <label class="agree"><input type="checkbox" id="agree" required><span><span lang="ru">Даю <a href="/consent/" target="_blank" rel="noopener">согласие на&nbsp;обработку персональных данных</a></span><span lang="en">I consent to the <a href="/consent/en/" target="_blank" rel="noopener">processing of my personal data</a></span></span></label>
         <p class="msg" id="msg" role="alert" aria-live="polite"></p>
         <p class="fine"><span lang="ru">На&nbsp;этот email начислим бонусные дни. Если подписки ещё нет, она появится сама: введите ваш email в&nbsp;настройках Heardly в&nbsp;разделе «Подписка».</span><span lang="en">Your bonus days go to this email. If you don't have a subscription yet, we'll create one, so just enter this email in Heardly's settings under Subscription.</span></p>
       </form>
@@ -63,7 +63,7 @@ html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not
       <div id="result" hidden>
         <p class="lead"><span lang="ru">Ваша ссылка. Отправьте её другу сами: мы приглашений не&nbsp;рассылаем.</span><span lang="en">Here's your link. Send it to your friends yourself: we never email anyone on your behalf.</span></p>
         <div class="link-box">
-          <input type="text" id="link" readonly aria-label="Ссылка-приглашение / Invite link">
+          <input type="text" id="link" readonly aria-label="Ссылка-приглашение" data-aria-ru="Ссылка-приглашение" data-aria-en="Invite link">
           <button class="btn btn-w" id="copy" type="button"><span lang="ru">Скопировать</span><span lang="en">Copy</span></button>
           <a class="btn btn-tg" id="tg" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.4 18.6 19.9c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.3-8.4c.4-.4-.1-.6-.6-.2L5.9 13.5 1 12c-1.1-.3-1.1-1.1.2-1.6L20.6 2.9c.9-.3 1.7.2 1.3 1.5Z"/></svg><span lang="ru">Отправить в&nbsp;Telegram</span><span lang="en">Share on Telegram</span></a>
         </div>
@@ -84,17 +84,17 @@ html[data-lang="ru"] [lang="en"]:not(html), html[data-lang="en"] [lang="ru"]:not
 
 <footer>
   <div class="wrap foot">
-    <a href="/privacy/" hreflang="ru"><span lang="ru">Политика обработки персональных данных</span><span lang="en">Privacy policy (RU)</span></a>
-    <a href="/consent/" hreflang="ru"><span lang="ru">Согласие на&nbsp;обработку данных</span><span lang="en">Data processing consent (RU)</span></a>
-    <a href="/legal/" hreflang="ru"><span lang="ru">Оферта</span><span lang="en">Terms of sale (RU)</span></a>
-    <a href="/legal/#referral" hreflang="ru"><span lang="ru">Условия программы</span><span lang="en">Program terms (RU)</span></a>
+    <a lang="ru" href="/privacy/">Политика обработки персональных данных</a><a lang="en" href="/privacy/en/">Privacy policy</a>
+    <a lang="ru" href="/consent/">Согласие на&nbsp;обработку данных</a><a lang="en" href="/consent/en/">Data processing consent</a>
+    <a lang="ru" href="/legal/">Оферта</a><a lang="en" href="/legal/en/">Public offer</a>
+    <a lang="ru" href="/legal/#referral">Условия программы</a><a lang="en" href="/legal/en/#referral">Program terms</a>
     <a href="mailto:support@kekoborn.ru">support@kekoborn.ru</a>
     <span class="sp"></span>
     <span>© 2026 Heardly</span>
   </div>
 </footer>
 
-<script src="invite.js?v=2"></script>
+<script src="invite.js?v=3"></script>
 <script src="../assets/consent.js" defer></script>
 </body>
 </html>
