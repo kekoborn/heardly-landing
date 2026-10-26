@@ -2,6 +2,8 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
+<script src="/assets/lang.js"></script>
+<script>/* Язык идёт за регионом (assets/lang.js). ?orig — открыть русский оригинал без перехода. */ if (HeardlyLang.lang === "en" && !/[?&]orig\b/.test(location.search)) location.replace("/cookies/en/" + location.hash); else document.documentElement.lang = document.documentElement.dataset.lang = "ru";</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Heardly — cookie и аналитика</title>
 <meta name="description" content="Какие cookie и данные браузера использует сайт Heardly, зачем, на какой срок и как от них отказаться.">
@@ -32,14 +34,14 @@ th{color:var(--ink);font-weight:600}
 .tw{overflow-x:auto}
 @media (max-width:520px){table{font-size:.85rem}}
 button.cs{font:inherit;color:var(--indigo);background:none;border:0;padding:0;text-decoration:underline;cursor:pointer}
-header{display:flex;align-items:center}.lng{margin-left:auto;display:flex;gap:4px;font-size:.85rem}.lng a,.lng span{font-weight:500;font-size:.85rem;padding:2px 8px;border-radius:999px;text-decoration:none}.lng span{background:rgba(29,29,31,.08);color:var(--ink)}.lng a{color:var(--graphite)}
+header{display:flex;align-items:center}
 </style>
 <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="../assets/favicon.ico" sizes="any">
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 </head>
 <body>
-<header><a href="/">‹ Heardly</a><nav class="lng" aria-label="Язык / Language"><span>RU</span><a href="/cookies/en/" hreflang="en" lang="en">EN</a></nav></header>
+<header><a href="/">‹ Heardly</a></header>
 <main>
 <h1>Cookie и аналитика</h1>
 <p class="updated">Редакция от 22 октября 2026 года</p>
